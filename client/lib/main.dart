@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './Profile/ProfileScreen.dart';
+import './Layout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
           primaryColor: Colors.green),
-          home: const ProfileScreen(title: "My Profile"),
+      home: const Layout(title: "My Profile"),
     );
   }
 }
