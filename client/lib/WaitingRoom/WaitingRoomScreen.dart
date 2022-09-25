@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Profile/ListViewScreen.dart';
 
-class HomeScreen extends StatelessWidget {
+class WaitingRoomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: Column(children: <Widget>[
-          Text("This is home page", style: TextStyle(fontSize: 24)),
+          Text("Waiting Room Screen", style: TextStyle(fontSize: 24)),
           ElevatedButton(
               onPressed: () => {
                     Navigator.push(

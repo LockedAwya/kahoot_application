@@ -1,5 +1,6 @@
 import '../Profile/ProfileScreen.dart';
 import './Home/HomeScreen.dart';
+import './JoinGame/JoinGameScreen.dart';
 
 import 'package:flutter/material.dart';
 
@@ -24,37 +25,39 @@ class _Layout extends State<Layout> {
       TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
+    JoinGameScreen(),
     Text(
-      'Index 1: Business',
+      'Index 1: Host',
       style: optionStyle,
     ),
     ProfileScreen(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    void onItemTapped(int index) {
+      setState(() {
+        if (index != 1) {
+          _selectedIndex = index;
+        } else {
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => _widgetOptions[1]),
+          // );
+          showModalBottomSheet<dynamic>(
+              isScrollControlled: true,
+              context: context,
+              builder: (context) => _widgetOptions[1]);
+        }
+      });
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-          // style: TextStyle(
-          //   fontWeight: FontWeight.bold,
-          //   fontSize: 20, // light
-          // ),
-        ),
-        centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 241, 241, 241),
-      ),
       body: SafeArea(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -65,13 +68,17 @@ class _Layout extends State<Layout> {
             label: 'Join',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Host',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        selectedItemColor: Colors.black,
+        onTap: onItemTapped,
       ),
     );
   }

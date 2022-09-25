@@ -16,6 +16,17 @@ class _ProfileScreen extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Profile",
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+              color: Colors.black.withOpacity(1.0)),
+        ),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 241, 241, 241),
+      ),
       body: SafeArea(
           //child: _widgetOptions.elementAt(_selectedIndex),
           child: ListView(
