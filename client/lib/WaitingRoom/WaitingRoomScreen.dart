@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Profile/ListViewScreen.dart';
+import '../HostGame/HostGamePlayScreen.dart';
 
 class WaitingRoomScreen extends StatelessWidget {
   @override
@@ -23,7 +23,7 @@ class WaitingRoomScreen extends StatelessWidget {
               onPressed: () => {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ListViewScreen()),
+                      MaterialPageRoute(builder: (context) => HostGamePlayScreen()),
                     ),
                   },
               child: const Text('Go to another page')),
