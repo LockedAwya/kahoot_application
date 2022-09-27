@@ -1,6 +1,7 @@
 import '../Profile/ProfileScreen.dart';
 import './Home/HomeScreen.dart';
 import './JoinGame/JoinGameScreen.dart';
+import './HostGame/HostGameScreen.dart';
 
 import 'package:flutter/material.dart';
 
@@ -26,10 +27,7 @@ class _Layout extends State<Layout> {
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     JoinGameScreen(),
-    Text(
-      'Index 1: Host',
-      style: optionStyle,
-    ),
+    HostGameScreen(),
     ProfileScreen(),
   ];
 
