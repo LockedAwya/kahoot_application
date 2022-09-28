@@ -7,7 +7,7 @@ class WaitingRoomScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Home",
+          "Waiting Room",
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -23,10 +23,11 @@ class WaitingRoomScreen extends StatelessWidget {
               onPressed: () => {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HostGamePlayScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => HostGamePlayScreen()),
                     ),
                   },
-              child: const Text('Go to another page')),
+              child: const Text('Play Game')),
         ]),
       ),
     );

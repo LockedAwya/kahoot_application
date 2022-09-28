@@ -38,14 +38,19 @@ class _Layout extends State<Layout> {
         if (index != 1) {
           _selectedIndex = index;
         } else {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => _widgetOptions[1]),
-          // );
           showModalBottomSheet<dynamic>(
               isScrollControlled: true,
               context: context,
-              builder: (context) => _widgetOptions[1]);
+              builder: (context) => Container(
+                  height: MediaQuery.of(context).size.height * 0.90,
+                  decoration: new BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: new BorderRadius.only(
+                      topLeft: const Radius.circular(25.0),
+                      topRight: const Radius.circular(25.0),
+                    ),
+                  ),
+                  child: _widgetOptions[1]));
         }
       });
     }

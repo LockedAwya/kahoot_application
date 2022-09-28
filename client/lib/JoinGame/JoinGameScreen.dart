@@ -12,53 +12,68 @@ class JoinGameScreen extends StatefulWidget {
 class _JoinGameScreen extends State<JoinGameScreen> {
   @override
   Widget build(BuildContext context) {
+    // const double height = MediaQuery.of(context).size.height;
+    // const double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.purple[900],
+      resizeToAvoidBottomInset: false,
       body: Container(
+        margin: EdgeInsets.only(bottom: 150.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
               child: const Text(
                 "Join a quiz game!",
                 style: TextStyle(
                   height: 1.0,
                   fontSize: 30,
-                  color: Colors.black,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            Container(
+            Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 3.0, horizontal: 20.0),
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
               child: TextField(
                 //controller: text1Controller,
                 obscureText: false,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Game ID',
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
               ),
             ),
-            Container(
+            Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 3.0, horizontal: 20.0),
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: TextField(
                 //controller: text2Controller,
                 obscureText: false,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Username',
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
               ),
             ),
-            Container(
+            SizedBox(
+              width: 370,
+              // padding:
+              //     const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
               child: TextButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
+                      MaterialStateProperty.all<Color>(Colors.black),
                   padding: MaterialStateProperty.all<EdgeInsets>(
                       const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 10.0)),
+                          vertical: 10.0, horizontal: 20.0)),
                 ),
                 child: const Text(
                   "Enter",
