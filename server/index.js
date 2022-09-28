@@ -1,35 +1,28 @@
-const mongoose = require('mongoose')
+const e = require('express');
 const express = require('express')
-require('dotenv').config();
+const mongoose = require("mongoose")
 
+const PORT = 3000;
 const app = express();
-const PORT = process.env.PORT;
-const url = process.env.DATABASE_URL;
+const DB = "mongodb+srv://elipsical:jerry100@cluster0.p18hqnw.mongodb.net/?retryWrites=true&w=majority"
+//import from files
+const authRouter = require('./routes/auth')
 
-const mongodbConnection = async () => {
-  try {
-    await mongoose.connect(url);
-    console.log("Connected to MongoDB")
-  } catch (error) {
-    throw error;
-  }
-}
-const database = mongoose.connection;
+//middleware
+app.use(express.json())
+app.use(authRouter)
 
-database.on('error', (error) => {
-  console.log(error)
-})
+//Connection
+mongoose
+    .connect(DB)
+    .then(() => {
+        console.log("Connection Successful!")
+    })
+    .catch((e) => {
+        console.log(e)
+    })
 
-database.on('connected', () => {
-  console.log("Database connected")
-})
-
-database.on('disconnected', () => {
-  console.log("Database disconnected")
-})
-
-
-app.listen(PORT, () => {
-  mongodbConnection();
-  console.log(`Server is running at port ${PORT}`)
+//API
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Connected at port ${PORT} hello`)
 })
