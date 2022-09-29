@@ -15,6 +15,7 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.deepPurpleAccent,
       body: WillPopScope(
         onWillPop: () async {
           Navigator.pushAndRemoveUntil(
