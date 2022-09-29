@@ -1,12 +1,12 @@
-import '../Profile/ProfileScreen.dart';
-import './Home/HomeScreen.dart';
-import './JoinGame/JoinGameScreen.dart';
-import './HostGame/HostGameScreen.dart';
+import '../../Profile/ProfileScreen.dart';
+import '../Home/HomeScreen.dart';
+import '../JoinGame/JoinGameScreen.dart';
+import '../HostGame/HostGameScreen.dart';
 
 import 'package:flutter/material.dart';
 
-class Layout extends StatefulWidget {
-  const Layout({super.key, required this.title});
+class SecretScreen extends StatefulWidget {
+  const SecretScreen({super.key, required this.title});
 
   final String title;
 
@@ -14,10 +14,10 @@ class Layout extends StatefulWidget {
   final double containerHeight = 70.0;
 
   @override
-  State<Layout> createState() => _Layout();
+  State<SecretScreen> createState() => _SecretScreen();
 }
 
-class _Layout extends State<Layout> {
+class _SecretScreen extends State<SecretScreen> {
   final double borderWidth = 0.5;
   final double containerHeight = 65;
   final double fontSize = 24;
