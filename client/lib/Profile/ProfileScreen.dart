@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../InitialScreen/inittial_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final double borderWidth = 0.5;
@@ -86,23 +87,30 @@ class _ProfileScreen extends State<ProfileScreen> {
               ), //BorderRadius.all
             ),
           ),
-          SizedBox(height: 10), // <-- Set height
-          Container(
-            height: containerHeight,
-            padding: EdgeInsets.all(15),
-            margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 0.0),
-            child: Text(
-              'Log out',
-              style: TextStyle(
-                fontWeight: FontWeight.bold, // light
-                fontSize: fontSize,
+          SizedBox(height: 10),
+          InkWell(
+            onTap: () {
+              //print("tapped on container");
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const InittialScreen()));
+            },
+            child: Container(
+              height: containerHeight,
+              padding: EdgeInsets.all(15),
+              margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 0.0),
+              child: Text(
+                'Log out',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold, // light
+                  fontSize: fontSize,
+                ),
               ),
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ), //BorderRadius.all
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ), //BorderRadius.all
+              ),
             ),
           ),
         ],
