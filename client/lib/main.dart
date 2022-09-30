@@ -37,7 +37,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import './InitialScreen/register_screen.dart';
+//import './InitialScreen/register_screen.dart';
 
 import './InitialScreen/inittial_screen.dart';
 

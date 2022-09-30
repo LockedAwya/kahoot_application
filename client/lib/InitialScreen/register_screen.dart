@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import './widget.dart';
 
-import 'ValidateUtil.dart';
+import 'validate_util.dart';
 import 'inittial_screen.dart';
 import 'login_screen.dart';
 
@@ -10,7 +10,7 @@ class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
 
   final margin = 0.0;
-  var formkey = GlobalKey<FormState>();
+  final formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {

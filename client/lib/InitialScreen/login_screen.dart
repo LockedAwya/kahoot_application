@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import './register_screen.dart';
 import './widget.dart';
-import '../SecretScreen/SecretScreen.dart';
+import '../SecretScreen/secret_screen.dart';
 
-import 'ValidateUtil.dart';
+import 'validate_util.dart';
 import 'inittial_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
   final margin = 0.0;
-  var formkey = GlobalKey<FormState>();
+  final formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
-                              SecretScreen(title: "Secret Screen")));
+                              const SecretScreen(title: "Secret Screen")));
                     }
                   },
                       textColor: Colors.white,

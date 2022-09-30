@@ -3,10 +3,10 @@ import './inittial_screen.dart';
 import '../main.dart';
 
 class Body extends StatelessWidget {
-  Body(this.chidren, {this.alignment = CrossAxisAlignment.center, Key? key})
+  const Body(this.chidren, {this.alignment = CrossAxisAlignment.center, Key? key})
       : super(key: key);
-  List<Widget> chidren;
-  CrossAxisAlignment alignment;
+  final List<Widget> chidren;
+  final CrossAxisAlignment alignment;
 
   @override
   Widget build(BuildContext context) {
