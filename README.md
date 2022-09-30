@@ -16,3 +16,8 @@
 + Ảnh chụp
 
 ![image](https://cdn.discordapp.com/attachments/1020955027319304229/1022755506244292629/groupPractice.gif)
+
+# Tuần 04 - Demo giao diện ảnh gif
++ Ảnh gif:
+
+![image](https://cdn.discordapp.com/attachments/1020955027319304229/1025300104313327647/20220930_123831.gif)
