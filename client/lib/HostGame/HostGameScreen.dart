@@ -22,7 +22,17 @@ class QuestionComponent extends StatelessWidget {
         showModalBottomSheet<dynamic>(
             isScrollControlled: true,
             context: context,
-            builder: (context) => QuestionModalBottomSheet());
+            // builder: (context) =>
+            builder: (context) => Container(
+                height: MediaQuery.of(context).size.height * 0.90,
+                decoration: new BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: new BorderRadius.only(
+                    topLeft: const Radius.circular(25.0),
+                    topRight: const Radius.circular(25.0),
+                  ),
+                ),
+                child: QuestionModalBottomSheet()));
       },
       child: Row(
         children: <Widget>[
