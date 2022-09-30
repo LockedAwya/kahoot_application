@@ -17,7 +17,14 @@
 
 ![image](https://cdn.discordapp.com/attachments/1020955027319304229/1022755506244292629/groupPractice.gif)
 
-# Tuần 04 - Demo giao diện ảnh gif
-+ Ảnh gif:
+# Tuần 04 - Demo giao diện ảnh gif (xem ở branch v1-frontend-test):
 
 ![image](https://cdn.discordapp.com/attachments/1020955027319304229/1025300104313327647/20220930_123831.gif)
+
++ Một số hình ảnh:
+![image](https://user-images.githubusercontent.com/58223975/193210283-1f904a6c-f895-4411-9f53-568bff872d7a.png)
+![image](https://user-images.githubusercontent.com/58223975/193210601-cbcfd47d-5462-470e-881d-05095bfc40b0.png)
+![image](https://user-images.githubusercontent.com/58223975/193210678-bcf6850d-9f13-4c03-820b-fe85e9e4b0d9.png)
+![image](https://user-images.githubusercontent.com/58223975/193210848-a4c5bb28-be18-45e6-b9bb-1f6c18ec4879.png)
+
+
