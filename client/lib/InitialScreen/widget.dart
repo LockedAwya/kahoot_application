@@ -73,7 +73,7 @@ Widget button(String title, VoidCallback onTap,
   );
 }
 
-Column itemTextFormField(String name, String? Function(String?) validator) {
+Column itemTextFormField(String name, String? Function(String?) validator, TextEditingController controller) {
   return Column(
     children: [
       const SizedBox(
@@ -90,6 +90,7 @@ Column itemTextFormField(String name, String? Function(String?) validator) {
       SizedBox(
         height: 40,
         child: TextFormField(
+          controller: controller,
           validator: validator,
           decoration: InputDecoration(
             fillColor: Colors.white,

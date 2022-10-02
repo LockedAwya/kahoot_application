@@ -1,18 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import './register_screen.dart';
 import './widget.dart';
-import '../SecretScreen/secret_screen.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+//import '../services/auth_services.dart';
+import '../utils/global_variables.dart';
 import 'validate_util.dart';
 //import 'inittial_screen.dart';
 import '../routing_names.dart';
+import 'package:dio/dio.dart';
+import 'dart:convert';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+var dio = Dio();
+
+class LoginScreen extends StatefulWidget {
+  @override
+  State<LoginScreen> createState() => _LoginScreen();
+}
+
+class _LoginScreen extends State<LoginScreen> {
+  //_LoginScreen({Key? key}) : super(key: key);
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   final margin = 0.0;
   final formkey = GlobalKey<FormState>();
+
+  signInFunc(String email, String password) async {
+    var res = await dio.post(api_url + "/api/signin",
+        data: {"email": email, "password": password});
+    print(res.statusCode);
+    if (res.statusCode == 200) {
+      //print("Response status: ${res.statusCode}");
+      print(res.data.toString());
+      //var jsonResponse = res.body;
+
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
+      // prefs.setString('jwt', jsonResponse);
+      //Navigator.of(context).pushNamed(routeName)
+      //Navigator.of(context).pushNamed(SecretScreenView);
+      print("YAYYYYYYYYYYYYYYYYYY LOGINNNNNN");
+    } else {
+      //print("Login failed!");
+      print(res.statusCode);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,24 +84,24 @@ class LoginScreen extends StatelessWidget {
                     height: 10,
                   ),
                   ...itemTextFormField("Username", (value) {
-                    return ValidateUtil.isNameUser(value)
+                    return ValidateUtil.isEmail(value)
                         ? null
                         : "Username Invalid";
-                  }).children,
+                  }, emailController)
+                      .children,
                   ...itemTextFormField("Password", (value) {
                     return ValidateUtil.isPassUser(value)
                         ? null
                         : "Password Invalid";
-                  }).children,
+                  }, passwordController)
+                      .children,
                   button("Login", () {
                     if (formkey.currentState?.validate() == false) {
                       showToast('Format Invalid',
                           position: ToastPosition.bottom);
                     } else {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         const SecretScreen(title: "Secret Screen")));
-                      Navigator.pushNamed(context, SecretScreenView);
+                      //Navigator.pushNamed(context, SecretScreenView);
+                      signInFunc(emailController.text, passwordController.text);
                     }
                   },
                       textColor: Colors.white,
@@ -86,4 +118,11 @@ class LoginScreen extends StatelessWidget {
 
   TextStyle get _textStyle => const TextStyle(
       fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black);
+
+  @override
+  void dispose() {
+    //super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
 }
