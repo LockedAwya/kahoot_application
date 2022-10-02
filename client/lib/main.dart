@@ -37,9 +37,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
+import './router.dart' as router;
+import './routing_names.dart';
 //import './InitialScreen/register_screen.dart';
-
-import './InitialScreen/inittial_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -59,7 +59,9 @@ class MyApp extends StatelessWidget {
         // theme: ThemeData(
         //     primarySwatch: Colors.blue,
         //     scaffoldBackgroundColor: Colors.deepPurpleAccent),
-        home: const SafeArea(child: InittialScreen()),
+        //home: const SafeArea(child: InittialScreen()),
+        onGenerateRoute: router.generateRoute,
+        initialRoute: InitialScreenView,
       ),
     );
   }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import './widget.dart';
 
-import 'login_screen.dart';
-import 'register_screen.dart';
+import '../routing_names.dart';
+// import 'login_screen.dart';
+// import 'register_screen.dart';
 
 class InittialScreen extends StatelessWidget {
   const InittialScreen({Key? key}) : super(key: key);
@@ -13,12 +14,14 @@ class InittialScreen extends StatelessWidget {
     return Scaffold(
       body: Body([
         button("Login", () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => LoginScreen()));
+          // Navigator.of(context)
+          //     .push(MaterialPageRoute(builder: (context) => LoginScreen()));
+          Navigator.pushNamed(context, LoginScreenView);
         }, bg: Colors.grey.shade400),
         button("Register", () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => RegisterScreen()));
+          // Navigator.of(context)
+          //     .push(MaterialPageRoute(builder: (context) => RegisterScreen()));
+          Navigator.pushNamed(context, RegisterScreenView);
         }, margin: EdgeInsets.symmetric(vertical: margin)),
         const Text(
           "OR",

@@ -6,9 +6,8 @@ import '../HostGame/host_game_screen.dart';
 import 'package:flutter/material.dart';
 
 class SecretScreen extends StatefulWidget {
-  const SecretScreen({super.key, required this.title});
-
   final String title;
+  const SecretScreen({super.key, required this.title});
 
   final double borderWidth = 0.5;
   final double containerHeight = 70.0;
@@ -35,6 +34,7 @@ class _SecretScreen extends State<SecretScreen> {
   Widget build(BuildContext context) {
     void onItemTapped(int index) {
       setState(() {
+        //print('Param is $title');
         if (index != 1) {
           _selectedIndex = index;
         } else {

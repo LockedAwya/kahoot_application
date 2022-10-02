@@ -5,7 +5,8 @@ import './widget.dart';
 import '../SecretScreen/secret_screen.dart';
 
 import 'validate_util.dart';
-import 'inittial_screen.dart';
+//import 'inittial_screen.dart';
+import '../routing_names.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -19,11 +20,12 @@ class LoginScreen extends StatelessWidget {
       backgroundColor: Colors.deepPurpleAccent,
       body: WillPopScope(
         onWillPop: () async {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => const InittialScreen()),
-              ModalRoute.withName('/'));
+          // Navigator.pushAndRemoveUntil(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (BuildContext context) => const InittialScreen()),
+          //     ModalRoute.withName('/'));
+          Navigator.pushNamed(context, InitialScreenView);
           return true;
         },
         child: Form(
@@ -31,8 +33,9 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               headerScreen("Sign up", () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => RegisterScreen()));
+                // Navigator.of(context).push(
+                //     MaterialPageRoute(builder: (context) => RegisterScreen()));
+                Navigator.pushNamed(context, RegisterScreenView);
               }),
               Expanded(
                   child: Body(
@@ -63,9 +66,10 @@ class LoginScreen extends StatelessWidget {
                       showToast('Format Invalid',
                           position: ToastPosition.bottom);
                     } else {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              const SecretScreen(title: "Secret Screen")));
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         const SecretScreen(title: "Secret Screen")));
+                      Navigator.pushNamed(context, SecretScreenView);
                     }
                   },
                       textColor: Colors.white,

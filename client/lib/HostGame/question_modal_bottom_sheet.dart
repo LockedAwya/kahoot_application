@@ -1,5 +1,6 @@
-import '../WaitingRoom/waiting_room.dart';
+//import '../WaitingRoom/waiting_room.dart';
 import 'package:flutter/material.dart';
+import '../routing_names.dart';
 
 class QuestionModalBottomSheet extends StatefulWidget {
   final double borderWidth = 0.5;
@@ -32,10 +33,11 @@ class _QuestionModalBottomSheet extends State<QuestionModalBottomSheet> {
                 ),
               ),
               onPressed: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => WaitingRoomScreen()),
-                )
+                Navigator.pushNamed(context, WaitingRoomScreenView)
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => WaitingRoomScreen()),
+                // )
               },
             ),
           ),

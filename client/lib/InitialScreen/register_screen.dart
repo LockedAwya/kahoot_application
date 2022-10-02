@@ -3,8 +3,9 @@ import 'package:oktoast/oktoast.dart';
 import './widget.dart';
 
 import 'validate_util.dart';
-import 'inittial_screen.dart';
-import 'login_screen.dart';
+// import 'inittial_screen.dart';
+// import 'login_screen.dart';
+import '../routing_names.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -18,11 +19,12 @@ class RegisterScreen extends StatelessWidget {
       backgroundColor: Colors.deepPurpleAccent,
       body: WillPopScope(
         onWillPop: () async {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => const InittialScreen()),
-              ModalRoute.withName('/'));
+          // Navigator.pushAndRemoveUntil(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (BuildContext context) => const InittialScreen()),
+          //     ModalRoute.withName('/'));
+          Navigator.pushNamed(context, InitialScreenView);
           return true;
         },
         child: Form(
@@ -30,8 +32,9 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             children: [
               headerScreen("Sign In", () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
+                // Navigator.of(context).push(
+                //     MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.pushNamed(context, LoginScreenView);
               }),
               Expanded(
                   child: Body(
@@ -64,8 +67,11 @@ class RegisterScreen extends StatelessWidget {
                   }).children,
                   button("Register", () {
                     if (formkey.currentState?.validate() == false) {
+                      //register failed
                       showToast('Format Invalid',
                           position: ToastPosition.bottom);
+                    } else {
+                      Navigator.pushNamed(context, LoginScreenView);
                     }
                   },
                       textColor: Colors.white,
