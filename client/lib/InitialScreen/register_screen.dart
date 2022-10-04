@@ -106,9 +106,10 @@ class _RegisterScreen extends State<RegisterScreen> {
                       showToast('Format Invalid',
                           position: ToastPosition.bottom);
                     } else {
-                      //Navigator.pushNamed(context, LoginScreenView);
+                      
                       signUpFunc(usernameController.text, emailController.text,
                           passwordController.text);
+                      Navigator.pushNamed(context, LoginScreenView);
                     }
                   },
                       textColor: Colors.white,

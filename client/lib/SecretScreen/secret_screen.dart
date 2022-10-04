@@ -2,15 +2,15 @@ import '../Profile/profile_screen.dart';
 import '../Home/home_screen.dart';
 import '../JoinGame/join_game_screen.dart';
 import '../HostGame/host_game_screen.dart';
-
 import 'package:flutter/material.dart';
 
 class SecretScreen extends StatefulWidget {
   final String title;
-  const SecretScreen({super.key, required this.title});
+  SecretScreen({super.key, required this.title});
 
   final double borderWidth = 0.5;
   final double containerHeight = 70.0;
+                      //print(shared_preferences.stringGetter('username'));
 
   @override
   State<SecretScreen> createState() => _SecretScreen();

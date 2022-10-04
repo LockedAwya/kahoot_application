@@ -9,6 +9,7 @@ import 'validate_util.dart';
 import '../routing_names.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
+import '../utils/global_variables.dart';
 
 var dio = Dio();
 
@@ -26,19 +27,29 @@ class _LoginScreen extends State<LoginScreen> {
   final margin = 0.0;
   final formkey = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initial();
+  }
+
+  void initial() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
   signInFunc(String email, String password) async {
     var res = await dio.post(api_url + "/api/signin",
         data: {"email": email, "password": password});
-    print(res.statusCode);
+    //print(res.statusCode);
     if (res.statusCode == 200) {
       //print("Response status: ${res.statusCode}");
+      var data = res.data;
+      // print(data['username']);
+      // print(data['token']);
       print(res.data.toString());
-      //var jsonResponse = res.body;
-
-      // SharedPreferences prefs = await SharedPreferences.getInstance();
-      // prefs.setString('jwt', jsonResponse);
-      //Navigator.of(context).pushNamed(routeName)
-      //Navigator.of(context).pushNamed(SecretScreenView);
+      prefs.setString('jwt', data['token']);
+      prefs.setString('username', data['username']);
       print("YAYYYYYYYYYYYYYYYYYY LOGINNNNNN");
     } else {
       //print("Login failed!");
@@ -102,6 +113,9 @@ class _LoginScreen extends State<LoginScreen> {
                     } else {
                       //Navigator.pushNamed(context, SecretScreenView);
                       signInFunc(emailController.text, passwordController.text);
+                      // print(shared_preferences.stringGetter('jwt'));
+                      // print(shared_preferences.stringGetter('username'));
+                      Navigator.pushNamed(context, SecretScreenView);
                     }
                   },
                       textColor: Colors.white,

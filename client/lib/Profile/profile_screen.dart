@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import '../InitialScreen/inittial_screen.dart';
+import '../utils/global_variables.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   final double borderWidth = 0.5;
   final double containerHeight = 70.0;
-
   @override
   State<ProfileScreen> createState() => _ProfileScreen();
 }
@@ -14,12 +15,31 @@ class _ProfileScreen extends State<ProfileScreen> {
   final double containerHeight = 65;
   final double fontSize = 24;
 
+  String? username;
+  //late
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initial();
+  }
+
+  void initial() async {
+    //username = await shared_preferences.stringGetter('username');
+    //profileData = shared_preferences.getSharedPreferenceInstance();
+    setState(() {
+      username = prefs.getString('username')!;
+      //username = shared_preferences.stringGetter('username')!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Profile",
+          username ?? '',
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
@@ -91,6 +111,8 @@ class _ProfileScreen extends State<ProfileScreen> {
           InkWell(
             onTap: () {
               //print("tapped on container");
+              prefs.remove('username');
+              prefs.remove('token');
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const InittialScreen()));
             },
