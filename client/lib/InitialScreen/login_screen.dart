@@ -48,7 +48,7 @@ class _LoginScreen extends State<LoginScreen> {
       // print(data['username']);
       // print(data['token']);
       print(res.data.toString());
-      prefs.setString('jwt', data['token']);
+      prefs.setString('token', data['token']);
       prefs.setString('username', data['username']);
       print("YAYYYYYYYYYYYYYYYYYY LOGINNNNNN");
     } else {

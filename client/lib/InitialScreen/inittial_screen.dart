@@ -27,8 +27,11 @@ class InittialScreen extends StatelessWidget {
           "OR",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        button("Play as a guest", () {},
-            bg: Colors.grey.shade400, margin: EdgeInsets.only(top: margin)),
+        button("Play as a guest", () {
+          //print("tapped on container");
+          Navigator.of(context).pushNamed(SecretScreenView);
+          //Navigator.pushNamed(context, InitialScreenView);
+        }, bg: Colors.grey.shade400, margin: EdgeInsets.only(top: margin)),
       ]),
     );
   }

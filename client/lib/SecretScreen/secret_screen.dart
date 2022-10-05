@@ -10,7 +10,7 @@ class SecretScreen extends StatefulWidget {
 
   final double borderWidth = 0.5;
   final double containerHeight = 70.0;
-                      //print(shared_preferences.stringGetter('username'));
+  //print(shared_preferences.stringGetter('username'));
 
   @override
   State<SecretScreen> createState() => _SecretScreen();

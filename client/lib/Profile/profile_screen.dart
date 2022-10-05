@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../InitialScreen/inittial_screen.dart';
 import '../utils/global_variables.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../NotLoggedIn/no_auth.dart';
 
 class ProfileScreen extends StatefulWidget {
   final double borderWidth = 0.5;
@@ -15,7 +16,8 @@ class _ProfileScreen extends State<ProfileScreen> {
   final double containerHeight = 65;
   final double fontSize = 24;
 
-  String? username;
+  String? username = "";
+  bool token = false;
   //late
 
   @override
@@ -26,10 +28,15 @@ class _ProfileScreen extends State<ProfileScreen> {
   }
 
   void initial() async {
-    //username = await shared_preferences.stringGetter('username');
-    //profileData = shared_preferences.getSharedPreferenceInstance();
+    prefs = await SharedPreferences.getInstance();
     setState(() {
-      username = prefs.getString('username')!;
+      if (prefs.containsKey('username')) {
+        username = prefs.getString('username');
+      }
+      if (prefs.containsKey('token')) {
+        //token = prefs.getString('token');
+        token = true;
+      }
       //username = shared_preferences.stringGetter('username')!;
     });
   }
@@ -37,106 +44,109 @@ class _ProfileScreen extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          username ?? '',
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
-              color: Colors.black.withOpacity(1.0)),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 241, 241, 241),
-      ),
-      body: SafeArea(
-          //child: _widgetOptions.elementAt(_selectedIndex),
-          child: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
-        children: <Widget>[
-          Container(
-            height: containerHeight,
-            // color: Colors.amber[600],
-            padding: const EdgeInsets.all(15),
-            child: Text(
-              'Profile Information',
-              style: TextStyle(
+        appBar: AppBar(
+          title: Text(
+            username ?? '',
+            style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: fontSize, // light
-              ),
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
-              ), //BorderRadius.all
-            ),
+                fontSize: 24,
+                color: Colors.black.withOpacity(1.0)),
           ),
-          const SizedBox(height: 10), // <-- Set height
-          Container(
-            height: containerHeight,
-            padding: const EdgeInsets.all(15),
-            child: Text(
-              'Your Kahoots',
-              style: TextStyle(
-                fontWeight: FontWeight.bold, // light
-                fontSize: fontSize,
-              ),
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
-              ), //BorderRadius.all
-            ),
-          ),
-          const SizedBox(height: 10), // <-- Set height
-          Container(
-            height: containerHeight,
-            padding: EdgeInsets.all(15),
-            child: Text(
-              'Reports',
-              style: TextStyle(
-                fontWeight: FontWeight.bold, // light
-                fontSize: fontSize,
-              ),
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ), //BorderRadius.all
-            ),
-          ),
-          const SizedBox(height: 10),
-          InkWell(
-            onTap: () {
-              //print("tapped on container");
-              prefs.remove('username');
-              prefs.remove('token');
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const InittialScreen()));
-            },
-            child: Container(
-              height: containerHeight,
-              padding: EdgeInsets.all(15),
-              margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 0.0),
-              child: Text(
-                'Log out',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold, // light
-                  fontSize: fontSize,
-                ),
-              ),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ), //BorderRadius.all
-              ),
-            ),
-          ),
-        ],
-      )),
-    );
+          centerTitle: true,
+          backgroundColor: const Color.fromARGB(255, 241, 241, 241),
+        ),
+        body: token
+            ? SafeArea(
+                //child: _widgetOptions.elementAt(_selectedIndex),
+                child: ListView(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 40.0, horizontal: 10.0),
+                children: <Widget>[
+                  Container(
+                    height: containerHeight,
+                    // color: Colors.amber[600],
+                    padding: const EdgeInsets.all(15),
+                    child: Text(
+                      'Profile Information',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: fontSize, // light
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10),
+                      ), //BorderRadius.all
+                    ),
+                  ),
+                  const SizedBox(height: 10), // <-- Set height
+                  Container(
+                    height: containerHeight,
+                    padding: const EdgeInsets.all(15),
+                    child: Text(
+                      'Your Kahoots',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold, // light
+                        fontSize: fontSize,
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10),
+                      ), //BorderRadius.all
+                    ),
+                  ),
+                  const SizedBox(height: 10), // <-- Set height
+                  Container(
+                    height: containerHeight,
+                    padding: EdgeInsets.all(15),
+                    child: Text(
+                      'Reports',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold, // light
+                        fontSize: fontSize,
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ), //BorderRadius.all
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  InkWell(
+                    onTap: () {
+                      //print("tapped on container");
+                      prefs.remove('username');
+                      prefs.remove('token');
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const InittialScreen()));
+                    },
+                    child: Container(
+                      height: containerHeight,
+                      padding: EdgeInsets.all(15),
+                      margin:
+                          EdgeInsets.symmetric(vertical: 50.0, horizontal: 0.0),
+                      child: Text(
+                        'Log out',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold, // light
+                          fontSize: fontSize,
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ), //BorderRadius.all
+                      ),
+                    ),
+                  ),
+                ],
+              ))
+            : (NoAuth()));
   }
 }

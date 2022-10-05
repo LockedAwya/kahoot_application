@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'question_modal_bottom_sheet.dart';
+import '../utils/global_variables.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HostGameScreen extends StatefulWidget {
   final double borderWidth = 0.5;
@@ -73,6 +75,29 @@ class _HostGameScreen extends State<HostGameScreen> {
   final double borderWidth = 0.5;
   final double containerHeight = 65;
   final double fontSize = 24;
+  String? username = "";
+  bool token = false;
+
+      @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initial();
+  }
+
+  void initial() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      if (prefs.containsKey('username')) {
+        username = prefs.getString('username');
+      }
+      if (prefs.containsKey('token')) {
+        //token = prefs.getString('token');
+        token = true;
+      }
+      //username = shared_preferences.stringGetter('username')!;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +113,7 @@ class _HostGameScreen extends State<HostGameScreen> {
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 241, 241, 241),
       ),
-      body: SafeArea(
+      body: token ? SafeArea(
           child: ListView(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
         children: const <Widget>[
@@ -97,7 +122,7 @@ class _HostGameScreen extends State<HostGameScreen> {
           QuestionComponent(text1: "lol"),
           SizedBox(height: 5),
         ],
-      )),
+      )) : (SafeArea(child: Text("You're not logged in yet!"))),
     );
   }
 }
