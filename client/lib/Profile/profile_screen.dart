@@ -41,6 +41,48 @@ class _ProfileScreen extends State<ProfileScreen> {
     });
   }
 
+  Widget buttonInkWell({
+    String? title,
+    VoidCallback? onTap,
+    EdgeInsets? margin,
+    EdgeInsets? padding,
+    Color bg = Colors.white,
+    Color? textColor = Colors.black,
+    IconData? iconData,
+    double? iconSize,
+    //double? width = double.infinity,
+    double height = 65,
+    double fontSize = 30,
+  }) {
+    return InkWell(
+        onTap: onTap,
+        child: Container(
+          height: height,
+          padding: padding,
+          margin: margin,
+          child: Text.rich(
+            TextSpan(
+              children: [
+                WidgetSpan(child: Icon(iconData, size: iconSize)),
+                TextSpan(
+                  text: title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold, // light
+                    fontSize: fontSize,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10),
+            ), //BorderRadius.all
+          ),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,62 +104,35 @@ class _ProfileScreen extends State<ProfileScreen> {
                 padding: const EdgeInsets.symmetric(
                     vertical: 40.0, horizontal: 10.0),
                 children: <Widget>[
-                  Container(
-                    height: containerHeight,
-                    // color: Colors.amber[600],
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      'Profile Information',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: fontSize, // light
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10),
-                      ), //BorderRadius.all
-                    ),
+                  buttonInkWell(
+                    title: 'Profile Information',
+                    onTap: () {},
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 10.0),
+                    iconData: Icons.person,
+                    iconSize: 30,
                   ),
                   const SizedBox(height: 10), // <-- Set height
-                  Container(
-                    height: containerHeight,
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      'Your Kahoots',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold, // light
-                        fontSize: fontSize,
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10),
-                      ), //BorderRadius.all
-                    ),
+                  buttonInkWell(
+                    title: 'Your kahoots',
+                    onTap: () {},
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 10.0),
+                    iconData: Icons.person,
+                    iconSize: 30,
                   ),
                   const SizedBox(height: 10), // <-- Set height
-                  Container(
-                    height: containerHeight,
-                    padding: EdgeInsets.all(15),
-                    child: Text(
-                      'Reports',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold, // light
-                        fontSize: fontSize,
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ), //BorderRadius.all
-                    ),
+                  buttonInkWell(
+                    title: 'Reports',
+                    onTap: () {},
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 10.0),
+                    iconData: Icons.query_stats,
+                    iconSize: 30,
                   ),
                   const SizedBox(height: 10),
-                  InkWell(
+                  buttonInkWell(
+                    title: 'Log out',
                     onTap: () {
                       //print("tapped on container");
                       prefs.remove('username');
@@ -125,26 +140,41 @@ class _ProfileScreen extends State<ProfileScreen> {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const InittialScreen()));
                     },
-                    child: Container(
-                      height: containerHeight,
-                      padding: EdgeInsets.all(15),
-                      margin:
-                          EdgeInsets.symmetric(vertical: 50.0, horizontal: 0.0),
-                      child: Text(
-                        'Log out',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold, // light
-                          fontSize: fontSize,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ), //BorderRadius.all
-                      ),
-                    ),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 10.0),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 50.0, horizontal: 0.0),
+                    iconData: Icons.logout,
+                    iconSize: 30,
                   ),
+                  // InkWell(
+                  //   onTap: () {
+                  //     //print("tapped on container");
+                  //     prefs.remove('username');
+                  //     prefs.remove('token');
+                  //     Navigator.of(context).push(MaterialPageRoute(
+                  //         builder: (context) => const InittialScreen()));
+                  //   },
+                  //   child: Container(
+                  //     height: containerHeight,
+                  //     padding: EdgeInsets.all(15),
+                  //     margin:
+                  //         EdgeInsets.symmetric(vertical: 50.0, horizontal: 0.0),
+                  //     child: Text(
+                  //       'Log out',
+                  //       style: TextStyle(
+                  //         fontWeight: FontWeight.bold, // light
+                  //         fontSize: fontSize,
+                  //       ),
+                  //     ),
+                  //     decoration: BoxDecoration(
+                  //       border: Border.all(color: Colors.grey),
+                  //       borderRadius: BorderRadius.all(
+                  //         Radius.circular(10),
+                  //       ), //BorderRadius.all
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ))
             : (NoAuth()));

@@ -7,9 +7,9 @@ import 'validate_util.dart';
 // import 'login_screen.dart';
 import '../utils/global_variables.dart';
 import '../routing_names.dart';
-import 'package:dio/dio.dart';
+//import 'package:dio/dio.dart';
 
-var dio = Dio();
+// var dio = Dio();
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -133,5 +133,6 @@ class _RegisterScreen extends State<RegisterScreen> {
     emailController.dispose();
     passwordController.dispose();
     usernameController.dispose();
+    super.dispose();
   }
 }

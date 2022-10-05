@@ -138,5 +138,6 @@ class _LoginScreen extends State<LoginScreen> {
     //super.dispose();
     emailController.dispose();
     passwordController.dispose();
+    super.dispose();
   }
 }
