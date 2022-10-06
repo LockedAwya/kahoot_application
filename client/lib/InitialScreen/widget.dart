@@ -3,7 +3,8 @@ import './inittial_screen.dart';
 import '../main.dart';
 
 class Body extends StatelessWidget {
-  const Body(this.chidren, {this.alignment = CrossAxisAlignment.center, Key? key})
+  const Body(this.chidren,
+      {this.alignment = CrossAxisAlignment.center, Key? key})
       : super(key: key);
   final List<Widget> chidren;
   final CrossAxisAlignment alignment;
@@ -14,6 +15,7 @@ class Body extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       color: Colors.deepPurpleAccent,
+      padding: EdgeInsets.only(bottom: 230.0),
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -24,8 +26,8 @@ class Body extends StatelessWidget {
               width: double.infinity,
               color: Colors.white,
               margin:
-                  const EdgeInsets.only(left: 25, right: 25, top: 9, bottom: 0),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                  const EdgeInsets.only(left: 25, right: 25, top: 0, bottom: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: alignment,
@@ -38,11 +40,19 @@ class Body extends StatelessWidget {
     );
   }
 
-  Text get _kahoot => const Text(
+  Container get _kahoot => Container(
+      margin: EdgeInsets.symmetric(
+          vertical: 5.0, horizontal: 10.0), //apply padding to some sides only
+      child: Text(
         "Kahoot!",
         style: TextStyle(
             color: Colors.white, fontWeight: FontWeight.normal, fontSize: 40),
-      );
+      ));
+  // const Text(
+  //       "Kahoot!",
+  //       style: TextStyle(
+  //           color: Colors.white, fontWeight: FontWeight.normal, fontSize: 40),
+  //     );
 }
 
 Widget button(String title, VoidCallback onTap,
@@ -73,7 +83,8 @@ Widget button(String title, VoidCallback onTap,
   );
 }
 
-Column itemTextFormField(String name, String? Function(String?) validator, TextEditingController controller) {
+Column itemTextFormField(String name, String? Function(String?) validator,
+    TextEditingController controller, bool obscureText) {
   return Column(
     children: [
       const SizedBox(
@@ -92,8 +103,10 @@ Column itemTextFormField(String name, String? Function(String?) validator, TextE
         child: TextFormField(
           controller: controller,
           validator: validator,
+          obscureText: obscureText,
           decoration: InputDecoration(
             fillColor: Colors.white,
+            contentPadding: EdgeInsets.all(10),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(4),
               borderSide: const BorderSide(

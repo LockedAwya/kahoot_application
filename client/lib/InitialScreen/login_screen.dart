@@ -60,6 +60,7 @@ class _LoginScreen extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, // set it to false
       backgroundColor: Colors.deepPurpleAccent,
       body: WillPopScope(
         onWillPop: () async {
@@ -71,6 +72,7 @@ class _LoginScreen extends State<LoginScreen> {
           Navigator.pushNamed(context, InitialScreenView);
           return true;
         },
+        //child: SingleChildScrollView(child:"Your widgets"))
         child: Form(
           key: formkey,
           child: Column(
@@ -81,6 +83,7 @@ class _LoginScreen extends State<LoginScreen> {
                 Navigator.pushNamed(context, RegisterScreenView);
               }),
               Expanded(
+                  //padding: EdgeInsets.symmetric(vertical: 0.5, horizontal: 0.5),
                   child: Body(
                 [
                   Container(
@@ -98,13 +101,15 @@ class _LoginScreen extends State<LoginScreen> {
                     return ValidateUtil.isEmail(value)
                         ? null
                         : "Username Invalid";
-                  }, emailController)
+                  }, emailController,
+                          false) //not display text, hence obscureText = false
                       .children,
                   ...itemTextFormField("Password", (value) {
                     return ValidateUtil.isPassUser(value)
                         ? null
                         : "Password Invalid";
-                  }, passwordController)
+                  }, passwordController,
+                          true) //not display text, hence obscureText = true
                       .children,
                   button("Login", () {
                     if (formkey.currentState?.validate() == false) {
@@ -119,7 +124,7 @@ class _LoginScreen extends State<LoginScreen> {
                     }
                   },
                       textColor: Colors.white,
-                      margin: const EdgeInsets.only(top: 20))
+                      margin: const EdgeInsets.only(top: 10))
                 ],
                 alignment: CrossAxisAlignment.start,
               ))

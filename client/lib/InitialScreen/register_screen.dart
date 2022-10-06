@@ -48,6 +48,7 @@ class _RegisterScreen extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, // set it to false
       backgroundColor: Colors.deepPurpleAccent,
       body: WillPopScope(
         onWillPop: () async {
@@ -86,19 +87,22 @@ class _RegisterScreen extends State<RegisterScreen> {
                     return ValidateUtil.isNameUser(value)
                         ? null
                         : "Username Invalid";
-                  }, usernameController)
+                  }, usernameController,
+                          false) //not display text, hence obscureText = false
                       .children,
                   ...itemTextFormField("Email", (value) {
                     return ValidateUtil.isEmail(value)
                         ? null
                         : "Username Invalid";
-                  }, emailController)
+                  }, emailController,
+                          false) //not display text, hence obscureText = false
                       .children,
                   ...itemTextFormField("Password", (value) {
                     return ValidateUtil.isPassUser(value)
                         ? null
                         : "Username Invalid";
-                  }, passwordController)
+                  }, passwordController,
+                          true) //not display text, hence obscureText = true
                       .children,
                   button("Register", () {
                     if (formkey.currentState?.validate() == false) {
@@ -106,7 +110,6 @@ class _RegisterScreen extends State<RegisterScreen> {
                       showToast('Format Invalid',
                           position: ToastPosition.bottom);
                     } else {
-                      
                       signUpFunc(usernameController.text, emailController.text,
                           passwordController.text);
                       Navigator.pushNamed(context, LoginScreenView);
