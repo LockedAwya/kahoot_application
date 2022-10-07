@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kahoot_application">
+    package="com.example.untitled_folder">
    <application
-        android:label="kahoot_application"
+        android:label="untitled_folder"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
