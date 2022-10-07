@@ -47,19 +47,34 @@ class QuestionComponent extends StatelessWidget {
               padding: const EdgeInsets.only(left: 10),
               child: Column(children: <Widget>[
                 Container(
-                    alignment: Alignment.topLeft,
-                    child: const Text(
-                      "Something",
-                    )),
+                  alignment: Alignment.topLeft,
+                  child: const Text(
+                    "Something",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.black),
+                  ),
+                ),
                 const SizedBox(height: 25), // <-- Set height
-                const Padding(
+                Container(
+                    alignment: Alignment.centerLeft,
                     padding: EdgeInsets.only(left: 0),
-                    child: Text("Something")),
+                    child: Text(
+                      "Something",
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    )),
                 const SizedBox(height: 25),
-                const Padding(
-                  padding: EdgeInsets.only(
-                      left: 0), //apply padding horizontal or vertical only
-                  child: Text("Lorem"),
+                Container(
+                  padding: EdgeInsets.only(left: 0),
+                  //apply padding horizontal or vertical only
+                  child: Text(
+                    "LockedAway00",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        color: Colors.grey),
+                  ),
                 ),
               ])),
         ],
@@ -78,7 +93,7 @@ class _HostGameScreen extends State<HostGameScreen> {
   String? username = "";
   bool token = false;
 
-      @override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -113,16 +128,43 @@ class _HostGameScreen extends State<HostGameScreen> {
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 241, 241, 241),
       ),
-      body: token ? SafeArea(
-          child: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-        children: const <Widget>[
-          QuestionComponent(text1: 'lol'),
-          SizedBox(height: 5),
-          QuestionComponent(text1: "lol"),
-          SizedBox(height: 5),
-        ],
-      )) : (SafeArea(child: Text("You're not logged in yet!"))),
+      body: token
+          ? SafeArea(
+              child: ListView(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+              children: const <Widget>[
+                QuestionComponent(text1: 'lol'),
+                SizedBox(height: 5),
+                QuestionComponent(text1: "lol"),
+                SizedBox(height: 5),
+                QuestionComponent(text1: 'lol'),
+                SizedBox(height: 5),
+                QuestionComponent(text1: "lol"),
+                SizedBox(height: 5),
+                QuestionComponent(text1: 'lol'),
+                SizedBox(height: 5),
+                QuestionComponent(text1: "lol"),
+                SizedBox(height: 5),
+                QuestionComponent(text1: 'lol'),
+                SizedBox(height: 5),
+                QuestionComponent(text1: "lol"),
+                SizedBox(height: 5),
+                QuestionComponent(text1: 'lol'),
+                SizedBox(height: 5),
+                QuestionComponent(text1: "lol"),
+                SizedBox(height: 5),
+                QuestionComponent(text1: 'lol'),
+                SizedBox(height: 5),
+                QuestionComponent(text1: "lol"),
+                SizedBox(height: 5),
+                QuestionComponent(text1: 'lol'),
+                SizedBox(height: 5),
+                QuestionComponent(text1: "lol"),
+                SizedBox(height: 5),
+              ],
+            ))
+          : (SafeArea(child: Text("You're not logged in yet!"))),
     );
   }
 }
