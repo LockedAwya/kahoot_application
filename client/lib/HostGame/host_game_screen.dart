@@ -12,8 +12,8 @@ class HostGameScreen extends StatefulWidget {
 }
 
 class QuestionComponent extends StatelessWidget {
-  final String text1;
-  const QuestionComponent({super.key, required this.text1});
+  //final String text1;
+  const QuestionComponent({super.key});
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -134,33 +134,33 @@ class _HostGameScreen extends State<HostGameScreen> {
               padding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
               children: const <Widget>[
-                QuestionComponent(text1: 'lol'),
+                QuestionComponent(),
                 SizedBox(height: 5),
-                QuestionComponent(text1: "lol"),
+                QuestionComponent(),
                 SizedBox(height: 5),
-                QuestionComponent(text1: 'lol'),
+                QuestionComponent(),
                 SizedBox(height: 5),
-                QuestionComponent(text1: "lol"),
+                QuestionComponent(),
                 SizedBox(height: 5),
-                QuestionComponent(text1: 'lol'),
+                QuestionComponent(),
                 SizedBox(height: 5),
-                QuestionComponent(text1: "lol"),
+                QuestionComponent(),
                 SizedBox(height: 5),
-                QuestionComponent(text1: 'lol'),
+                QuestionComponent(),
                 SizedBox(height: 5),
-                QuestionComponent(text1: "lol"),
+                QuestionComponent(),
                 SizedBox(height: 5),
-                QuestionComponent(text1: 'lol'),
+                QuestionComponent(),
                 SizedBox(height: 5),
-                QuestionComponent(text1: "lol"),
+                QuestionComponent(),
                 SizedBox(height: 5),
-                QuestionComponent(text1: 'lol'),
+                QuestionComponent(),
                 SizedBox(height: 5),
-                QuestionComponent(text1: "lol"),
+                QuestionComponent(),
                 SizedBox(height: 5),
-                QuestionComponent(text1: 'lol'),
+                QuestionComponent(),
                 SizedBox(height: 5),
-                QuestionComponent(text1: "lol"),
+                QuestionComponent(),
                 SizedBox(height: 5),
               ],
             ))
