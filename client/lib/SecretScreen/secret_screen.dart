@@ -3,10 +3,18 @@ import '../Home/home_screen.dart';
 import '../JoinGame/join_game_screen.dart';
 import '../HostGame/host_game_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../utils/global_variables.dart';
+import '../NotLoggedIn/no_auth.dart';
 
 class SecretScreen extends StatefulWidget {
-  final String title;
-  SecretScreen({super.key, required this.title});
+  //final String title;
+  //final bool isAuth;
+  //SecretScreen({super.key});
+
+  // bool get auth {
+  //   return isAuth;
+  // }
 
   final double borderWidth = 0.5;
   final double containerHeight = 70.0;
@@ -16,6 +24,10 @@ class SecretScreen extends StatefulWidget {
   State<SecretScreen> createState() => _SecretScreen();
 }
 
+//bool token = false;
+
+//List<Widget> _widgetOptions2 = <Widget>[];
+
 class _SecretScreen extends State<SecretScreen> {
   final double borderWidth = 0.5;
   final double containerHeight = 65;
@@ -23,15 +35,66 @@ class _SecretScreen extends State<SecretScreen> {
   int _selectedIndex = 0;
   // static const TextStyle optionStyle =
   //     TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
-  static final List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    JoinGameScreen(),
-    HostGameScreen(),
-    ProfileScreen(),
-  ];
+  String? username = "";
+  // List<Widget> _widgetOptions = <Widget>[
+  //   HomeScreen(),
+  //   JoinGameScreen(),
+  //   HostGameScreen(),
+  //   ProfileScreen(),
+  // ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initial();
+
+    // if (token == true) {
+    //   _widgetOptions = <Widget>[
+    //     HomeScreen(),
+    //     JoinGameScreen(),
+    //     HostGameScreen(),
+    //     ProfileScreen(),
+    //   ];
+    // } else {
+    //   _widgetOptions = <Widget>[
+    //     HomeScreen(),
+    //     JoinGameScreen(),
+    //     NoAuth(),
+    //     NoAuth(),
+    //   ];
+    // }
+    //print(isAuth);
+  }
+
+  void initial() async {
+    prefs = await SharedPreferences.getInstance();
+    // setState(() {
+    //   // if (prefs.containsKey('username')) {
+    //   //   username = prefs.getString('username');
+    //   // }
+    //   // if (prefs.containsKey('token')) {
+    //   //   //token = prefs.getString('token');
+    //   //   token = true;
+    //   //   //token = auth();
+    //   // }
+    //   if (prefs.containsKey('token')) {
+    //     isAuth = true;
+    //     //this.widgetOption(_widgetOptions);
+    //   }
+    //   //username = shared_preferences.stringGetter('username')!;
+    // });
+    //prefs = await SharedPreferences.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _widgetOptions = <Widget>[
+      HomeScreen(),
+      JoinGameScreen(),
+      isAuth == true ? HostGameScreen() : NoAuth(),
+      isAuth == true ? ProfileScreen() : NoAuth(),
+    ];
     void onItemTapped(int index) {
       setState(() {
         //print('Param is $title');
@@ -55,38 +118,82 @@ class _SecretScreen extends State<SecretScreen> {
       });
     }
 
-    return Scaffold(
-      body: SafeArea(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border(top: BorderSide(color: Colors.black, width: 1.0))),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white, // <-- This works for fixed
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home, size: 30),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.groups_outlined, size: 50),
-              label: 'Join',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.quiz, size: 50),
-              label: 'Host',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 30),
-              label: 'Profile',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.black,
-          onTap: onItemTapped,
+    Future<bool> _onWillPop() async {
+      return (await showDialog(
+        context: context,
+        builder: (context) => isAuth == true
+            ? (AlertDialog(
+                title: new Text('Are you sure?'),
+                content: new Text('Do you want to exit an App'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () =>
+                        Navigator.of(context).pop(false), //<-- SEE HERE
+                    child: new Text('No'),
+                  ),
+                  TextButton(
+                    onPressed: () =>
+                        Navigator.of(context).pop(true), // <-- SEE HERE
+                    child: new Text('Yes'),
+                  ),
+                ],
+              ))
+            : (AlertDialog(
+                title: new Text('Are you sure?'),
+                content: new Text('Do you want to log out?'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () =>
+                        Navigator.of(context).pop(false), //<-- SEE HERE
+                    child: new Text('No'),
+                  ),
+                  TextButton(
+                    onPressed: () => {
+                      prefs.remove("username"),
+                      prefs.remove("token"),
+                      isAuth = false,
+                      Navigator.of(context).pop(true)
+                    }, // <-- SEE HERE
+                    child: new Text('Yes'),
+                  ),
+                ],
+              )),
+      ));
+    }
+
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        body: SafeArea(child: _widgetOptions.elementAt(_selectedIndex)),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(top: BorderSide(color: Colors.black, width: 1.0))),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.white, // <-- This works for fixed
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home, size: 30),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.groups_outlined, size: 50),
+                label: 'Join',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.quiz, size: 50),
+                label: 'Host',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person, size: 30),
+                label: 'Profile',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.black,
+            onTap: onItemTapped,
+          ),
         ),
       ),
     );

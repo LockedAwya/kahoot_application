@@ -51,6 +51,7 @@ class _LoginScreen extends State<LoginScreen> {
       prefs.setString('token', data['token']);
       prefs.setString('username', data['username']);
       print("YAYYYYYYYYYYYYYYYYYY LOGINNNNNN");
+      isAuth = true;
     } else {
       //print("Login failed!");
       print(res.statusCode);

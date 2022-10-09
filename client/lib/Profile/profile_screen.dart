@@ -17,7 +17,6 @@ class _ProfileScreen extends State<ProfileScreen> {
   final double fontSize = 24;
 
   String? username = "";
-  bool token = false;
   //late
 
   @override
@@ -33,10 +32,10 @@ class _ProfileScreen extends State<ProfileScreen> {
       if (prefs.containsKey('username')) {
         username = prefs.getString('username');
       }
-      if (prefs.containsKey('token')) {
-        //token = prefs.getString('token');
-        token = true;
-      }
+      // if (prefs.containsKey('token')) {
+      //   //token = prefs.getString('token');
+      //   token = true;
+      // }
       //username = shared_preferences.stringGetter('username')!;
     });
   }
@@ -88,7 +87,7 @@ class _ProfileScreen extends State<ProfileScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            username ?? '',
+            username ?? 'Profile',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 24,
@@ -97,7 +96,7 @@ class _ProfileScreen extends State<ProfileScreen> {
           centerTitle: true,
           backgroundColor: const Color.fromARGB(255, 241, 241, 241),
         ),
-        body: token
+        body: isAuth
             ? SafeArea(
                 //child: _widgetOptions.elementAt(_selectedIndex),
                 child: ListView(
@@ -137,6 +136,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                       //print("tapped on container");
                       prefs.remove('username');
                       prefs.remove('token');
+                      isAuth = false;
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const InittialScreen()));
                     },

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'question_modal_bottom_sheet.dart';
 import '../utils/global_variables.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../NotLoggedIn/no_auth.dart';
+import '../router.dart';
 
 class HostGameScreen extends StatefulWidget {
   final double borderWidth = 0.5;
@@ -164,7 +166,7 @@ class _HostGameScreen extends State<HostGameScreen> {
                 SizedBox(height: 5),
               ],
             ))
-          : (SafeArea(child: Text("You're not logged in yet!"))),
+          : (SafeArea(child: NoAuth())),
     );
   }
 }
