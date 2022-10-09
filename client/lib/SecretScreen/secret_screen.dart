@@ -36,12 +36,6 @@ class _SecretScreen extends State<SecretScreen> {
   // static const TextStyle optionStyle =
   //     TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
   String? username = "";
-  // List<Widget> _widgetOptions = <Widget>[
-  //   HomeScreen(),
-  //   JoinGameScreen(),
-  //   HostGameScreen(),
-  //   ProfileScreen(),
-  // ];
 
   @override
   void initState() {
@@ -121,7 +115,7 @@ class _SecretScreen extends State<SecretScreen> {
     Future<bool> _onWillPop() async {
       return (await showDialog(
         context: context,
-        builder: (context) => isAuth == true
+        builder: (context) => isAuth == false
             ? (AlertDialog(
                 title: new Text('Are you sure?'),
                 content: new Text('Do you want to exit an App'),
