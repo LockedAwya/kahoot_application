@@ -62,10 +62,4 @@ authRouter.post("/api/signin", async (req, res) => {
 
 })
 
-authRouter.get("/", (req, res) => {
-    res.json({
-        name: "DManh"
-    });
-})
-
 module.exports = authRouter
