@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:untitled_folder/inittial_screen.dart';
 import 'package:untitled_folder/main.dart';
+import 'package:untitled_folder/model/add_question_model.dart';
 
 class Body extends StatelessWidget {
   Body(this.chidren, {this.alignment = CrossAxisAlignment.center, Key? key})
@@ -23,8 +26,7 @@ class Body extends StatelessWidget {
             Container(
               width: double.infinity,
               color: Colors.white,
-              margin:
-                  const EdgeInsets.only(left: 25, right: 25, top: 9, bottom: 0),
+              margin: const EdgeInsets.only(left: 25, right: 25, top: 40),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -74,7 +76,7 @@ Widget button(String title, VoidCallback onTap,
 }
 
 Column itemTextFormField(String name, String? Function(String?) validator,
-    {bool obscureText = false}) {
+    {String? hintText, bool obscureText = false}) {
   return Column(
     children: [
       const SizedBox(
@@ -94,6 +96,12 @@ Column itemTextFormField(String name, String? Function(String?) validator,
           obscureText: obscureText,
           validator: validator,
           decoration: InputDecoration(
+            hintStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFFB8B8B8)),
+            hintText: hintText,
+            contentPadding: const EdgeInsets.all(10),
             fillColor: Colors.white,
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(4),
@@ -119,7 +127,7 @@ Column itemTextFormField(String name, String? Function(String?) validator,
 
 Widget headerScreen(String title, VoidCallback onTap) {
   return Container(
-    margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 17),
+    margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
     child: Row(
       children: [
         InkWell(
@@ -146,4 +154,103 @@ Widget headerScreen(String title, VoidCallback onTap) {
       ],
     ),
   );
+}
+
+class AppButton extends StatelessWidget {
+  final String? text;
+  final VoidCallback? onTap;
+  final double? height;
+  final double? width;
+
+  const AppButton({super.key, this.text, this.onTap, this.height, this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: OutlinedButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          padding: MaterialStateProperty.all(
+            const EdgeInsets.symmetric(vertical: 10),
+          ),
+          backgroundColor: MaterialStateProperty.all(Colors.blue[700]),
+          side: MaterialStateProperty.all(const BorderSide(
+            color: Colors.blue,
+            width: 1.0,
+          )),
+          shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0))),
+        ),
+        child: Text(
+          text ?? '',
+          style: TextStyle(
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+}
+
+class AddQuestionItem extends StatelessWidget {
+  final AddQuestionModel data;
+  final VoidCallback? onTap;
+  const AddQuestionItem({Key? key, required this.data, this.onTap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            padding: const EdgeInsets.only(top: 10),
+            height: MediaQuery.of(context).size.height * 0.08,
+            child: Column(
+              children: [
+                Image.asset(
+                  data.image ?? "",
+                  width: 60,
+                  height: 60,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(data.title ?? "",
+                    style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold)),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.teal),
+              width: 20,
+              height: 20,
+              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: const Icon(
+                Icons.star,
+                color: Colors.white,
+                size: 16,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
