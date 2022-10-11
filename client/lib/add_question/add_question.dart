@@ -1,10 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled_folder/model/add_question_model.dart';
 import 'package:untitled_folder/quiz_page/quiz_page.dart';
 import 'package:untitled_folder/widget.dart';
 
 class AddQuestion extends StatefulWidget {
-  const AddQuestion({Key? key}) : super(key: key);
+  final int value;
+  const AddQuestion({Key? key, this.value = 0}) : super(key: key);
 
   @override
   _AddQuestionState createState() => _AddQuestionState();
@@ -30,6 +32,7 @@ class _AddQuestionState extends State<AddQuestion> {
   List<AddQuestionModel> listPresentInfo = [
     AddQuestionModel(title: 'Slide', image: 'assets/images/img_6.png')
   ];
+  int value = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -166,11 +169,17 @@ class _AddQuestionState extends State<AddQuestion> {
     );
   }
 
-  changePage(int index, BuildContext context) {
+  changePage(int index, BuildContext context) async {
     switch (index) {
       case 0:
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const QuizPage()));
+        setState(() {
+          value = widget.value + 1;
+        });
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => QuizPage(
+                  values: value,
+                )));
+
         break;
       case 1:
         break;

@@ -163,7 +163,8 @@ class _CreateKahootState extends State<CreateKahoot> {
                   height: 60,
                   text: 'Add Question',
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddQuestion()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const AddQuestion()));
                   },
                 ),
               ),
