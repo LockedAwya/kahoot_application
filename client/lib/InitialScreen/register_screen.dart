@@ -88,21 +88,21 @@ class _RegisterScreen extends State<RegisterScreen> {
                         ? null
                         : "Username Invalid";
                   }, usernameController,
-                          false) //not display text, hence obscureText = false
+                          ) //not display text, hence obscureText = false
                       .children,
                   ...itemTextFormField("Email", (value) {
                     return ValidateUtil.isEmail(value)
                         ? null
                         : "Username Invalid";
                   }, emailController,
-                          false) //not display text, hence obscureText = false
+                            ) //not display text, hence obscureText = false
                       .children,
                   ...itemTextFormField("Password", (value) {
                     return ValidateUtil.isPassUser(value)
                         ? null
                         : "Username Invalid";
-                  }, passwordController,
-                          true) //not display text, hence obscureText = true
+                  }, passwordController, obscureText: true
+                          ) //not display text, hence obscureText = true
                       .children,
                   button("Register", () {
                     if (formkey.currentState?.validate() == false) {

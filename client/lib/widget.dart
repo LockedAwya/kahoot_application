@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import './inittial_screen.dart';
 import '../main.dart';
-import '../model/add_question_model.dart';
+import 'package:untitled_folder/model/add_question_model.dart';
 
 class Body extends StatelessWidget {
   const Body(this.chidren,
@@ -87,9 +87,7 @@ Widget button(String title, VoidCallback onTap,
 }
 
 Column itemTextFormField(String name, String? Function(String?) validator,
-    TextEditingController controller,
     {String? hintText, bool obscureText = false}) {
-  //{String? hintText, bool obscureText = false}) {
   return Column(
     children: [
       const SizedBox(
@@ -106,9 +104,9 @@ Column itemTextFormField(String name, String? Function(String?) validator,
       SizedBox(
         height: 40,
         child: TextFormField(
-          controller: controller,
-          validator: validator,
           obscureText: obscureText,
+          validator: validator,
+          //obscureText: obscureText,
           decoration: InputDecoration(
             hintStyle: const TextStyle(
                 fontSize: 14,

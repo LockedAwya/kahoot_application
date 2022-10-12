@@ -1,0 +1,48 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "client",
+            "cwd": "client",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "client (profile mode)",
+            "cwd": "client",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "client (release mode)",
+            "cwd": "client",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "untitled_folder",
+            "cwd": "client\\untitled_folder",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "untitled_folder (profile mode)",
+            "cwd": "client\\untitled_folder",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "untitled_folder (release mode)",
+            "cwd": "client\\untitled_folder",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
