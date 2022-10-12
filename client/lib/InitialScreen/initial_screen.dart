@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import './widget.dart';
+import '../utils/widget.dart';
 
 import '../routing_names.dart';
 // import 'login_screen.dart';
 // import 'register_screen.dart';
 
-class InittialScreen extends StatelessWidget {
-  const InittialScreen({Key? key}) : super(key: key);
+class InitialScreen extends StatelessWidget {
+  const InitialScreen({Key? key}) : super(key: key);
   final margin = 25.0;
 
   @override

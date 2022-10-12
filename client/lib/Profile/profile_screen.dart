@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../InitialScreen/inittial_screen.dart';
+import '../InitialScreen/initial_screen.dart';
 import '../utils/global_variables.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../NotLoggedIn/no_auth.dart';
@@ -143,7 +143,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                       prefs.remove('token');
                       isAuth = false;
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const InittialScreen()));
+                          builder: (context) => const InitialScreen()));
                     },
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10.0),

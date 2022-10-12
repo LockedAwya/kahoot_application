@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import './widget.dart';
+import '../utils/widget.dart';
 
 import 'validate_util.dart';
 // import 'inittial_screen.dart';

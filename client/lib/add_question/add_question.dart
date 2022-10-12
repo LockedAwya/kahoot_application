@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled_folder/model/add_question_model.dart';
 import 'package:untitled_folder/quiz_page/quiz_page.dart';
-import 'package:untitled_folder/widget.dart';
+import '../utils/widget.dart';
 
 class AddQuestion extends StatefulWidget {
   final int value;

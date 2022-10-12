@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './InitialScreen/inittial_screen.dart';
+import 'InitialScreen/initial_screen.dart';
 import './InitialScreen/login_screen.dart';
 import './InitialScreen/register_screen.dart';
 import './SecretScreen/secret_screen.dart';
@@ -21,6 +21,6 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     // case '/no_auth':
     //   return MaterialPageRoute(builder: (context) => NoAuth());
     default:
-      return MaterialPageRoute(builder: (context) => InittialScreen());
+      return MaterialPageRoute(builder: (context) => InitialScreen());
   }
 }

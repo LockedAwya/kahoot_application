@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import './inittial_screen.dart';
+import '../InitialScreen/initial_screen.dart';
 import '../main.dart';
 import 'package:untitled_folder/model/add_question_model.dart';
 
@@ -87,6 +87,7 @@ Widget button(String title, VoidCallback onTap,
 }
 
 Column itemTextFormField(String name, String? Function(String?) validator,
+    TextEditingController controller,
     {String? hintText, bool obscureText = false}) {
   return Column(
     children: [
@@ -106,6 +107,7 @@ Column itemTextFormField(String name, String? Function(String?) validator,
         child: TextFormField(
           obscureText: obscureText,
           validator: validator,
+          controller: controller,
           //obscureText: obscureText,
           decoration: InputDecoration(
             hintStyle: const TextStyle(
@@ -148,7 +150,7 @@ Widget headerScreen(String title, VoidCallback onTap) {
             Navigator.pushAndRemoveUntil(
                 globalKey.currentContext!,
                 MaterialPageRoute(
-                    builder: (BuildContext context) => const InittialScreen()),
+                    builder: (BuildContext context) => const InitialScreen()),
                 ModalRoute.withName('/'));
           },
           child: const Text("Cancel",

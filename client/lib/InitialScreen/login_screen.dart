@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import './widget.dart';
+import '../utils/widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //import '../services/auth_services.dart';
 import '../utils/global_variables.dart';

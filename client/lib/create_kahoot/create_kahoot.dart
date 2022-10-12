@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_folder/add_question/add_question.dart';
-import 'package:untitled_folder/widget.dart';
+import '../utils/widget.dart';
 
 class CreateKahoot extends StatefulWidget {
   const CreateKahoot({Key? key}) : super(key: key);
