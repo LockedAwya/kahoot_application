@@ -87,7 +87,7 @@ class _SecretScreen extends State<SecretScreen> {
       HomeScreen(),
       JoinGameScreen(),
       isAuth == true ? HostGameScreen() : NoAuth(),
-      isAuth == true ? ProfileScreen() : NoAuth(),
+      isAuth == true ? (ProfileScreen()) : NoAuth(),
     ];
     void onItemTapped(int index) {
       setState(() {

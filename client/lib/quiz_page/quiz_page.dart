@@ -89,6 +89,7 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ],
       ),
+      //bottom navigation of question list
       persistentFooterButtons: [
         Container(
             height: 70,

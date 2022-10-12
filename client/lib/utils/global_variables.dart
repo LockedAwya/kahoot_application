@@ -6,3 +6,4 @@ String api_url = 'http://10.0.2.2:3000';
 var dio = Dio();
 
 bool isAuth = false;
+String secretPageState = "";

@@ -3,6 +3,7 @@ import '../InitialScreen/inittial_screen.dart';
 import '../utils/global_variables.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../NotLoggedIn/no_auth.dart';
+import './my_kahoots.dart';
 
 class ProfileScreen extends StatefulWidget {
   final double borderWidth = 0.5;
@@ -23,6 +24,7 @@ class _ProfileScreen extends State<ProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    secretPageState = "Profile";
     initial();
   }
 
@@ -114,7 +116,10 @@ class _ProfileScreen extends State<ProfileScreen> {
                   const SizedBox(height: 10), // <-- Set height
                   buttonInkWell(
                     title: 'Your kahoots',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MyKahootScreen()));
+                    },
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10.0),
                     iconData: Icons.person,
