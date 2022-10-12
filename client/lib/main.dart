@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:untitled_folder/highscore_page.dart';
 import 'package:untitled_folder/register_screen.dart';
 
 import 'inittial_screen.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primarySwatch: Colors.blue,
             scaffoldBackgroundColor: Colors.deepPurpleAccent),
-        home: const SafeArea(child: InittialScreen()),
+        home: const SafeArea(child: HighScorePage()),
       ),
     );
   }
