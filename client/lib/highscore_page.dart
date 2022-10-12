@@ -9,7 +9,7 @@ class HighScorePage extends StatefulWidget {
 
 class _HighScorePageState extends State<HighScorePage> {
   double max = 450;
-  double medium = 300;
+  double medium = 350;
   double min = 100;
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class _HighScorePageState extends State<HighScorePage> {
                 HighScoreItem(
                   text: 'FunnyBizon',
                   image: 'assets/icons/ic_game_2.png',
-                  height: min,
+                  height: medium,
                 ),
                 HighScoreItem(
                   text: 'SpaceHazard',
@@ -45,7 +45,7 @@ class _HighScorePageState extends State<HighScorePage> {
                 HighScoreItem(
                   text: 'Bronzelbex',
                   image: 'assets/icons/ic_game_3.png',
-                  height: medium,
+                  height: min,
                 ),
               ],
             )
