@@ -7,11 +7,10 @@ import '../utils/global_variables.dart';
 import 'validate_util.dart';
 //import 'inittial_screen.dart';
 import '../routing_names.dart';
-import 'package:dio/dio.dart';
 import 'dart:convert';
-import '../utils/global_variables.dart';
+import 'package:dio/dio.dart';
 
-var dio = Dio();
+//var dio = Dio();
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -26,7 +25,7 @@ class _LoginScreen extends State<LoginScreen> {
 
   final margin = 0.0;
   final formkey = GlobalKey<FormState>();
-
+  String errorMessage = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -38,23 +37,26 @@ class _LoginScreen extends State<LoginScreen> {
     prefs = await SharedPreferences.getInstance();
   }
 
-  signInFunc(String email, String password) async {
-    var res = await dio.post(api_url + "/api/signin",
-        data: {"email": email, "password": password});
-    //print(res.statusCode);
+  Future<void> signInFunc(String email, String password) async {
+    var res = await dio.post(
+      api_url + "/api/signin",
+      data: {"email": email, "password": password},
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status == 200 || status == 400;
+        },
+      ),
+    );
+    var data = res.data;
+    // print(data['username']);
+    // print(data['token']);
     if (res.statusCode == 200) {
-      //print("Response status: ${res.statusCode}");
-      var data = res.data;
-      // print(data['username']);
-      // print(data['token']);
       print(res.data.toString());
       prefs.setString('token', data['token']);
       prefs.setString('username', data['username']);
       print("YAYYYYYYYYYYYYYYYYYY LOGINNNNNN");
       isAuth = true;
-    } else {
-      //print("Login failed!");
-      print(res.statusCode);
     }
   }
 
@@ -112,16 +114,20 @@ class _LoginScreen extends State<LoginScreen> {
                   }, passwordController,
                           true) //not display text, hence obscureText = true
                       .children,
-                  button("Login", () {
+                  button("Login", () async {
                     if (formkey.currentState?.validate() == false) {
                       showToast('Format Invalid',
                           position: ToastPosition.bottom);
                     } else {
-                      //Navigator.pushNamed(context, SecretScreenView);
-                      signInFunc(emailController.text, passwordController.text);
-                      // print(shared_preferences.stringGetter('jwt'));
-                      // print(shared_preferences.stringGetter('username'));
-                      Navigator.pushNamed(context, SecretScreenView);
+                      await signInFunc(
+                          emailController.text, passwordController.text);
+                      if (isAuth == true) {
+                        if (!mounted) return;
+                        Navigator.pushNamed(context, SecretScreenView);
+                      } else {
+                        errorMessage = "Incorrect username or password!";
+                        showToast(errorMessage, position: ToastPosition.bottom);
+                      }
                     }
                   },
                       textColor: Colors.white,
