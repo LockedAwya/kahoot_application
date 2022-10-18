@@ -42,8 +42,7 @@ class _ProfileScreen extends State<ProfileScreen> {
     });
   }
 
-  Widget buttonInkWell({
-    String? title,
+  Widget buttonInkWell(String title, {
     VoidCallback? onTap,
     EdgeInsets? margin,
     EdgeInsets? padding,
@@ -56,6 +55,7 @@ class _ProfileScreen extends State<ProfileScreen> {
     double fontSize = 30,
   }) {
     return InkWell(
+        key: Key(title),
         onTap: onTap,
         child: Container(
           height: height,
@@ -106,7 +106,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                     vertical: 40.0, horizontal: 10.0),
                 children: <Widget>[
                   buttonInkWell(
-                    title: 'Profile Information',
+                    'Profile Information',
                     onTap: () {},
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10.0),
@@ -115,7 +115,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 10), // <-- Set height
                   buttonInkWell(
-                    title: 'Your kahoots',
+                    'Your kahoots',
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => MyKahootScreen()));
@@ -127,7 +127,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 10), // <-- Set height
                   buttonInkWell(
-                    title: 'Reports',
+                    'Reports',
                     onTap: () {},
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10.0),
@@ -136,7 +136,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 10),
                   buttonInkWell(
-                    title: 'Log out',
+                    'Log out',
                     onTap: () {
                       //print("tapped on container");
                       prefs.remove('username');

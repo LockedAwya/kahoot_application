@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../WaitingRoom/waiting_room.dart';
+import '../game_pin.dart';
 
 class JoinGameScreen extends StatefulWidget {
   final double borderWidth = 0.5;
@@ -84,8 +85,7 @@ class _JoinGameScreen extends State<JoinGameScreen> {
                 onPressed: () => {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => WaitingRoomScreen()),
+                    MaterialPageRoute(builder: (context) => GamePin()),
                   )
                 },
               ),

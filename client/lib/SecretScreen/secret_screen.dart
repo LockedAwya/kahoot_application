@@ -166,6 +166,7 @@ class _SecretScreen extends State<SecretScreen> {
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.white, // <-- This works for fixed
+            key: Key('BottomNavigationBar'),
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home, size: 30),

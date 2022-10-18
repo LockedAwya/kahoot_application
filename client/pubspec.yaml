@@ -43,6 +43,10 @@ dependencies:
   dio: ^4.0.6
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
+  flutter_driver:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 

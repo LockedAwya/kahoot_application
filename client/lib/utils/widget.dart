@@ -67,6 +67,7 @@ Widget button(String title, VoidCallback onTap,
     double? fontSize = 18,
     double radius = 8.0}) {
   return InkWell(
+    key: Key(title),
     onTap: onTap,
     child: Container(
       width: width,
@@ -88,6 +89,7 @@ Widget button(String title, VoidCallback onTap,
 
 Column itemTextFormField(String name, String? Function(String?) validator,
     TextEditingController controller,
+    //String? keyname,
     {String? hintText, bool obscureText = false}) {
   return Column(
     children: [
@@ -105,6 +107,7 @@ Column itemTextFormField(String name, String? Function(String?) validator,
       SizedBox(
         height: 40,
         child: TextFormField(
+          key: Key(name),
           obscureText: obscureText,
           validator: validator,
           controller: controller,
