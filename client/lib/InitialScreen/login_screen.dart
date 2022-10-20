@@ -25,7 +25,7 @@ class _LoginScreen extends State<LoginScreen> {
 
   final margin = 0.0;
   final formkey = GlobalKey<FormState>();
-  String errorMessage = "";
+  String message = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -52,10 +52,10 @@ class _LoginScreen extends State<LoginScreen> {
     // print(data['username']);
     // print(data['token']);
     if (res.statusCode == 200) {
-      print(res.data.toString());
+      //print(res.data.toString());
       prefs.setString('token', data['token']);
       prefs.setString('username', data['username']);
-      print("YAYYYYYYYYYYYYYYYYYY LOGINNNNNN");
+      //print("YAYYYYYYYYYYYYYYYYYY LOGINNNNNN");
       isAuth = true;
     }
   }
@@ -126,11 +126,13 @@ class _LoginScreen extends State<LoginScreen> {
                       await signInFunc(
                           emailController.text, passwordController.text);
                       if (isAuth == true) {
+                        message = "Login success!";
+                        showToast(message, position: ToastPosition.bottom);
                         if (!mounted) return;
                         Navigator.pushNamed(context, SecretScreenView);
                       } else {
-                        errorMessage = "Incorrect username or password!";
-                        showToast(errorMessage, position: ToastPosition.bottom);
+                        message = "Incorrect username or password!";
+                        showToast(message, position: ToastPosition.bottom);
                       }
                     }
                   },

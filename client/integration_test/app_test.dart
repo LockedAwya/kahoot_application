@@ -10,7 +10,8 @@ import 'package:untitled_folder/main.dart' as app;
 void main() {
   group('app_test', () {
     IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-    testWidgets("Full app", (tester) async {
+
+    testWidgets("login_fail", (tester) async {
       app.main();
       await tester.pumpAndSettle();
       //initial screen
@@ -18,6 +19,7 @@ void main() {
       await Future.delayed(Duration(seconds: 1));
 
       await tester.tap(loginButtonFinder);
+      await tester.pumpAndSettle();
       //login screen
       await Future.delayed(Duration(seconds: 1));
       final usernameField = find.byKey(Key("Username"));
@@ -26,24 +28,14 @@ void main() {
 
       await tester.enterText(usernameField, "test1@gmail.com");
       await Future.delayed(Duration(seconds: 1));
-      await tester.enterText(passwordField, "123456789");
-      await Future.delayed(Duration(seconds: 1));
+      await tester.enterText(passwordField, "1234567");
+      await Future.delayed(Duration(seconds: 2));
+      //await tester.pumpAndSettle();
 
       await tester.tap(loginButtonFinder2);
-      //await tester.pumpAndSettle();
-      //home screen
-      /**
-       * tab profile
-       */
-      //final tabProfile = find.byType(BottomNavigationBarItem).at(3);
-      //await find('BottomNavigationBar');
-      // await Future.delayed(Duration(seconds: 5));
-      // final tabProfile = find.byIcon(Icons.person);
-      // await tester.tap(tabProfile);
-      // await Future.delayed(Duration(seconds: 3));
-      // final tabLogout = find.byKey(Key("Log out"));
-      // await tester.tap(tabLogout);
-      // await Future.delayed(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      expect(find.text("Incorrect username or password!"), findsOneWidget);
     });
   });
 }
