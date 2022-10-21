@@ -6,6 +6,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:untitled_folder/main.dart' as app;
+import 'package:untitled_folder/quiz_page/quiz_page.dart' as quizPage;
 
 void main() {
   group('app_test', () {

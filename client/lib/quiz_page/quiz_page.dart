@@ -138,6 +138,7 @@ class _QuizPageState extends State<QuizPage> {
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(5.0),
                   child: InkWell(
+                    key: Key("plus-button"),
                     borderRadius: BorderRadius.circular(5.0),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
