@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_folder/add_question/add_question.dart';
+import 'package:untitled_folder/add_question/add_question2.dart';
+//import './quiz_page_body.dart';
+import 'dart:convert';
+import '../utils/global_variables.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../model/question_model.dart';
+import '../model/answer_model.dart';
 
 class QuizPage extends StatefulWidget {
   final int? values;
@@ -9,8 +16,172 @@ class QuizPage extends StatefulWidget {
   _QuizPageState createState() => _QuizPageState();
 }
 
+class Answer {
+  String name = "";
+  String body = "";
+  bool isCorrect = false;
+
+  Answer({required this.name, required this.body, required this.isCorrect});
+  factory Answer.fromJson(Map<dynamic, dynamic> json) {
+    return Answer(
+        name: json["name"], body: json["body"], isCorrect: json["isCorrect"]);
+  }
+
+  static Map<String, dynamic> toMap(Answer answer) => {
+        'name': answer.name,
+        'body': answer.body,
+        'isCorrect': answer.isCorrect,
+      };
+
+  static String encode(List<Answer> answers) => json.encode(
+        answers
+            .map<Map<String, dynamic>>((answer) => Answer.toMap(answer))
+            .toList(),
+      );
+
+  static List<Answer> decode(String answers) =>
+      (json.decode(answers) as List<dynamic>)
+          .map<Answer>((item) => Answer.fromJson(item))
+          .toList();
+}
+
+// List<Answer> ans1 = [
+//   Answer(name: "A", body: "abcd", isCorrect: false),
+//   Answer(name: "B", body: "abcd", isCorrect: false),
+//   Answer(name: "C", body: "abcd", isCorrect: true),
+//   Answer(name: "D", body: "abcd", isCorrect: false),
+// ];
+
+final String encodedAnswer = Answer.encode([
+  Answer(name: "A", body: "abcd", isCorrect: false),
+  Answer(name: "B", body: "abcd", isCorrect: false),
+  Answer(name: "C", body: "abcd", isCorrect: true),
+  Answer(name: "D", body: "abcd", isCorrect: false),
+]);
+final String encodedQuestionList = Question.encode([
+  Question(
+      questionTitle: "What is this?",
+      answerList: encodedAnswer,
+      questionIndex: 1),
+  Question(
+      questionTitle: "What is this?",
+      answerList: encodedAnswer,
+      questionIndex: 2),
+  Question(
+      questionTitle: "What is this?",
+      answerList: encodedAnswer,
+      questionIndex: 3),
+  Question(
+      questionTitle: "What is this?",
+      answerList: encodedAnswer,
+      questionIndex: 4),
+]);
+
 class _QuizPageState extends State<QuizPage> {
-  final fieldController = TextEditingController();
+  //final fieldController = TextEditingController();
+  late TextEditingController fieldController;
+  final List<Question> _questions = <Question>[];
+
+  void initial() async {
+    prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('question_list', encodedQuestionList);
+
+    String questionListString = await prefs.getString('question_list') ?? "";
+
+    final List<Question> questions = Question.decode(questionListString);
+
+    print(questionListString);
+  }
+
+  List<Widget> _persistentFooterButtons(BuildContext context) {
+    return [
+      Container(
+          height: 70,
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: widget.values,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                          onTap: () {
+                            print("Index is ${index + 1}");
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 60,
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.blueAccent, width: 2)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(2),
+                                  child: Text(
+                                    '${index + 1}',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 10),
+                                  ),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  fieldController.text,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 10),
+                                )
+                              ],
+                            ),
+                          ));
+                    }),
+              ),
+              Material(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(5.0),
+                child: InkWell(
+                  key: Key("plus-button"),
+                  borderRadius: BorderRadius.circular(5.0),
+                  onTap: () {
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) =>
+                    //         AddQuestion(value: widget.values ?? 1)));
+                    showModalBottomSheet<dynamic>(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) =>
+                            AddQuestion(value: widget.values ?? 1));
+                  },
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    alignment: Alignment.center,
+                    child: const Icon(
+                      Icons.add_rounded,
+                      color: Colors.white,
+                      size: 60,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ))
+    ];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fieldController = new TextEditingController(text: widget.values.toString());
+    initial();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,76 +261,7 @@ class _QuizPageState extends State<QuizPage> {
         ],
       ),
       //bottom navigation of question list
-      persistentFooterButtons: [
-        Container(
-            height: 70,
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: widget.values,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          width: 100,
-                          height: 60,
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.blueAccent, width: 2)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(2),
-                                child: Text(
-                                  '${index + 1}',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 10),
-                                ),
-                              ),
-                              const Spacer(),
-                              Text(
-                                fieldController.text,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 10),
-                              )
-                            ],
-                          ),
-                        );
-                      }),
-                ),
-                Material(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: InkWell(
-                    key: Key("plus-button"),
-                    borderRadius: BorderRadius.circular(5.0),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              AddQuestion(value: widget.values ?? 1)));
-                    },
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      alignment: Alignment.center,
-                      child: const Icon(
-                        Icons.add_rounded,
-                        color: Colors.white,
-                        size: 60,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            )),
-      ],
+      persistentFooterButtons: _persistentFooterButtons(context),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

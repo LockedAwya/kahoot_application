@@ -4,15 +4,15 @@ import 'package:untitled_folder/model/add_question_model.dart';
 import 'package:untitled_folder/quiz_page/quiz_page.dart';
 import '../utils/widget.dart';
 
-class AddQuestion extends StatefulWidget {
+class AddQuestion2 extends StatefulWidget {
   final int value;
-  const AddQuestion({Key? key, this.value = 0}) : super(key: key);
+  const AddQuestion2({Key? key, this.value = 0}) : super(key: key);
 
   @override
-  _AddQuestionState createState() => _AddQuestionState();
+  _AddQuestionState2 createState() => _AddQuestionState2();
 }
 
-class _AddQuestionState extends State<AddQuestion> {
+class _AddQuestionState2 extends State<AddQuestion2> {
   List<AddQuestionModel> listTestnowledge = [
     AddQuestionModel(title: 'Quiz', image: 'assets/images/img_0.png'),
     AddQuestionModel(title: 'True or False', image: 'assets/images/img_1.png'),
@@ -176,10 +176,11 @@ class _AddQuestionState extends State<AddQuestion> {
           value = widget.value + 1;
           print(value);
         });
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => QuizPage(
-                  values: value,
-                )));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (context) => QuizPage(
+        //           values: value,
+        //         )));
+        Navigator.of(context).pop();
 
         break;
       case 1:
