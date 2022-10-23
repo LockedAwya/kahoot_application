@@ -7,6 +7,7 @@ const app = express();
 const DB = "mongodb+srv://elipsical:jerry100@cluster0.p18hqnw.mongodb.net/?retryWrites=true&w=majority"
 //import from files
 const authRouter = require('./routes/auth')
+const quizRouter = require('./routes/quiz')
 
 //middleware
 app.use(express.json())

@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
     email: {
         type: String,
         required: true,
+        unique: true,
         validate: {
             validator: (value) => {
                 const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -18,6 +19,7 @@ const userSchema = mongoose.Schema({
     },
     username: {
         type: String,
+        unique: true,
         required: true
     },
     password: {
