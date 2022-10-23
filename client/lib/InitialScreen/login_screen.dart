@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import '../utils/widget.dart';
@@ -7,8 +9,8 @@ import '../utils/global_variables.dart';
 import 'validate_util.dart';
 //import 'inittial_screen.dart';
 import '../routing_names.dart';
-import 'dart:convert';
 import 'package:dio/dio.dart';
+import "../model/user_model.dart";
 
 //var dio = Dio();
 
@@ -48,13 +50,17 @@ class _LoginScreen extends State<LoginScreen> {
         },
       ),
     );
-    var data = res.data;
-    // print(data['username']);
-    // print(data['token']);
+    //res.extra
+    //var data = res.data;
+    User user = User.fromJson(res.data);
+    //String resData = jsonEncode(user);
+
     if (res.statusCode == 200) {
-      //print(res.data.toString());
-      prefs.setString('token', data['token']);
-      prefs.setString('username', data['username']);
+      //print(resData.toString());
+      //print(responceData);
+      print(user.username);
+      prefs.setString('token', user.token);
+      prefs.setString('username', user.username);
       //print("YAYYYYYYYYYYYYYYYYYY LOGINNNNNN");
       isAuth = true;
     }
