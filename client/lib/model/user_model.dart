@@ -12,7 +12,7 @@ class User {
       required this.username,
       required this.password});
 
-  factory User.fromJson(Map<String, dynamic> json) {
+  factory User.fromJson(Map<dynamic, dynamic> json) {
     return User(
         token: json["token"],
         id: json["_id"],

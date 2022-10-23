@@ -11,6 +11,7 @@ import 'validate_util.dart';
 import '../routing_names.dart';
 import 'package:dio/dio.dart';
 import "../model/user_model.dart";
+import '../api/index.dart';
 
 //var dio = Dio();
 
@@ -39,30 +40,29 @@ class _LoginScreen extends State<LoginScreen> {
     prefs = await SharedPreferences.getInstance();
   }
 
-  Future<void> signInFunc(String email, String password) async {
-    var res = await dio.post(
-      api_url + "/api/signin",
-      data: {"email": email, "password": password},
-      options: Options(
-        followRedirects: false,
-        validateStatus: (status) {
-          return status == 200 || status == 400;
-        },
-      ),
-    );
-    //res.extra
-    //var data = res.data;
-    User user = User.fromJson(res.data);
-    //String resData = jsonEncode(user);
+  void signInFunc(String email, String password, BuildContext context) async {
+    if (formkey.currentState?.validate() == false) {
+      showToast('Format Invalid', position: ToastPosition.bottom);
+    } else {
+      var res = await loginAPI(email, password);
 
-    if (res.statusCode == 200) {
-      //print(resData.toString());
-      //print(responceData);
-      print(user.username);
-      prefs.setString('token', user.token);
-      prefs.setString('username', user.username);
-      //print("YAYYYYYYYYYYYYYYYYYY LOGINNNNNN");
-      isAuth = true;
+      if (res.statusCode == 200) {
+        User user = User.fromJson(res.data);
+        print(user.username);
+        prefs.setString('token', user.token);
+        prefs.setString('username', user.username);
+        isAuth = true;
+      }
+
+      if (isAuth == true) {
+        message = "Login success!";
+        showToast(message, position: ToastPosition.bottom);
+        if (!mounted) return;
+        Navigator.pushNamed(context, SecretScreenView);
+      } else {
+        message = "Incorrect username or password!";
+        showToast(message, position: ToastPosition.bottom);
+      }
     }
   }
 
@@ -124,23 +124,9 @@ class _LoginScreen extends State<LoginScreen> {
                           obscureText:
                               true) //not display text, hence obscureText = true
                       .children,
-                  button("Login", () async {
-                    if (formkey.currentState?.validate() == false) {
-                      showToast('Format Invalid',
-                          position: ToastPosition.bottom);
-                    } else {
-                      await signInFunc(
-                          emailController.text, passwordController.text);
-                      if (isAuth == true) {
-                        message = "Login success!";
-                        showToast(message, position: ToastPosition.bottom);
-                        if (!mounted) return;
-                        Navigator.pushNamed(context, SecretScreenView);
-                      } else {
-                        message = "Incorrect username or password!";
-                        showToast(message, position: ToastPosition.bottom);
-                      }
-                    }
+                  button("Login", () {
+                    signInFunc(
+                        emailController.text, passwordController.text, context);
                   },
                       textColor: Colors.white,
                       margin: const EdgeInsets.only(top: 10))

@@ -7,9 +7,7 @@ import 'validate_util.dart';
 // import 'login_screen.dart';
 import '../utils/global_variables.dart';
 import '../routing_names.dart';
-//import 'package:dio/dio.dart';
-
-// var dio = Dio();
+import '../api/index.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -25,23 +23,22 @@ class _RegisterScreen extends State<RegisterScreen> {
   final margin = 0.0;
   final formkey = GlobalKey<FormState>();
 
-  signUpFunc(String username, String email, String password) async {
-    var res = await dio.post(api_url + "/api/signup",
-        data: {"email": email, "username": username, "password": password});
-    print(res.statusCode);
-    if (res.statusCode == 200) {
-      //print("Response status: ${res.statusCode}");
-      print(res.data.toString());
-      //var jsonResponse = res.body;
-
-      // SharedPreferences prefs = await SharedPreferences.getInstance();
-      // prefs.setString('jwt', jsonResponse);
-      //Navigator.of(context).pushNamed(routeName)
-      //Navigator.of(context).pushNamed(SecretScreenView);
-      print("YAYYYYYYYYYYYYYYYYYY REGISTERRRRR");
+  void signUpFunc(String username, String email, String password,
+      BuildContext context) async {
+    if (formkey.currentState?.validate() == false) {
+      //register failed
+      showToast('Format Invalid', position: ToastPosition.bottom);
     } else {
-      //print("Login failed!");
+      var res = await signupAPI(username, email, password);
       print(res.statusCode);
+      if (res.statusCode == 200) {
+        print(res.data.toString());
+        print("YAYYYYYYYYYYYYYYYYYY REGISTERRRRR");
+        if (!mounted) return;
+        Navigator.pushNamed(context, LoginScreenView);
+      } else {
+        print(res.data);
+      }
     }
   }
 
@@ -83,37 +80,37 @@ class _RegisterScreen extends State<RegisterScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  ...itemTextFormField("Username", (value) {
-                    return ValidateUtil.isNameUser(value)
-                        ? null
-                        : "Username Invalid";
-                  }, usernameController,
-                          ) //not display text, hence obscureText = false
+                  ...itemTextFormField(
+                    "Username",
+                    (value) {
+                      return ValidateUtil.isNameUser(value)
+                          ? null
+                          : "Username Invalid";
+                    },
+                    usernameController,
+                  ) //not display text, hence obscureText = false
                       .children,
-                  ...itemTextFormField("Email", (value) {
-                    return ValidateUtil.isEmail(value)
-                        ? null
-                        : "Username Invalid";
-                  }, emailController,
-                            ) //not display text, hence obscureText = false
+                  ...itemTextFormField(
+                    "Email",
+                    (value) {
+                      return ValidateUtil.isEmail(value)
+                          ? null
+                          : "Username Invalid";
+                    },
+                    emailController,
+                  ) //not display text, hence obscureText = false
                       .children,
                   ...itemTextFormField("Password", (value) {
                     return ValidateUtil.isPassUser(value)
                         ? null
                         : "Username Invalid";
-                  }, passwordController, obscureText: true
-                          ) //not display text, hence obscureText = true
+                  }, passwordController,
+                          obscureText:
+                              true) //not display text, hence obscureText = true
                       .children,
                   button("Register", () {
-                    if (formkey.currentState?.validate() == false) {
-                      //register failed
-                      showToast('Format Invalid',
-                          position: ToastPosition.bottom);
-                    } else {
-                      signUpFunc(usernameController.text, emailController.text,
-                          passwordController.text);
-                      Navigator.pushNamed(context, LoginScreenView);
-                    }
+                    signUpFunc(usernameController.text, emailController.text,
+                        passwordController.text, context);
                   },
                       textColor: Colors.white,
                       margin: const EdgeInsets.only(top: 20))
