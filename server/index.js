@@ -12,6 +12,7 @@ const quizRouter = require('./routes/quiz')
 //middleware
 app.use(express.json())
 app.use(authRouter)
+app.use("/api/quizes", quizRouter);
 
 //Connection
 mongoose

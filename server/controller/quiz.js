@@ -11,7 +11,7 @@ const createQuiz = async (req, res) => {
         questionList,
     } = req.body
 
-    const quiz = new Quiz ({
+    const quiz = new Quiz({
         name,
         description,
         background,
@@ -23,19 +23,20 @@ const createQuiz = async (req, res) => {
         questionList,
     })
 
-    try{
+    try {
         const newQuiz = await quiz.save()
-        res.status(201).json(newQuiz)
-    }catch (error) {
+        console.log("Quiz is :" + req.body.creatorId);
+        res.status(200).json(newQuiz)
+    } catch (error) {
         res.status(400).json({ message: error.message })
     }
 }
 
 const getQuizes = async (req, res) => {
-    try{
+    try {
         const quizes = await Quiz.find()
         res.status(200).send(quizes)
-    }catch (error) {
+    } catch (error) {
         res.status(500).json({ message: error.message })
     }
 }
@@ -50,7 +51,7 @@ const getQuiz = async (req, res) => {
             })
         }
         res.status(200).json(quiz)
-    }catch (error) {
+    } catch (error) {
         res.status(500).json({ message: error.message })
     }
 }
@@ -98,13 +99,13 @@ const getQuestions = async (req, res) => {
             })
         }
         res.status(200).send(quiz.questionList);
-    }catch (error) {
+    } catch (error) {
         res.status(500).json({ message: error.message })
     }
 }
 
 const getQuestion = async (req, res) => {
-    const {quizId, questionId} = req.params
+    const { quizId, questionId } = req.params
     try {
         const quiz = await Quiz.findById(quizId)
         if (quiz == null) {
@@ -114,7 +115,7 @@ const getQuestion = async (req, res) => {
         }
         const question = quiz.questionList.id(questionId)
         res.json(question)
-    }catch (error) {
+    } catch (error) {
         res.status(500).json({ message: error.message })
     }
 }
