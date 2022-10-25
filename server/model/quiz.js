@@ -4,7 +4,6 @@ const quizSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique: true
     },
     description: {
         type: String
@@ -58,13 +57,13 @@ const quizSchema = mongoose.Schema({
             required: true
         },
         answerList: [{
-            name: {type: String},
-            body: {type: String},
-            isCorrect: {type: Boolean},
+            name: { type: String },
+            body: { type: String },
+            isCorrect: { type: Boolean },
         }],
         correctAnswerList: [{
-            name: {type: String},
-            body: {type: String},
+            name: { type: String },
+            body: { type: String },
         }],
         questionIndex: {
             type: Number,

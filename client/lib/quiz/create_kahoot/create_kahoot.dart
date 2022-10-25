@@ -4,6 +4,9 @@ import '../../utils/widget.dart';
 import '../my_kahoots.dart';
 import '../components/quiz_component.dart';
 import '../../utils/global_variables.dart';
+import '../../api/index.dart';
+import '../../model/quiz_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateKahoot extends StatefulWidget {
   //final List<Widget> quizList;
@@ -17,12 +20,46 @@ class CreateKahoot extends StatefulWidget {
 
 class _CreateKahootState extends State<CreateKahoot> {
   final TextEditingController quizTitleController = TextEditingController();
+  String username = "";
 
-    @override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    initial();
   }
+
+  void initial() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      username = prefs.getString('username') as String;
+      //username = shared_preferences.stringGetter('username')!;
+    });
+    //prefs = await SharedPreferences.getInstance();
+  }
+
+  void saveQuizFunc(
+      String name,
+      String description,
+      String background,
+      String creatorName,
+      int scorePerQuestion,
+      int numberOfQuestion,
+      List questionList,
+      BuildContext context) async {
+    var res = await addQuizAPI(name, description, background, creatorName,
+        scorePerQuestion, numberOfQuestion, questionList);
+    if (res.statusCode == 200) {
+      Quiz quiz = Quiz.fromJson(res.data);
+      print(quiz.name);
+      if (!mounted) return;
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MyKahootScreen()));
+    } else {
+      print(res.statusMessage);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,12 +128,16 @@ class _CreateKahootState extends State<CreateKahoot> {
             ),
             onPressed: () {
               print("Tap Save");
-              quizListGlobal.addAll([
-                QuizComponent(quizTitleController.text, "Something", "duc"),
-                SizedBox(height: 5),
-              ]);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MyKahootScreen()));
+              // quizListGlobal.addAll([
+              //   QuizComponent(random(1, 1000000000).toString(),
+              //       quizTitleController.text, "Something", "duc"),
+              //   SizedBox(height: 5),
+              // ]);
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => MyKahootScreen()));
+              saveQuizFunc(quizTitleController.text, 
+              quizTitleController.text,
+                  "", username, 10, 0, [], context);
             },
           ),
         ],

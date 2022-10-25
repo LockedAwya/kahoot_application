@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
-import '../create_kahoot/create_kahoot.dart';
+//import '../create_kahoot/create_kahoot.dart';
+import '../components/quiz_details.dart';
+import '../../utils/global_variables.dart';
 
 class QuizComponent extends StatelessWidget {
   //final String text1;
+  final String quizId;
   final String quizName;
   final String quizDescription;
   final String quizCreator;
-  const QuizComponent(this.quizName, this.quizDescription, this.quizCreator);
+  const QuizComponent(this.quizId, this.quizName, this.quizDescription, this.quizCreator);
   @override
   Widget build(BuildContext context) {
     return InkWell(
       //padding: EdgeInsets.all(5),
       // alignment: Alignment.topLeft,
       onTap: () {
+        quizNameGlobal = quizName;
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => CreateKahoot()),
+          MaterialPageRoute(builder: (context) => QuizDetails()),
         );
       },
       child: Row(

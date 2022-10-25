@@ -7,7 +7,6 @@ import '../../utils/global_variables.dart';
 
 class QuizDetails extends StatefulWidget {
   //final List<Widget> quizList;
-
   const QuizDetails({Key? key}) : super(key: key);
   //const CreateKahoot({required this.quizList});
 
@@ -16,13 +15,15 @@ class QuizDetails extends StatefulWidget {
 }
 
 class _QuizDetailsState extends State<QuizDetails> {
-  final TextEditingController quizTitleController = TextEditingController();
+  final TextEditingController quizTitleController =
+      TextEditingController(text: quizNameGlobal);
 
-    @override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,6 +96,7 @@ class _QuizDetailsState extends State<QuizDetails> {
               //   QuizComponent(quizTitleController.text, "Something", "duc"),
               //   SizedBox(height: 5),
               // ]);
+              quizNameGlobal = quizTitleController.text;
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => MyKahootScreen()));
             },

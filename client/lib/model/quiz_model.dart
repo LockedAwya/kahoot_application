@@ -1,9 +1,4 @@
 class Quiz {
-  // String token = "";
-  // String id = "";
-  // String email = "";
-  // String username = "";
-  // String password = "";
   String name = "";
   String description = "";
   String background = "";
@@ -27,8 +22,8 @@ class Quiz {
       description: json["description"],
       background: json["background"],
       creatorName: json["creatorName"],
-      scorePerQuestion: json["scorePerQuestion"],
-      numberOfQuestion: json["numberOfQuestion"],
+      scorePerQuestion: json["scorePerQuestion"] as int,
+      numberOfQuestion: json["numberOfQuestion"] as int,
       questionList: json["questionList"] as List,
     );
   }

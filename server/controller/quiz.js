@@ -6,6 +6,7 @@ const createQuiz = async (req, res) => {
         name,
         description,
         background,
+        creatorId,
         creatorName,
         scorePerQuestion,
         questionList,
@@ -15,7 +16,7 @@ const createQuiz = async (req, res) => {
         name,
         description,
         background,
-        creatorId: req.user.id,
+        creatorId,
         creatorName,
         numberOfQuestion: questionList.length,
         scorePerQuestion,
@@ -35,6 +36,16 @@ const createQuiz = async (req, res) => {
 const getQuizes = async (req, res) => {
     try {
         const quizes = await Quiz.find()
+        res.status(200).send(quizes)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
+const getHostQuizes = async (req, res) => {
+    let hostId = req.params.hostId
+    try {
+        const quizes = await Quiz.find({ creatorId: hostId })
         res.status(200).send(quizes)
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -126,5 +137,6 @@ module.exports = {
     getQuiz,
     addQuestion,
     getQuestions,
-    getQuestion
+    getQuestion,
+    getHostQuizes
 }
