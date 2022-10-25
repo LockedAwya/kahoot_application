@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_folder/add_question/add_question.dart';
-import '../utils/widget.dart';
+import '../../utils/widget.dart';
+import '../my_kahoots.dart';
+import '../components/quiz_component.dart';
+import '../../utils/global_variables.dart';
 
 class CreateKahoot extends StatefulWidget {
+  //final List<Widget> quizList;
+
   const CreateKahoot({Key? key}) : super(key: key);
+  //const CreateKahoot({required this.quizList});
 
   @override
   _CreateKahootState createState() => _CreateKahootState();
 }
 
 class _CreateKahootState extends State<CreateKahoot> {
+  final TextEditingController quizTitleController = TextEditingController();
+
+    @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,6 +91,12 @@ class _CreateKahootState extends State<CreateKahoot> {
             ),
             onPressed: () {
               print("Tap Save");
+              quizListGlobal.addAll([
+                QuizComponent(quizTitleController.text, "Something", "duc"),
+                SizedBox(height: 5),
+              ]);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MyKahootScreen()));
             },
           ),
         ],
@@ -183,6 +202,7 @@ class _CreateKahootState extends State<CreateKahoot> {
           children: [
             Expanded(
                 child: TextFormField(
+              controller: quizTitleController,
               decoration: InputDecoration(
                 hintStyle: const TextStyle(
                     fontSize: 18,
@@ -228,4 +248,11 @@ class _CreateKahootState extends State<CreateKahoot> {
           ],
         ),
       );
+
+  @override
+  void dispose() {
+    //super.dispose();
+    quizTitleController.dispose();
+    super.dispose();
+  }
 }

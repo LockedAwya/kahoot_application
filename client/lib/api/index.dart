@@ -29,4 +29,30 @@ Future<Response> signupAPI(String username, String email, String password) {
   );
 }
 
+// Future<Response> getQuizesAPI() {
+//   // return dio.post(
+//   //   api_url + "/api/signup",
+//   //   data: {"email": email, "username": username, "password": password},
+//   //   options: Options(
+//   //     followRedirects: false,
+//   //     validateStatus: (status) {
+//   //       return status == 200 || status == 400;
+//   //     },
+//   //   ),
+//   // );
+//   //return Response;
+// }
 
+// Future<Response> addQuizAPI() {
+//   // return dio.post(
+//   //   api_url + "/api/signup",
+//   //   data: {"email": email, "username": username, "password": password},
+//   //   options: Options(
+//   //     followRedirects: false,
+//   //     validateStatus: (status) {
+//   //       return status == 200 || status == 400;
+//   //     },
+//   //   ),
+//   // );
+//   //return Response;
+// }

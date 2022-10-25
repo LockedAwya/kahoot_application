@@ -3,7 +3,7 @@ import '../InitialScreen/initial_screen.dart';
 import '../utils/global_variables.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../NotLoggedIn/no_auth.dart';
-import './my_kahoots.dart';
+import '../quiz/my_kahoots.dart';
 
 class ProfileScreen extends StatefulWidget {
   final double borderWidth = 0.5;
@@ -42,7 +42,8 @@ class _ProfileScreen extends State<ProfileScreen> {
     });
   }
 
-  Widget buttonInkWell(String title, {
+  Widget buttonInkWell(
+    String title, {
     VoidCallback? onTap,
     EdgeInsets? margin,
     EdgeInsets? padding,
@@ -144,6 +145,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                       isAuth = false;
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const InitialScreen()));
+                      quizListGlobal = [];
                     },
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10.0),
