@@ -21,6 +21,7 @@ class CreateKahoot extends StatefulWidget {
 class _CreateKahootState extends State<CreateKahoot> {
   final TextEditingController quizTitleController = TextEditingController();
   String username = "";
+  String userId = "";
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _CreateKahootState extends State<CreateKahoot> {
     prefs = await SharedPreferences.getInstance();
     setState(() {
       username = prefs.getString('username') as String;
+      userId = prefs.getString('userId') as String;
       //username = shared_preferences.stringGetter('username')!;
     });
     //prefs = await SharedPreferences.getInstance();
@@ -42,13 +44,14 @@ class _CreateKahootState extends State<CreateKahoot> {
       String name,
       String description,
       String background,
+      String creatorId,
       String creatorName,
       int scorePerQuestion,
       int numberOfQuestion,
       List questionList,
       BuildContext context) async {
-    var res = await addQuizAPI(name, description, background, creatorName,
-        scorePerQuestion, numberOfQuestion, questionList);
+    var res = await addQuizAPI(name, description, background, creatorId,
+        creatorName, scorePerQuestion, numberOfQuestion, questionList);
     if (res.statusCode == 200) {
       Quiz quiz = Quiz.fromJson(res.data);
       print(quiz.name);
@@ -56,6 +59,7 @@ class _CreateKahootState extends State<CreateKahoot> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => MyKahootScreen()));
     } else {
+      print(res.statusCode);
       print(res.statusMessage);
     }
   }
@@ -135,9 +139,8 @@ class _CreateKahootState extends State<CreateKahoot> {
               // ]);
               // Navigator.push(context,
               //     MaterialPageRoute(builder: (context) => MyKahootScreen()));
-              saveQuizFunc(quizTitleController.text, 
-              quizTitleController.text,
-                  "", username, 10, 0, [], context);
+              saveQuizFunc(quizTitleController.text, quizTitleController.text,
+                  "", userId, username, 10, 0, [], context);
             },
           ),
         ],
