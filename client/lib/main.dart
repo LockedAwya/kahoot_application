@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primarySwatch: Colors.blue,
             scaffoldBackgroundColor: Colors.deepPurpleAccent),
-        home: const SafeArea(child: ScoreBoard()),
+        home: const SafeArea(child: CreateKahoot()),
         // onGenerateRoute: router.generateRoute,
         // initialRoute: InitialScreenView,
       ),

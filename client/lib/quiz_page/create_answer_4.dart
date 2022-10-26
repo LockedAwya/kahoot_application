@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:untitled_folder/model/quiz_model.dart';
 
 class CreateAnswer4 extends StatefulWidget {
   final String? textanswer;
-  const CreateAnswer4({Key? key, this.textanswer}) : super(key: key);
+  final bool isCorrect;
+  const CreateAnswer4({Key? key, this.textanswer,this.isCorrect = false}) : super(key: key);
 
   @override
   State<CreateAnswer4> createState() => _CreateAnswer4State();
@@ -23,6 +25,7 @@ class _CreateAnswer4State extends State<CreateAnswer4> {
   setAnswer() {
     setState(() {
       answerController.text = widget.textanswer ?? '';
+      status = widget.isCorrect;
     });
   }
   @override
@@ -157,7 +160,8 @@ class _CreateAnswer4State extends State<CreateAnswer4> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ButtonItem(
                 onTap: (){
-                  Navigator.pop(context,answerController.text.trim());
+                  QuizModel quizModel = QuizModel(text: answerController.text.trim(),isCorrect: status);
+                  Navigator.pop(context,quizModel);
                 },
                 colors: Colors.lightBlue[900],text: 'Done'),
             )

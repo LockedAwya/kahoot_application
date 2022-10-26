@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_folder/add_question/add_question.dart';
 import 'package:untitled_folder/model/quiz_model.dart';
+import 'package:untitled_folder/quiz_page/create_answer_4.dart';
 import 'package:untitled_folder/quiz_page/create_answer_1.dart';
 import 'package:untitled_folder/quiz_page/create_answer_2.dart';
 import 'package:untitled_folder/quiz_page/create_answer_3.dart';
@@ -246,19 +247,24 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                             children: [
                               ButtonItem(
                                 onTap: () async {
-                                  final String value = await Navigator.of(
+                                  final QuizModel value = await Navigator.of(
                                           context)
                                       .push(MaterialPageRoute(
                                           builder: (context) => CreateAnswer1(
+                                                isCorrect: listQuiz[
+                                                        listQuiz.indexOf(e)]
+                                                    .isCorrect,
                                                 textanswer: listQuiz[
                                                         listQuiz.indexOf(e)]
                                                     .answer1,
                                               )));
-                                  if (value.isEmpty) return;
-                                  if (value.isNotEmpty) {
+                                  listQuiz[listQuiz.indexOf(e)].isCorrect =
+                                      value.isCorrect;
+                                  if (value.text?.isEmpty ?? false) return;
+                                  if (value.text?.isNotEmpty ?? false) {
                                     setState(() {
                                       listQuiz[listQuiz.indexOf(e)].answer1 =
-                                          value;
+                                          value.text;
                                     });
                                   }
                                 },
@@ -271,19 +277,24 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                               ),
                               ButtonItem(
                                 onTap: () async {
-                                  final String value = await Navigator.of(
+                                  final QuizModel value = await Navigator.of(
                                           context)
                                       .push(MaterialPageRoute(
                                           builder: (context) => CreateAnswer2(
+                                                isCorrect: listQuiz[
+                                                        listQuiz.indexOf(e)]
+                                                    .isCorrect2,
                                                 textanswer: listQuiz[
                                                         listQuiz.indexOf(e)]
                                                     .answer2,
                                               )));
-                                  if (value.isEmpty) return;
-                                  if (value.isNotEmpty) {
+                                  listQuiz[listQuiz.indexOf(e)].isCorrect2 =
+                                      value.isCorrect;
+                                  if (value.text?.isEmpty ?? false) return;
+                                  if (value.text?.isNotEmpty ?? false) {
                                     setState(() {
                                       listQuiz[listQuiz.indexOf(e)].answer2 =
-                                          value;
+                                          value.text;
                                     });
                                   }
                                 },
@@ -301,19 +312,24 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                             children: [
                               ButtonItem(
                                 onTap: () async {
-                                  final String value = await Navigator.of(
+                                  final QuizModel value = await Navigator.of(
                                           context)
                                       .push(MaterialPageRoute(
                                           builder: (context) => CreateAnswer3(
+                                                isCorrect: listQuiz[
+                                                        listQuiz.indexOf(e)]
+                                                    .isCorrect3,
                                                 textanswer: listQuiz[
                                                         listQuiz.indexOf(e)]
                                                     .answer3,
                                               )));
-                                  if (value.isEmpty) return;
-                                  if (value.isNotEmpty) {
+                                  listQuiz[listQuiz.indexOf(e)].isCorrect3 =
+                                      value.isCorrect;
+                                  if (value.text?.isEmpty ?? false) return;
+                                  if (value.text?.isNotEmpty ?? false) {
                                     setState(() {
                                       listQuiz[listQuiz.indexOf(e)].answer3 =
-                                          value;
+                                          value.text;
                                     });
                                   }
                                 },
@@ -326,19 +342,24 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                               ),
                               ButtonItem(
                                 onTap: () async {
-                                  final String value = await Navigator.of(
+                                  final QuizModel value = await Navigator.of(
                                           context)
                                       .push(MaterialPageRoute(
-                                          builder: (context) => CreateAnswer3(
+                                          builder: (context) => CreateAnswer4(
+                                                isCorrect: listQuiz[
+                                                        listQuiz.indexOf(e)]
+                                                    .isCorrect4,
                                                 textanswer: listQuiz[
                                                         listQuiz.indexOf(e)]
                                                     .answer4,
                                               )));
-                                  if (value.isEmpty) return;
-                                  if (value.isNotEmpty) {
+                                  listQuiz[listQuiz.indexOf(e)].isCorrect4 =
+                                      value.isCorrect;
+                                  if (value.text?.isEmpty ?? false) return;
+                                  if (value.text?.isNotEmpty ?? false) {
                                     setState(() {
                                       listQuiz[listQuiz.indexOf(e)].answer4 =
-                                          value;
+                                          value.text;
                                     });
                                   }
                                 },
