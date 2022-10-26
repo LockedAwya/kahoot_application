@@ -7,6 +7,7 @@ import 'create_kahoot/create_kahoot.dart';
 import './components/quiz_component.dart';
 import '../api/index.dart';
 import '../model/quiz_model.dart';
+import '../quiz/components/quiz_details.dart';
 
 class MyKahootScreen extends StatefulWidget {
   final double borderWidth = 0.5;
@@ -133,21 +134,20 @@ class _MyKahootScreen extends State<MyKahootScreen> {
                         itemCount: quizList.length,
                         itemBuilder: (context, index) {
                           return Container(
-                              margin: EdgeInsets.all(8),
-                              padding: EdgeInsets.all(8),
-                              color: Colors.white,
-                              child: Column(
-                                // padding: const EdgeInsets.symmetric(
-                                //     vertical: 10.0, horizontal: 5.0),
-                                children: [
-                                  QuizComponent(
-                                      quizList[index].id,
-                                      quizList[index].name,
-                                      quizList[index].description,
-                                      quizList[index].creatorName),
-                                  // SizedBox(height: 5),
-                                ],
-                              ));
+                            margin: EdgeInsets.all(8),
+                            padding: EdgeInsets.all(8),
+                            color: Colors.white,
+                            child: Column(
+                              children: [
+                                QuizComponent(
+                                    quizList[index].id,
+                                    quizList[index].name,
+                                    quizList[index].description,
+                                    quizList[index].creatorName),
+                                // SizedBox(height: 5),
+                              ],
+                            ),
+                          );
                         });
                   }
                   if (snapshot.hasError) {

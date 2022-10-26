@@ -9,19 +9,20 @@ class QuizComponent extends StatelessWidget {
   final String quizName;
   final String quizDescription;
   final String quizCreator;
-  const QuizComponent(this.quizId, this.quizName, this.quizDescription, this.quizCreator);
+  const QuizComponent(
+      this.quizId, this.quizName, this.quizDescription, this.quizCreator);
   @override
   Widget build(BuildContext context) {
     return InkWell(
       //padding: EdgeInsets.all(5),
       // alignment: Alignment.topLeft,
-      onTap: () {
-        quizNameGlobal = quizName;
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => QuizDetails()),
-        );
-      },
+      onTap: (() {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                QuizDetails(quizId))
+                );
+        print("Quiz id is: " + quizId);
+      }),
       child: Row(
         children: <Widget>[
           Image.asset(

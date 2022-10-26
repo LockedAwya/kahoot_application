@@ -43,10 +43,6 @@ Future<List<Quiz>> getQuizesByHostId(String hostId) async {
     ),
   );
   if (res.statusCode == 200) {
-    // for (int i = 0; i < res.data.length; i++) {
-    //   Quiz quiz = Quiz.fromJson(res.data[i]);
-    //   quizList.add(quiz);
-    // }
     List<Quiz> reversedList =
         (res.data as List).map((e) => Quiz.fromJson(e)).toList();
     reversedList = reversedList.reversed.toList();
@@ -55,6 +51,27 @@ Future<List<Quiz>> getQuizesByHostId(String hostId) async {
     // If the server did not return a 200 OK response,
     // then throw an exception.
     throw Exception('Failed to load quizes');
+  }
+}
+
+Future<Quiz> getQuizesById(String quizId) async {
+  //List<Quiz> quizList = <Quiz>[];
+  Response res = await dio.get(
+    api_url + "/api/quizes/" + quizId,
+    options: Options(
+      followRedirects: false,
+      validateStatus: (status) {
+        return status == 200 || status == 400;
+      },
+    ),
+  );
+  if (res.statusCode == 200) {
+    Quiz _quiz = Quiz.fromJson(res.data);
+    return _quiz;
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to find quiz');
   }
 }
 

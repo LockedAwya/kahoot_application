@@ -7,9 +7,14 @@ import '../../utils/global_variables.dart';
 
 class QuizDetails extends StatefulWidget {
   //final List<Widget> quizList;
-  const QuizDetails({Key? key}) : super(key: key);
+  //const QuizDetails({Key? key}) : super(key: key);
   //const CreateKahoot({required this.quizList});
-
+  final String quizId;
+  // final String quizName;
+  // final String quizDescription;
+  // final String quizCreator;
+  const QuizDetails(
+      this.quizId);
   @override
   _QuizDetailsState createState() => _QuizDetailsState();
 }
