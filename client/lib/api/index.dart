@@ -47,7 +47,10 @@ Future<List<Quiz>> getQuizesByHostId(String hostId) async {
     //   Quiz quiz = Quiz.fromJson(res.data[i]);
     //   quizList.add(quiz);
     // }
-    return (res.data as List).map((e) => Quiz.fromJson(e)).toList();
+    List<Quiz> reversedList =
+        (res.data as List).map((e) => Quiz.fromJson(e)).toList();
+    reversedList = reversedList.reversed.toList();
+    return reversedList;
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.

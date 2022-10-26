@@ -37,7 +37,7 @@ class _LoginScreen extends State<LoginScreen> {
   }
 
   void initial() async {
-    prefs = await SharedPreferences.getInstance();
+    //prefs = await SharedPreferences.getInstance();
   }
 
   void signInFunc(String email, String password, BuildContext context) async {
@@ -49,9 +49,11 @@ class _LoginScreen extends State<LoginScreen> {
       if (res.statusCode == 200) {
         User user = User.fromJson(res.data);
         print(user.username);
-        prefs.setString('token', user.token);
-        prefs.setString('username', user.username);
-        prefs.setString('userId', user.id);
+        // prefs.setString('token', user.token);
+        // prefs.setString('username', user.username);
+        // prefs.setString('userId', user.id);
+        username = user.username;
+        userId = user.id;
         isAuth = true;
       }
 

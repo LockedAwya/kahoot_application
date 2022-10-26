@@ -82,17 +82,17 @@ class _QuizPageState extends State<QuizPage> {
   late TextEditingController fieldController;
   final List<Question> _questions = <Question>[];
 
-  void initial() async {
-    prefs = await SharedPreferences.getInstance();
+  // void initial() async {
+  //   prefs = await SharedPreferences.getInstance();
 
-    await prefs.setString('question_list', encodedQuestionList);
+  //   await prefs.setString('question_list', encodedQuestionList);
 
-    String questionListString = await prefs.getString('question_list') ?? "";
+  //   String questionListString = await prefs.getString('question_list') ?? "";
 
-    final List<Question> questions = Question.decode(questionListString);
+  //   final List<Question> questions = Question.decode(questionListString);
 
-    print(questionListString);
-  }
+  //   print(questionListString);
+  // }
 
   List<Widget> _persistentFooterButtons(BuildContext context) {
     return [
@@ -180,7 +180,7 @@ class _QuizPageState extends State<QuizPage> {
   void initState() {
     super.initState();
     fieldController = new TextEditingController(text: widget.values.toString());
-    initial();
+    //initial();
   }
 
   @override

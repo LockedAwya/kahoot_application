@@ -17,7 +17,7 @@ class _ProfileScreen extends State<ProfileScreen> {
   final double containerHeight = 65;
   final double fontSize = 24;
 
-  String? username = "";
+  //String? username = "";
   //late
 
   @override
@@ -28,19 +28,7 @@ class _ProfileScreen extends State<ProfileScreen> {
     initial();
   }
 
-  void initial() async {
-    prefs = await SharedPreferences.getInstance();
-    setState(() {
-      if (prefs.containsKey('username')) {
-        username = prefs.getString('username');
-      }
-      // if (prefs.containsKey('token')) {
-      //   //token = prefs.getString('token');
-      //   token = true;
-      // }
-      //username = shared_preferences.stringGetter('username')!;
-    });
-  }
+  void initial() async {}
 
   Widget buttonInkWell(
     String title, {
@@ -139,10 +127,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                   buttonInkWell(
                     'Log out',
                     onTap: () {
-                      //print("tapped on container");
-                      prefs.remove('username');
-                      prefs.remove('token');
-                      isAuth = false;
+                      resetGlobalVariable();
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const InitialScreen()));
                       quizListGlobal = [];

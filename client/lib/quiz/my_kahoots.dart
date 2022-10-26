@@ -24,12 +24,6 @@ class _MyKahootScreen extends State<MyKahootScreen> {
   final double borderWidth = 0.5;
   final double containerHeight = 65;
   final double fontSize = 24;
-  String? username = "";
-  bool token = false;
-  List<dynamic> _quizList = [];
-  List<Widget> quizList = [];
-  String userId = "";
-  late Future<dynamic> fetchQuizList;
 
   @override
   void initState() {
@@ -40,21 +34,21 @@ class _MyKahootScreen extends State<MyKahootScreen> {
   }
 
   void initial() async {
-    prefs = await SharedPreferences.getInstance();
+    //prefs = await SharedPreferences.getInstance();
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      if (prefs.containsKey('username')) {
-        username = prefs.getString('username');
-      }
-      if (prefs.containsKey('token')) {
-        //token = prefs.getString('token');
-        token = true;
-      }
-      userId = prefs.getString('userId') as String;
+      // if (prefs.containsKey('username')) {
+      //   username = prefs.getString('username');
+      // }
+      // if (prefs.containsKey('token')) {
+      //   //token = prefs.getString('token');
+      //   token = true;
+      // }
+      // userId = prefs.getString('userId') as String;
     });
     //fetchQuizList = await getQuizesByHostId(userId) as Future<dynamic>;
   }
@@ -123,7 +117,7 @@ class _MyKahootScreen extends State<MyKahootScreen> {
           ),
         ],
       ),
-      body: token
+      body: isAuth == true
           ? SafeArea(
               //child:
               // ListView(

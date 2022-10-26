@@ -20,8 +20,6 @@ class CreateKahoot extends StatefulWidget {
 
 class _CreateKahootState extends State<CreateKahoot> {
   final TextEditingController quizTitleController = TextEditingController();
-  String username = "";
-  String userId = "";
 
   @override
   void initState() {
@@ -31,10 +29,10 @@ class _CreateKahootState extends State<CreateKahoot> {
   }
 
   void initial() async {
-    prefs = await SharedPreferences.getInstance();
+    //prefs = await SharedPreferences.getInstance();
     setState(() {
-      username = prefs.getString('username') as String;
-      userId = prefs.getString('userId') as String;
+      // username = prefs.getString('username') as String;
+      // userId = prefs.getString('userId') as String;
       //username = shared_preferences.stringGetter('username')!;
     });
     //prefs = await SharedPreferences.getInstance();

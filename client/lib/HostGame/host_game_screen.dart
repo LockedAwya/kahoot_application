@@ -103,17 +103,17 @@ class _HostGameScreen extends State<HostGameScreen> {
   }
 
   void initial() async {
-    prefs = await SharedPreferences.getInstance();
-    setState(() {
-      if (prefs.containsKey('username')) {
-        username = prefs.getString('username');
-      }
-      if (prefs.containsKey('token')) {
-        //token = prefs.getString('token');
-        token = true;
-      }
-      //username = shared_preferences.stringGetter('username')!;
-    });
+    // prefs = await SharedPreferences.getInstance();
+    // setState(() {
+    //   if (prefs.containsKey('username')) {
+    //     username = prefs.getString('username');
+    //   }
+    //   if (prefs.containsKey('token')) {
+    //     //token = prefs.getString('token');
+    //     token = true;
+    //   }
+    //   //username = shared_preferences.stringGetter('username')!;
+    // });
   }
 
   @override

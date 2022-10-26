@@ -42,44 +42,9 @@ class _SecretScreen extends State<SecretScreen> {
     // TODO: implement initState
     super.initState();
     initial();
-
-    // if (token == true) {
-    //   _widgetOptions = <Widget>[
-    //     HomeScreen(),
-    //     JoinGameScreen(),
-    //     HostGameScreen(),
-    //     ProfileScreen(),
-    //   ];
-    // } else {
-    //   _widgetOptions = <Widget>[
-    //     HomeScreen(),
-    //     JoinGameScreen(),
-    //     NoAuth(),
-    //     NoAuth(),
-    //   ];
-    // }
-    //print(isAuth);
   }
 
-  void initial() async {
-    prefs = await SharedPreferences.getInstance();
-    // setState(() {
-    //   // if (prefs.containsKey('username')) {
-    //   //   username = prefs.getString('username');
-    //   // }
-    //   // if (prefs.containsKey('token')) {
-    //   //   //token = prefs.getString('token');
-    //   //   token = true;
-    //   //   //token = auth();
-    //   // }
-    //   if (prefs.containsKey('token')) {
-    //     isAuth = true;
-    //     //this.widgetOption(_widgetOptions);
-    //   }
-    //   //username = shared_preferences.stringGetter('username')!;
-    // });
-    //prefs = await SharedPreferences.getInstance();
-  }
+  void initial() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -143,9 +108,10 @@ class _SecretScreen extends State<SecretScreen> {
                   ),
                   TextButton(
                     onPressed: () => {
-                      prefs.remove("username"),
-                      prefs.remove("token"),
-                      isAuth = false,
+                      // prefs.remove("username"),
+                      // prefs.remove("token"),
+                      resetGlobalVariable(),
+                      //isAuth = false,
                       Navigator.of(context).pop(true)
                     }, // <-- SEE HERE
                     child: new Text('Yes'),
