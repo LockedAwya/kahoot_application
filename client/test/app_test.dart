@@ -2,41 +2,55 @@
 import 'package:flutter/material.dart';
 //import 'package:flutter_test/flutter_test.dart';
 //import 'package:flutter_driver/driver_extension.dart';
-import 'package:integration_test/integration_test.dart';
+//import 'package:integration_test/integration_test.dart';
+import 'package:untitled_folder/InitialScreen/login_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:untitled_folder/main.dart' as app;
-import 'package:untitled_folder/quiz/components/quiz_page.dart' as quizPage;
+import 'package:untitled_folder/main.dart';
+//import 'package:untitled_folder/quiz/components/quiz_page.dart' as quizPage;
 
 void main() {
-  group('app_test', () {
-    IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
-    testWidgets("login_fail", (tester) async {
-      app.main();
-      await tester.pumpAndSettle();
-      //initial screen
+  group('initial_screens', () {
+    testWidgets("first_screen", (tester) async {
+      await tester.pumpWidget(MyApp());
       final loginButtonFinder = find.byKey(Key("Login"));
-      await Future.delayed(Duration(seconds: 1));
-
+      expect(loginButtonFinder, findsOneWidget);
       await tester.tap(loginButtonFinder);
-      await tester.pumpAndSettle();
-      //login screen
-      await Future.delayed(Duration(seconds: 1));
-      final usernameField = find.byKey(Key("Username"));
-      final passwordField = find.byKey(Key("Password"));
-      final loginButtonFinder2 = find.byKey(Key("Login"));
+    });
 
-      await tester.enterText(usernameField, "test1@gmail.com");
-      await Future.delayed(Duration(seconds: 1));
-      await tester.enterText(passwordField, "1234567");
-      await Future.delayed(Duration(seconds: 2));
-      //await tester.pumpAndSettle();
+    // Widget testWidget = MediaQuery(
+    //   data: MediaQueryData(),
+    //   child: MaterialApp(home: LoginScreen()),
+    // );
+  });
 
-      await tester.tap(loginButtonFinder2);
-      await tester.pumpAndSettle();
+  group('login_screen', () {
+    Widget testWidget = MediaQuery(
+      data: MediaQueryData(),
+      child: MaterialApp(home: LoginScreen()),
+    );
+    testWidgets("type_username", (tester) async {
+      await tester.pumpWidget(testWidget);
+      final usernameFinder = find.byKey(Key("Username"));
+      await tester.enterText(usernameFinder, "test1@gmail.com");
+      expect(find.text("test1@gmail.com"), findsOneWidget);
+      //await Future.delayed(Duration(seconds: 1));
+    });
 
-      expect(find.text("Incorrect username or password!"), findsOneWidget);
+    testWidgets("type_password", (tester) async {
+      await tester.pumpWidget(testWidget);
+      final usernameFinder = find.byKey(Key("Password"));
+      await tester.enterText(usernameFinder, "123456789");
+      expect(find.text("123456789"), findsOneWidget);
+      //await Future.delayed(Duration(seconds: 1));
+    });
+
+    testWidgets("click_login_button", (tester) async {
+      await tester.pumpWidget(testWidget);
+      //await tester.tap(find.byType();
+      final loginButtonFinder = find.byKey(Key("Login"));
+      expect(loginButtonFinder, findsOneWidget);
+      // await tester.tap(loginButtonFinder);
     });
   });
 }
