@@ -73,10 +73,10 @@ class HighScoreItem extends StatelessWidget {
                 fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
           ),
           const SizedBox(
-            height: 20,
+            height: 10, // khoang cach ten voi cot
           ),
           Container(
-            width: 120,
+            width: 120, //chieu rong cot
             height: height,
             decoration: BoxDecoration(
               color: Colors.deepPurple,
@@ -96,7 +96,8 @@ class HighScoreItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: height! * 0.08,
+                  height:
+                      height! * 0.001, //chieu cao huy chuong trong highscore
                 ),
                 Image.asset(
                   '$image',
@@ -104,7 +105,7 @@ class HighScoreItem extends StatelessWidget {
                   height: 60,
                 ),
                 SizedBox(
-                  height: height! * 0.08,
+                  height: height! * 0.01,
                 ),
                 Text(
                   "${height?.toInt()}/450",
