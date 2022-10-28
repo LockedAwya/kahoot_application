@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:untitled_folder/model/add_question_model.dart';
 import 'package:untitled_folder/quiz/components/quiz_page.dart';
 import '../../utils/widget.dart';
+//import 'package:untitled_folder/quiz/components/quiz_page.dart';
 
 class QuizPageBody extends StatefulWidget {
   final int? values;
