@@ -109,30 +109,35 @@ const getQuiz = async (req, res) => {
 }
 
 const addQuestion = async (req, res) => {
+    const { quizId } = req.params
     const {
         questionType,
         scoreType,
         timer,
+        backgroundQuestion,
         question,
         answerList,
-        correctAnswerList
+        questionIndex
+        //correctAnswerList
     } = req.body
 
     let quiz;
     try {
-        quiz = await Quiz.findById(req.params)
+        quiz = await Quiz.findById(quizId)
         if (quiz == null) {
             return res.status(404).json({
-                msg: "Quiz not found!"
+                msg: "Quiz did not found!"
             })
         }
         quiz.questionList.push({
             questionType,
             scoreType,
             timer,
+            backgroundQuestion,
             question,
             answerList,
-            correctAnswerList
+            questionIndex
+            //correctAnswerList
         })
         quiz.numberOfQuestion += 1
         const updateQuiz = await quiz.save()
@@ -144,7 +149,7 @@ const addQuestion = async (req, res) => {
 
 const getQuestions = async (req, res) => {
     try {
-        const quiz = await Quiz.findById(req.params)
+        const quiz = await Quiz.findById(req.params.quizId)
         if (quiz == null) {
             return res.status(404).json({
                 msg: "Quiz not found!"

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_folder/add_question/add_question.dart';
-import 'package:untitled_folder/add_question/add_question2.dart';
+import 'package:untitled_folder/quiz/add_question/add_question.dart';
+import 'package:untitled_folder/quiz/add_question/add_question2.dart';
 //import './quiz_page_body.dart';
 import 'dart:convert';
 import '../../utils/global_variables.dart';
@@ -26,34 +26,34 @@ class QuizPage extends StatefulWidget {
   _QuizPageState createState() => _QuizPageState();
 }
 
-class Answer {
-  String name = "";
-  String body = "";
-  bool isCorrect = false;
+// class Answer {
+//   String name = "";
+//   String body = "";
+//   bool isCorrect = false;
 
-  Answer({required this.name, required this.body, required this.isCorrect});
-  factory Answer.fromJson(Map<dynamic, dynamic> json) {
-    return Answer(
-        name: json["name"], body: json["body"], isCorrect: json["isCorrect"]);
-  }
+//   Answer({required this.name, required this.body, required this.isCorrect});
+//   factory Answer.fromJson(Map<dynamic, dynamic> json) {
+//     return Answer(
+//         name: json["name"], body: json["body"], isCorrect: json["isCorrect"]);
+//   }
 
-  static Map<String, dynamic> toMap(Answer answer) => {
-        'name': answer.name,
-        'body': answer.body,
-        'isCorrect': answer.isCorrect,
-      };
+//   static Map<String, dynamic> toMap(Answer answer) => {
+//         'name': answer.name,
+//         'body': answer.body,
+//         'isCorrect': answer.isCorrect,
+//       };
 
-  static String encode(List<Answer> answers) => json.encode(
-        answers
-            .map<Map<String, dynamic>>((answer) => Answer.toMap(answer))
-            .toList(),
-      );
+//   static String encode(List<Answer> answers) => json.encode(
+//         answers
+//             .map<Map<String, dynamic>>((answer) => Answer.toMap(answer))
+//             .toList(),
+//       );
 
-  static List<Answer> decode(String answers) =>
-      (json.decode(answers) as List<dynamic>)
-          .map<Answer>((item) => Answer.fromJson(item))
-          .toList();
-}
+//   static List<Answer> decode(String answers) =>
+//       (json.decode(answers) as List<dynamic>)
+//           .map<Answer>((item) => Answer.fromJson(item))
+//           .toList();
+// }
 
 // List<Answer> ans1 = [
 //   Answer(name: "A", body: "abcd", isCorrect: false),
@@ -165,6 +165,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
             ),
           ),
           onPressed: () {
+            print("PIP");
             Navigator.of(context).pop();
           },
         ),
@@ -189,6 +190,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
+            //bottom
             child: TabBarView(
               controller: tabController,
               physics: const NeverScrollableScrollPhysics(),
@@ -319,6 +321,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              //choice 1
                               ButtonItem(
                                 onTap: () async {
                                   final QuizModel value = await Navigator.of(
@@ -349,6 +352,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                               const SizedBox(
                                 width: 10,
                               ),
+                              //choice 2
                               ButtonItem(
                                 onTap: () async {
                                   final QuizModel value = await Navigator.of(
@@ -379,6 +383,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                             ],
                           ),
                         ),
+                        //choice 3
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Row(
@@ -414,6 +419,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                               const SizedBox(
                                 width: 10,
                               ),
+                              //choice 4
                               ButtonItem(
                                 onTap: () async {
                                   final QuizModel value = await Navigator.of(

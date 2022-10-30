@@ -61,10 +61,10 @@ const quizSchema = mongoose.Schema({
             body: { type: String },
             isCorrect: { type: Boolean },
         }],
-        correctAnswerList: [{
-            name: { type: String },
-            body: { type: String },
-        }],
+        // correctAnswerList: [{
+        //     name: { type: String },
+        //     body: { type: String },
+        // }],
         questionIndex: {
             type: Number,
             required: true

@@ -135,6 +135,7 @@ Future<Quiz> updateQuizByIdAPI(
   // List questionList
 ) async {
   //TODO
+  //update quiz when question is updated.
   var res = await dio.patch(
     api_url + "/api/quizes/" + quizId,
     data: {
