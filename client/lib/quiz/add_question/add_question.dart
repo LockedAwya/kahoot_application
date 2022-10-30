@@ -4,6 +4,7 @@ import 'package:untitled_folder/model/add_question_model.dart';
 import 'package:untitled_folder/quiz/components/quiz_page.dart';
 import 'package:untitled_folder/model/quiz_model.dart';
 import '../../utils/widget.dart';
+import '../../utils/global_variables.dart';
 
 class AddQuestion extends StatefulWidget {
   final List<QuizModel>? listValue;
@@ -34,6 +35,13 @@ class _AddQuestionState extends State<AddQuestion> {
     AddQuestionModel(title: 'Slide', image: 'assets/images/img_6.png')
   ];
   List<QuizModel> value = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(box.read("quiz_details")["title"]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

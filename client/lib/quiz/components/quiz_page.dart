@@ -8,10 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../model/question_model.dart';
 import '../../model/answer_model.dart';
 import 'package:untitled_folder/model/quiz_model.dart';
-// import 'package:untitled_folder//quiz_page/create_answer_4.dart';
-// import 'package:untitled_folder/quiz_page/create_answer_1.dart';
-// import 'package:untitled_folder/quiz_page/create_answer_2.dart';
-// import 'package:untitled_folder/quiz_page/create_answer_3.dart';
 
 import 'package:untitled_folder/quiz/components/create_answer_4.dart';
 import 'package:untitled_folder/quiz/components/create_answer_1.dart';
@@ -167,6 +163,8 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
           onPressed: () {
             print("PIP");
             Navigator.of(context).pop();
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) => QuizDetails()));
           },
         ),
         actions: [

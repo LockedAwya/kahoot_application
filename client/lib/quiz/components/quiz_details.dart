@@ -221,6 +221,13 @@ class _QuizDetailsState extends State<QuizDetails> {
                                 height: 60,
                                 text: 'Add Question',
                                 onTap: () {
+                                  box.write("quiz_details", {
+                                    "id": widget.quizId,
+                                    "title": widget.quizName,
+                                    "description": widget.quizDescription,
+                                  });
+
+                                  //print("LOfasdfasdL");
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
                                           const AddQuestion()));
