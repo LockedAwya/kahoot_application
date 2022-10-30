@@ -34,7 +34,7 @@ const createQuiz = async (req, res) => {
 }
 
 const updateQuiz = async (req, res) => {
-    const { quizId } = req.params
+    //const { quizId } = req.params
     const {
         name,
         description,
@@ -45,7 +45,8 @@ const updateQuiz = async (req, res) => {
         questionList,
     } = req.body
     const quiz = new Quiz({
-        _id: quizId,
+        _id: req.params.id,
+        name,
         description,
         background,
         creatorId,
@@ -55,17 +56,18 @@ const updateQuiz = async (req, res) => {
     }
     )
     try {
-        const quizUpdated = await Quiz.findByIdAndUpdate(quizId, quiz, { new: true })
-        res.json(quizUpdated)
+        const quizUpdated = await Quiz.findByIdAndUpdate(req.params.id, quiz, { new: true })
+        res.status(200).json(quizUpdated)
     } catch (error) {
         res.status(400).json({ message: error.message })
     }
 }
 
 const deleteQuiz = async (req, res) => {
-    const { quizId } = req.params;
+    //const { id } = req.params;
+    console.log(req.params.id)
     try {
-        await Quiz.findByIdAndRemove(quizId);
+        await Quiz.findByIdAndRemove(req.params.id);
         res.json({ message: "Quiz has deleted." })
     } catch (error) {
         res.status(500).json({ message: error.message })

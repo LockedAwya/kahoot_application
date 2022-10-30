@@ -7,27 +7,28 @@ import '../../utils/global_variables.dart';
 import '../../api/index.dart';
 import '../../model/quiz_model.dart';
 import '../../Profile/List_View_Screen.dart';
+import '../../api/index.dart';
 
 class QuizDetails extends StatefulWidget {
-  //final List<Widget> quizList;
-  //const QuizDetails({Key? key}) : super(key: key);
-  //const CreateKahoot({required this.quizList});
   final String quizId;
-  // final String quizName;
-  // final String quizDescription;
-  // final String quizCreator;
-  const QuizDetails(this.quizId);
+  final String quizName;
+  final String quizDescription;
+  //final String quizCreator;
+  const QuizDetails(this.quizId, this.quizName, this.quizDescription);
   @override
   _QuizDetailsState createState() => _QuizDetailsState();
 }
 
 class _QuizDetailsState extends State<QuizDetails> {
-  // final TextEditingController quizTitleController =
-  //     TextEditingController(text: "");
-
+  late TextEditingController quizTitleController;
+  late TextEditingController quizDescriptionController;
+  //late var quizData;
   @override
   void initState() {
     // TODO: implement initState
+    quizTitleController = TextEditingController(text: widget.quizName);
+    quizDescriptionController =
+        TextEditingController(text: widget.quizDescription);
     super.initState();
   }
 
@@ -99,13 +100,11 @@ class _QuizDetailsState extends State<QuizDetails> {
                     color: Color(0xFFE2E2E2),
                     fontWeight: FontWeight.bold),
               ),
-              onPressed: () {
+              onPressed: () async {
                 print("Tap Save");
-                // quizListGlobal.addAll([
-                //   QuizComponent(quizTitleController.text, "Something", "duc"),
-                //   SizedBox(height: 5),
-                // ]);
-                //quizNameGlobal = quizTitleController.text;
+                var res = await updateQuizByIdAPI(widget.quizId,
+                    quizTitleController.text, quizDescriptionController.text);
+                print(res);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => MyKahootScreen()));
               },
@@ -176,7 +175,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                           const SizedBox(
                             height: 10,
                           ),
-                          textField2(snapshot.data!.name),
+                          textField2(quizTitleController.text),
                           const SizedBox(
                             height: 10,
                           ),
@@ -190,7 +189,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
-                          textField1(snapshot.data!.description),
+                          textField1(quizDescriptionController.text),
                           const Padding(
                             padding: EdgeInsets.only(left: 10),
                             child: Text(
@@ -247,13 +246,7 @@ class _QuizDetailsState extends State<QuizDetails> {
           children: [
             Expanded(
                 child: TextFormField(
-              controller: TextEditingController.fromValue(
-                TextEditingValue(
-                    text: text,
-                    selection: TextSelection.collapsed(
-                      offset: text.length,
-                    )),
-              ),
+              controller: quizDescriptionController,
               decoration: InputDecoration(
                 hintStyle: const TextStyle(
                     fontSize: 18,
@@ -295,13 +288,7 @@ class _QuizDetailsState extends State<QuizDetails> {
           children: [
             Expanded(
                 child: TextFormField(
-              controller: TextEditingController.fromValue(
-                TextEditingValue(
-                    text: text,
-                    selection: TextSelection.collapsed(
-                      offset: text.length,
-                    )),
-              ),
+              controller: quizTitleController,
               decoration: InputDecoration(
                 hintStyle: const TextStyle(
                     fontSize: 18,
@@ -332,11 +319,17 @@ class _QuizDetailsState extends State<QuizDetails> {
             const SizedBox(
               width: 10,
             ),
-            IconSetting(),
+            deleteButton(),
           ],
         ),
       );
-  Widget IconSetting() => Container(
+  Widget deleteButton() => InkWell(
+      onTap: () async {
+        await _showDeleteWarning();
+        print("Tapped on Delete button");
+        //Navigator.pop(context);
+      },
+      child: Container(
         width: 58,
         height: 58,
         alignment: Alignment.center,
@@ -347,12 +340,56 @@ class _QuizDetailsState extends State<QuizDetails> {
           "assets/icons/ic_settings.png",
           scale: 1.6,
         ),
-      );
+      ));
+  Future<void> _showDeleteWarning() async {
+    return showDialog<void>(
+      context: context,
+      //barrierDismissible: false, // user must tap button!
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Delete quiz'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('You are going to delete the quiz.'),
+                Text('Are you sure to do that?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: () async {
+                print(widget.quizId);
+                var res = await deleteQuizByIdAPI(widget.quizId);
+                // Navigator.of(context).push(
+                //     MaterialPageRoute(builder: (context) => MyKahootScreen()));
+                if (res.statusCode == 200) {
+                  print("Quiz has deleted successfully");
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => MyKahootScreen()));
+                } else {
+                  print("NO");
+                }
+              },
+            ),
+            TextButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   void dispose() {
     //super.dispose();
-    //quizTitleController.dispose();
+    quizTitleController.dispose();
+    quizDescriptionController.dispose();
     super.dispose();
   }
 }

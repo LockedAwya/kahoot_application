@@ -19,7 +19,7 @@ class QuizComponent extends StatelessWidget {
       onTap: (() {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                QuizDetails(quizId))
+                QuizDetails(quizId, quizName, quizDescription))
                 );
         print("Quiz id is: " + quizId);
       }),

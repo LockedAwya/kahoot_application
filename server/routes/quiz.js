@@ -5,10 +5,12 @@ const {
     getQuizes,
     createQuiz,
     getQuiz,
+    updateQuiz,
+    deleteQuiz,
     addQuestion,
     getQuestions,
     getQuestion,
-    getHostQuizes
+    getHostQuizes,
 } = require("../controller/quiz")
 
 //get list of quizes and create a quiz

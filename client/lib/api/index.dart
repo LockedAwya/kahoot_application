@@ -104,3 +104,60 @@ Future<Response> addQuizAPI(
     ),
   );
 }
+
+Future<Response> deleteQuizByIdAPI(String quizId) {
+  return dio.delete(
+    api_url + "/api/quizes/" + quizId,
+    options: Options(
+      followRedirects: false,
+      validateStatus: (status) {
+        return status == 200 || status == 404 || status == 500;
+      },
+    ),
+  );
+  // if (res.statusCode == 200) {
+  //   Quiz _quiz = Quiz.fromJson(res.data);
+  //   return _quiz;
+  // } else {
+  //   // If the server did not return a 200 OK response,
+  //   // then throw an exception.
+  //   throw Exception('Failed to delete quiz');
+  // }
+}
+
+Future<Quiz> updateQuizByIdAPI(
+  String quizId,
+  String name,
+  String description,
+  // String background,
+  // int scorePerQuestion,
+  // int numberOfQuestion,
+  // List questionList
+) async {
+  //TODO
+  var res = await dio.patch(
+    api_url + "/api/quizes/" + quizId,
+    data: {
+      "name": name,
+      "description": description,
+      // "background": background,
+      // "scorePerQuestion": scorePerQuestion,
+      // "numberOfQuestion": numberOfQuestion,
+      // "questionList": questionList
+    },
+    options: Options(
+      followRedirects: false,
+      validateStatus: (status) {
+        return status == 200 || status == 404 || status == 500;
+      },
+    ),
+  );
+  if (res.statusCode == 200) {
+    Quiz _quiz = Quiz.fromJson(res.data);
+    return _quiz;
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to delete quiz');
+  }
+}
