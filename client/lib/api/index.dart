@@ -54,7 +54,7 @@ Future<List<Quiz>> getQuizesByHostId(String hostId) async {
   }
 }
 
-Future<Quiz> getQuizesById(String quizId) async {
+Future<Quiz> getQuizById(String quizId) async {
   //List<Quiz> quizList = <Quiz>[];
   Response res = await dio.get(
     api_url + "/api/quizes/" + quizId,

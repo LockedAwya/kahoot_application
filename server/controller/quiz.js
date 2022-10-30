@@ -33,6 +33,45 @@ const createQuiz = async (req, res) => {
     }
 }
 
+const updateQuiz = async (req, res) => {
+    const { quizId } = req.params
+    const {
+        name,
+        description,
+        background,
+        creatorId,
+        creatorName,
+        scorePerQuestion,
+        questionList,
+    } = req.body
+    const quiz = new Quiz({
+        _id: quizId,
+        description,
+        background,
+        creatorId,
+        creatorName,
+        scorePerQuestion,
+        questionList,
+    }
+    )
+    try {
+        const quizUpdated = await Quiz.findByIdAndUpdate(quizId, quiz, { new: true })
+        res.json(quizUpdated)
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+const deleteQuiz = async (req, res) => {
+    const { quizId } = req.params;
+    try {
+        await Quiz.findByIdAndRemove(quizId);
+        res.json({ message: "Quiz has deleted." })
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
 const getQuizes = async (req, res) => {
     try {
         const quizes = await Quiz.find()
@@ -138,5 +177,7 @@ module.exports = {
     addQuestion,
     getQuestions,
     getQuestion,
-    getHostQuizes
+    getHostQuizes,
+    updateQuiz,
+    deleteQuiz
 }

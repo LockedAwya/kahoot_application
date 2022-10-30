@@ -120,11 +120,6 @@ class _MyKahootScreen extends State<MyKahootScreen> {
       ),
       body: isAuth == true
           ? SafeArea(
-              //child:
-              // ListView(
-              // padding:
-              //     const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-              // children: quizList,
               child: FutureBuilder<List<Quiz>>(
                 future: getQuizesByHostId(userId),
                 builder: (context, snapshot) {
