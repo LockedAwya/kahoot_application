@@ -62,136 +62,32 @@ class Answer {
 //   Answer(name: "D", body: "abcd", isCorrect: false),
 // ];
 
-final String encodedAnswer = Answer.encode([
-  Answer(name: "A", body: "abcd", isCorrect: false),
-  Answer(name: "B", body: "abcd", isCorrect: false),
-  Answer(name: "C", body: "abcd", isCorrect: true),
-  Answer(name: "D", body: "abcd", isCorrect: false),
-]);
-final String encodedQuestionList = Question.encode([
-  Question(
-      questionTitle: "What is this?",
-      answerList: encodedAnswer,
-      questionIndex: 1),
-  Question(
-      questionTitle: "What is this?",
-      answerList: encodedAnswer,
-      questionIndex: 2),
-  Question(
-      questionTitle: "What is this?",
-      answerList: encodedAnswer,
-      questionIndex: 3),
-  Question(
-      questionTitle: "What is this?",
-      answerList: encodedAnswer,
-      questionIndex: 4),
-]);
+// final String encodedAnswer = Answer.encode([
+//   Answer(name: "A", body: "abcd", isCorrect: false),
+//   Answer(name: "B", body: "abcd", isCorrect: false),
+//   Answer(name: "C", body: "abcd", isCorrect: true),
+//   Answer(name: "D", body: "abcd", isCorrect: false),
+// ]);
+// final String encodedQuestionList = Question.encode([
+//   Question(
+//       questionTitle: "What is this?",
+//       answerList: encodedAnswer,
+//       questionIndex: 1),
+//   Question(
+//       questionTitle: "What is this?",
+//       answerList: encodedAnswer,
+//       questionIndex: 2),
+//   Question(
+//       questionTitle: "What is this?",
+//       answerList: encodedAnswer,
+//       questionIndex: 3),
+//   Question(
+//       questionTitle: "What is this?",
+//       answerList: encodedAnswer,
+//       questionIndex: 4),
+// ]);
 
-class _QuizPageState extends State<QuizPage> {
-  //final fieldController = TextEditingController();
-  late TextEditingController fieldController;
-  final List<Question> _questions = <Question>[];
-
-  // void initial() async {
-  //   prefs = await SharedPreferences.getInstance();
-
-  //   await prefs.setString('question_list', encodedQuestionList);
-
-  //   String questionListString = await prefs.getString('question_list') ?? "";
-
-  //   final List<Question> questions = Question.decode(questionListString);
-
-  //   print(questionListString);
-  // }
-
-  List<Widget> _persistentFooterButtons(BuildContext context) {
-    return [
-      Container(
-          height: 70,
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: widget.values,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                          onTap: () {
-                            print("Index is ${index + 1}");
-                          },
-                          child: Container(
-                            width: 100,
-                            height: 60,
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.blueAccent, width: 2)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(2),
-                                  child: Text(
-                                    '${index + 1}',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 10),
-                                  ),
-                                ),
-                                const Spacer(),
-                                Text(
-                                  fieldController.text,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 10),
-                                )
-                              ],
-                            ),
-                          ));
-                    }),
-              ),
-              Material(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(5.0),
-                child: InkWell(
-                  key: Key("plus-button"),
-                  borderRadius: BorderRadius.circular(5.0),
-                  onTap: () {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) =>
-                    //         AddQuestion(value: widget.values ?? 1)));
-                    showModalBottomSheet<dynamic>(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (context) =>
-                            AddQuestion(value: widget.values ?? 1));
-                  },
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    alignment: Alignment.center,
-                    child: const Icon(
-                      Icons.add_rounded,
-                      color: Colors.white,
-                      size: 60,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ))
-    ];
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fieldController = new TextEditingController(text: widget.values.toString());
-  }
-    //initial();
+//initial();
 class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   final fieldController = TextEditingController();
   String? answer1 = 'Add answer';
@@ -690,11 +586,9 @@ class ButtonItem extends StatelessWidget {
   final Color? colors;
   final String text;
   final VoidCallback? onTap;
-
   const ButtonItem(
       {Key? key, required this.colors, required this.text, this.onTap})
       : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Material(
