@@ -32,10 +32,22 @@
 </tr>
 </table>
 
+# Tuần 05 - 06: Thực hiện việc thiết kế cơ sở dữ liệu với MongoDB và ứng dụng API từ Node.js vào phần client flutter
+![image](https://user-images.githubusercontent.com/58223975/199229377-ac061d3c-7474-47f6-9790-37d13bf60fa4.png)
+![image](https://user-images.githubusercontent.com/58223975/199229622-474f7648-277b-4346-9c33-75811c7d0eb1.png)
+![image](https://user-images.githubusercontent.com/58223975/199229750-98652a1b-6c39-4eeb-98c4-89e376d17b7d.png)
+
+Những chức năng đã kết nối được với backend:
++ Chức năng đăng nhập, đăng kí, đăng xuất
++ Chức năng tạo quiz
++ Chức năng hiển thị danh sách các quizes
++ Ch
+
 # Tuần 07 - 08: Thực hành việc kiểm thử ứng dụng
 + Report kiểm thử widget testing:
-![image](https://user-images.githubusercontent.com/58223975/199227749-5ba9ea59-8a65-4247-9885-91d1be405f80.png)
-+ Report kcoverage testing:
+ 
+ ![image](https://user-images.githubusercontent.com/58223975/199227749-5ba9ea59-8a65-4247-9885-91d1be405f80.png)
++ Report coverage testing:
 ![image](https://user-images.githubusercontent.com/58223975/199228543-e72c8ba5-2e76-4a81-95bc-d3d5c35891a0.png)
 
 
