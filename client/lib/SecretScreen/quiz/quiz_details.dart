@@ -225,6 +225,12 @@ class _QuizDetailsState extends State<QuizDetails> {
                                     "id": widget.quizId,
                                     "title": widget.quizName,
                                     "description": widget.quizDescription,
+                                    "background": snapshot.data!.background,
+                                    "numberOfQuestion":
+                                        snapshot.data!.numberOfQuestion,
+                                    "scorePerQuestion":
+                                        snapshot.data!.scorePerQuestion,
+                                    "questionList": snapshot.data!.questionList
                                   });
 
                                   //print("LOfasdfasdL");

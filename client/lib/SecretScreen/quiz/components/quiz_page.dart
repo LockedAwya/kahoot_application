@@ -11,6 +11,7 @@ import 'package:untitled_folder/SecretScreen/quiz/components/create_answer_4.dar
 import 'package:untitled_folder/SecretScreen/quiz/components/create_answer_1.dart';
 import 'package:untitled_folder/SecretScreen/quiz/components/create_answer_2.dart';
 import 'package:untitled_folder/SecretScreen/quiz/components/create_answer_3.dart';
+import '../../../utils/global_variables.dart';
 
 class QuizPage extends StatefulWidget {
   final List<QuizModel> listValue;
@@ -103,6 +104,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
         TabController(initialIndex: 0, length: listQuiz.length, vsync: this);
     //fieldController.text = listQuiz[0].text ?? "";
     //fieldController.text = listQuiz[currentpage].text ?? "";
+    print(box.read("quiz_details")["questionList"]);
     tabController?.animateTo(currentpage);
   }
 
@@ -182,6 +184,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
             ),
             onPressed: () {
               print("Tap delete a question index ${currentpage}");
+              _showDeleteQuestionWarning(currentpage);
             },
           ),
         ],
@@ -557,6 +560,60 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
     );
   }
 
+  Future<void> _showDeleteQuestionWarning(int questionIndex) {
+    return showDialog<void>(
+        context: context,
+        //barrierDismissible: false, // user must tap button!
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Delete question'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: const <Widget>[
+                  Text('You are going to delete the question.'),
+                  Text('Are you sure to do that?'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Yes'),
+                onPressed: () {
+                  print(questionIndex);
+                  if (currentpage != 0) {
+                    int listQuizLength = listQuiz.length;
+                    listQuiz.removeAt(currentpage);
+                    print(listQuiz.length);
+                    setState(() {
+                      if (currentpage != listQuiz.length - 1 &&
+                          currentpage != listQuizLength - 1) {
+                        tabController = TabController(
+                            initialIndex: currentpage + 1,
+                            length: listQuiz.length,
+                            vsync: this);
+                      } else if (currentpage == listQuizLength - 1) {
+                        tabController = TabController(
+                            initialIndex: currentpage - 1,
+                            length: listQuiz.length,
+                            vsync: this);
+                      }
+                      //tabController?.animateTo(currentpage);
+                    });
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+              TextButton(
+                child: const Text('No'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
   Widget textField() => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: TextFormField(
@@ -590,59 +647,6 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
           ),
         ),
       );
-  Future<void> _showDeleteQuestionWarning(int questionIndex) async {
-    return showDialog<void>(
-      context: context,
-      //barrierDismissible: false, // user must tap button!
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Delete question'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('You are going to delete the question.'),
-                Text('Are you sure to do that?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Yes'),
-              onPressed: () async {
-                print(questionIndex);
-                if (currentpage != 0) {
-                int listQuizLength = listQuiz.length;
-                listQuiz.removeAt(currentpage);
-                print(listQuiz.length);
-                setState(() {
-                  if (currentpage != listQuiz.length - 1 &&
-                      currentpage != listQuizLength - 1) {
-                    tabController = TabController(
-                        initialIndex: currentpage + 1,
-                        length: listQuiz.length,
-                        vsync: this);
-                  } else if (currentpage == listQuizLength - 1) {
-                    tabController = TabController(
-                        initialIndex: currentpage - 1,
-                        length: listQuiz.length,
-                        vsync: this);
-                  }
-                  //tabController?.animateTo(currentpage);
-                });
-              }
-              },
-            ),
-            TextButton(
-              child: const Text('No'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
 
 class ButtonItem extends StatelessWidget {
