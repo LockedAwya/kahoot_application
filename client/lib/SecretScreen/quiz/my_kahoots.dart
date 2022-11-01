@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../utils/global_variables.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../NotLoggedIn/no_auth.dart';
-import '../../utils/router.dart';
+//import '../../utils/router.dart';
 import 'create_kahoot.dart';
 import './components/quiz_component.dart';
 import '../../api/index.dart';
 import '../../model/quiz_model.dart';
-import 'quiz_details.dart';
+//import 'quiz_details.dart';
 
 class MyKahootScreen extends StatefulWidget {
   final double borderWidth = 0.5;

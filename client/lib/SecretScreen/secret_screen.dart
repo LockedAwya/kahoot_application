@@ -3,7 +3,6 @@ import 'Home/home_screen.dart';
 import '../GamePlay/JoinGame/join_game_screen.dart';
 import '../GamePlay/HostGame/host_game_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/global_variables.dart';
 import 'NotLoggedIn/no_auth.dart';
 

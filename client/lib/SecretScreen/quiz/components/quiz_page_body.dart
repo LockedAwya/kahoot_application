@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled_folder/model/add_question_model.dart';
+//import 'package:untitled_folder/model/add_question_model.dart';
 import 'package:untitled_folder/SecretScreen/quiz/components/quiz_page.dart';
-import '../../../utils/widget.dart';
+//import '../../../utils/widget.dart';
 //import 'package:untitled_folder/quiz/components/quiz_page.dart';
 
 class QuizPageBody extends StatefulWidget {
@@ -18,7 +18,7 @@ class _QuizPageBodyState extends State<QuizPageBody> {
   @override
   void initState() {
     super.initState();
-    fieldController = new TextEditingController(text: widget.values.toString());
+    fieldController = TextEditingController(text: widget.values.toString());
   }
 
   @override

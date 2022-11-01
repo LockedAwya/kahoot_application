@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../InitialScreen/initial_screen.dart';
 import '../../utils/global_variables.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../NotLoggedIn/no_auth.dart';
 import '../quiz/my_kahoots.dart';
 

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:untitled_folder/SecretScreen/quiz/components/add_question.dart';
 import '../../utils/widget.dart';
 import 'my_kahoots.dart';
-import 'components/quiz_component.dart';
+//import 'components/quiz_component.dart';
 import '../../utils/global_variables.dart';
 import '../../api/index.dart';
 import '../../model/quiz_model.dart';
-import '../../api/index.dart';
+//import '../../api/index.dart';
 
 class QuizDetails extends StatefulWidget {
   final String quizId;
