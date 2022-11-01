@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../utils/widget.dart';
 
-import '../routing_names.dart';
+import '../utils/routing_names.dart';
 // import 'login_screen.dart';
 // import 'register_screen.dart';
 

@@ -37,8 +37,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import './router.dart' as router;
-import './routing_names.dart';
+import './utils/router.dart' as router;
+import './utils/routing_names.dart';
 //import './InitialScreen/register_screen.dart';
 
 void main() {

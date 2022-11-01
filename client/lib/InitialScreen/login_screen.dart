@@ -8,9 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/global_variables.dart';
 import 'validate_util.dart';
 //import 'inittial_screen.dart';
-import '../routing_names.dart';
-import 'package:dio/dio.dart';
-import "../model/user_model.dart";
+import '../utils/routing_names.dart';
+import '../model/user_model.dart';
 import '../api/index.dart';
 
 //var dio = Dio();

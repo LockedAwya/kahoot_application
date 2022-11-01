@@ -1,6 +1,6 @@
 //import '../WaitingRoom/waiting_room.dart';
 import 'package:flutter/material.dart';
-import '../routing_names.dart';
+import '../../utils/routing_names.dart';
 
 class QuestionModalBottomSheet extends StatefulWidget {
   final double borderWidth = 0.5;

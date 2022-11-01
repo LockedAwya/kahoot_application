@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/global_variables.dart';
-import '../routing_names.dart';
+import '../utils/routing_names.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class NoAuth extends StatelessWidget {
