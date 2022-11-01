@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'question_modal_bottom_sheet.dart';
 import '../../utils/global_variables.dart';
-import '../../NotLoggedIn/no_auth.dart';
+import '../../SecretScreen/NotLoggedIn/no_auth.dart';
 import '../../utils/router.dart';
 
 class HostGameScreen extends StatefulWidget {

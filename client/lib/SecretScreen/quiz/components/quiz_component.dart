@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 //import '../create_kahoot/create_kahoot.dart';
-import '../components/quiz_details.dart';
-import '../../utils/global_variables.dart';
+import '../quiz_details.dart';
+import '../../../utils/global_variables.dart';
 
 class QuizComponent extends StatelessWidget {
   //final String text1;
