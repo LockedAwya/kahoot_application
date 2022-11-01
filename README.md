@@ -41,7 +41,6 @@ Những chức năng đã kết nối được với backend:
 + Chức năng đăng nhập, đăng kí, đăng xuất
 + Chức năng tạo quiz
 + Chức năng hiển thị danh sách các quizes
-+ Ch
 
 # Tuần 07 - 08: Thực hành việc kiểm thử ứng dụng
 + Report kiểm thử widget testing:
