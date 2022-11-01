@@ -32,4 +32,11 @@
 </tr>
 </table>
 
+# Tuần 07 - 08: Thực hành việc kiểm thử ứng dụng
++ Report kiểm thử widget testing:
+![image](https://user-images.githubusercontent.com/58223975/199227749-5ba9ea59-8a65-4247-9885-91d1be405f80.png)
++ Report kcoverage testing:
+![image](https://user-images.githubusercontent.com/58223975/199228543-e72c8ba5-2e76-4a81-95bc-d3d5c35891a0.png)
+
+
 
