@@ -51,7 +51,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                 const Padding(
                   padding: EdgeInsets.zero,
                   child: Text(
-                    "Create Kahoot",
+                    "Create Kahoo",
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,

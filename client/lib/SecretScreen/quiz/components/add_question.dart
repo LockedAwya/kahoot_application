@@ -188,6 +188,7 @@ class _AddQuestionState extends State<AddQuestion> {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => QuizPage(
                   listValue: value,
+                  currentIndexPage: value.length - 1,
                 )));
 
         break;

@@ -14,7 +14,10 @@ import 'package:untitled_folder/SecretScreen/quiz/components/create_answer_3.dar
 
 class QuizPage extends StatefulWidget {
   final List<QuizModel> listValue;
-  const QuizPage({Key? key, required this.listValue}) : super(key: key);
+  final int currentIndexPage;
+  const QuizPage(
+      {Key? key, required this.listValue, required this.currentIndexPage})
+      : super(key: key);
 
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -95,9 +98,12 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     listQuiz = widget.listValue;
+    currentpage = widget.currentIndexPage;
     tabController =
         TabController(initialIndex: 0, length: listQuiz.length, vsync: this);
-    fieldController.text = listQuiz[0].text ?? "";
+    //fieldController.text = listQuiz[0].text ?? "";
+    //fieldController.text = listQuiz[currentpage].text ?? "";
+    tabController?.animateTo(currentpage);
   }
 
   @override
@@ -175,7 +181,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
               height: 20,
             ),
             onPressed: () {
-              print("Tap Save");
+              print("Tap delete a question index ${currentpage}");
             },
           ),
         ],
@@ -457,6 +463,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
             thickness: 0.5,
             color: Colors.black12,
           ),
+          //bottom of the page including a list of white rectangle of questions
           Container(
               height: 70,
               width: MediaQuery.of(context).size.width,
@@ -472,6 +479,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                       onTap: (page) {
                         setState(() {
                           currentpage = page;
+                          print("Current page: ${currentpage}");
                         });
                         fieldController.text = listQuiz[currentpage].text ?? "";
                         tabController?.animateTo(page);
@@ -582,6 +590,59 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
           ),
         ),
       );
+  Future<void> _showDeleteQuestionWarning(int questionIndex) async {
+    return showDialog<void>(
+      context: context,
+      //barrierDismissible: false, // user must tap button!
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Delete question'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('You are going to delete the question.'),
+                Text('Are you sure to do that?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: () async {
+                print(questionIndex);
+                if (currentpage != 0) {
+                int listQuizLength = listQuiz.length;
+                listQuiz.removeAt(currentpage);
+                print(listQuiz.length);
+                setState(() {
+                  if (currentpage != listQuiz.length - 1 &&
+                      currentpage != listQuizLength - 1) {
+                    tabController = TabController(
+                        initialIndex: currentpage + 1,
+                        length: listQuiz.length,
+                        vsync: this);
+                  } else if (currentpage == listQuizLength - 1) {
+                    tabController = TabController(
+                        initialIndex: currentpage - 1,
+                        length: listQuiz.length,
+                        vsync: this);
+                  }
+                  //tabController?.animateTo(currentpage);
+                });
+              }
+              },
+            ),
+            TextButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
 class ButtonItem extends StatelessWidget {
