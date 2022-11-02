@@ -116,7 +116,9 @@ class _QuizDetailsState extends State<QuizDetails> {
                         "",
                         10 /**score per question */,
                         20 /**time per question */,
-                        0 /** number of questions */,
+                        box
+                            .read("questionsList")
+                            .length /** number of questions */,
                         box.read("questionsList"));
                     print(res);
                     Navigator.push(
@@ -294,6 +296,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                                           }
                                         }
                                       });
+                                      globalState = "update-quiz";
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
                                               builder: (context) => QuizPage2(
@@ -468,13 +471,14 @@ class _QuizDetailsState extends State<QuizDetails> {
               content: new Text('Do you want go back to my kahoots page?'),
               actions: <Widget>[
                 TextButton(
-                  onPressed: () =>
-                      Navigator.of(context).pop(false), //<-- SEE HERE
+                  onPressed: () => Navigator.of(context).pop(false),
+                  //<-- SEE HERE
                   child: new Text('No'),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MyKahootScreen())), // <-- SEE HERE
+                      builder: (context) => MyKahootScreen())),
+                  // <-- SEE HERE
                   child: new Text('Yes'),
                 ),
               ],

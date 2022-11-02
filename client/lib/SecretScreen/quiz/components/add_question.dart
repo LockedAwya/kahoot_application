@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_folder/model/add_question_model.dart';
 import 'package:untitled_folder/SecretScreen/quiz/components/quiz_page_2.dart';
+import 'package:untitled_folder/SecretScreen/quiz/components/quiz_page.dart';
 import 'package:untitled_folder/model/quiz_model.dart';
 import '../../../utils/widget.dart';
 import '../../../utils/global_variables.dart';
@@ -39,7 +40,7 @@ class _AddQuestionState extends State<AddQuestion> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(box.read("quiz_details")["title"]);
+    //print(box.read("quiz_details")["title"]);
   }
 
   @override
@@ -185,11 +186,19 @@ class _AddQuestionState extends State<AddQuestion> {
           value = widget.listValue ?? [];
           value.add(QuizModel());
         });
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => QuizPage2(
-                  listValue: value,
-                  currentIndexPage: value.length - 1,
-                )));
+        if (globalState == "update-quiz") {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => QuizPage2(
+                    listValue: value,
+                    currentIndexPage: value.length - 1,
+                  )));
+        } else if (globalState == "create-quiz") {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => QuizPage(
+                    listValue: value,
+                    currentIndexPage: value.length - 1,
+                  )));
+        }
 
         break;
       case 1:

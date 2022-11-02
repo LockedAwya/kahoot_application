@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-
 bool isAuth = false;
 String secretPageState = "";
 
@@ -13,9 +12,7 @@ String quizNameGlobal = "";
 String username = "";
 String userId = "";
 
-// void initGetStorage() async {
-//   await GetStorage.init();
-// }
+String globalState = "";
 GetStorage box = GetStorage();
 
 void resetGlobalVariable() {
@@ -24,6 +21,7 @@ void resetGlobalVariable() {
 
   username = "";
   userId = "";
+  globalState = "";
 }
 
 int random(int min, int max) {

@@ -1,6 +1,7 @@
 const e = require('express');
 const express = require('express')
 const mongoose = require("mongoose")
+const cors = require('cors');
 
 const PORT = 3000;
 const app = express();
@@ -8,6 +9,10 @@ const DB = "mongodb+srv://elipsical:jerry100@cluster0.p18hqnw.mongodb.net/?retry
 //import from files
 const authRouter = require('./routes/auth')
 const quizRouter = require('./routes/quiz')
+
+app.use(cors({
+    origin: 'http://localhost:55866'
+}));
 
 //middleware
 app.use(express.json())

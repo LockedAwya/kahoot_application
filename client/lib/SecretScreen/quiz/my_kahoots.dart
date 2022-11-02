@@ -29,6 +29,9 @@ class _MyKahootScreen extends State<MyKahootScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    if (box.hasData("quiz_details")) {
+      box.remove("quiz_details");
+    }
     //initial();
     //quizListInitial();
   }

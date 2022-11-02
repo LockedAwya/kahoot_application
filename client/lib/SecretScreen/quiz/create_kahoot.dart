@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_folder/SecretScreen/quiz/components/add_question.dart';
+//import 'package:untitled_folder/SecretScreen/quiz/components/add_question.dart';
+import 'package:untitled_folder/SecretScreen/quiz/components/quiz_page.dart';
 import '../../utils/widget.dart';
 import 'my_kahoots.dart';
 //import 'components/quiz_component.dart';
@@ -18,23 +19,17 @@ class CreateKahoot extends StatefulWidget {
 }
 
 class _CreateKahootState extends State<CreateKahoot> {
-  final TextEditingController quizTitleController = TextEditingController();
-
+  late TextEditingController quizTitleController;
+  List<QuizModel> quizModelList = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    initial();
-  }
-
-  void initial() async {
-    //prefs = await SharedPreferences.getInstance();
-    setState(() {
-      // username = prefs.getString('username') as String;
-      // userId = prefs.getString('userId') as String;
-      //username = shared_preferences.stringGetter('username')!;
-    });
-    //prefs = await SharedPreferences.getInstance();
+    if (box.hasData("quiz-name")) {
+      quizTitleController = TextEditingController(text: box.read("quiz-name"));
+    } else {
+      quizTitleController = TextEditingController(text: "");
+    }
   }
 
   void saveQuizFunc(
@@ -138,8 +133,8 @@ class _CreateKahootState extends State<CreateKahoot> {
                   username,
                   10 /** */,
                   20 /**timer */,
-                  0 /**number of question */,
-                  [] /**question list */,
+                  box.read("questionsList").length /**number of question */,
+                  box.read("questionsList") /**question list */,
                   context);
               //             saveQuizFunc(
               // String name,
@@ -237,8 +232,15 @@ class _CreateKahootState extends State<CreateKahoot> {
                   height: 60,
                   text: 'Add Question',
                   onTap: () {
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) => const QuizPage2()));
+                    box.write("quiz-name", quizTitleController.text);
+                    globalState = "create-quiz";
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AddQuestion()));
+                        builder: (context) => QuizPage(
+                              listValue: quizModelList,
+                              currentIndexPage: 0,
+                            )));
                   },
                 ),
               ),
