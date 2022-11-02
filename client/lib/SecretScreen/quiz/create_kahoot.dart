@@ -44,11 +44,12 @@ class _CreateKahootState extends State<CreateKahoot> {
       String creatorId,
       String creatorName,
       int scorePerQuestion,
+      int timer,
       int numberOfQuestion,
       List questionList,
       BuildContext context) async {
     var res = await addQuizAPI(name, description, background, creatorId,
-        creatorName, scorePerQuestion, numberOfQuestion, questionList);
+        creatorName, scorePerQuestion, timer, numberOfQuestion, questionList);
     if (res.statusCode == 200) {
       Quiz quiz = Quiz.fromJson(res.data);
       print(quiz.name);
@@ -129,15 +130,28 @@ class _CreateKahootState extends State<CreateKahoot> {
             ),
             onPressed: () {
               print("Tap Save");
-              // quizListGlobal.addAll([
-              //   QuizComponent(random(1, 1000000000).toString(),
-              //       quizTitleController.text, "Something", "duc"),
-              //   SizedBox(height: 5),
-              // ]);
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => MyKahootScreen()));
-              saveQuizFunc(quizTitleController.text, quizTitleController.text,
-                  "", userId, username, 10, 0, [], context);
+              saveQuizFunc(
+                  quizTitleController.text,
+                  quizTitleController.text,
+                  "" /**background */,
+                  userId,
+                  username,
+                  10 /** */,
+                  20 /**timer */,
+                  0 /**number of question */,
+                  [] /**question list */,
+                  context);
+              //             saveQuizFunc(
+              // String name,
+              // String description,
+              // String background,
+              // String creatorId,
+              // String creatorName,
+              // int scorePerQuestion,
+              // int timer,
+              // int numberOfQuestion,
+              // List questionList,
+              // BuildContext context)
             },
           ),
         ],

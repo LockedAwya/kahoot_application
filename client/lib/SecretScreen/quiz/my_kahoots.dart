@@ -29,43 +29,9 @@ class _MyKahootScreen extends State<MyKahootScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    initial();
+    //initial();
     //quizListInitial();
   }
-
-  void initial() async {
-    //prefs = await SharedPreferences.getInstance();
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      // if (prefs.containsKey('username')) {
-      //   username = prefs.getString('username');
-      // }
-      // if (prefs.containsKey('token')) {
-      //   //token = prefs.getString('token');
-      //   token = true;
-      // }
-      // userId = prefs.getString('userId') as String;
-    });
-    //fetchQuizList = await getQuizesByHostId(userId) as Future<dynamic>;
-  }
-
-  // void quizListInitial() async {
-  //   var res = await getQuizesByHostId(userId);
-  //   if (res.statusCode == 200) {
-  //     print(res.data);
-  //     //quizList = res.data;
-  //     for (int i = 0; i < res.data.length; i++) {
-  //       Quiz quiz = Quiz.fromJson(res.data[i]);
-  //       _quizList.add(quiz);
-  //     }
-  //   } else {
-  //     print(res.statusMessage);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -31,6 +31,12 @@ const quizSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     },
+    timer: {
+        type: Number,
+        min: 10,
+        max: 30,
+        required: true,
+    },
     questionList: [{
         // questionType: {
         //     type: String,
@@ -43,12 +49,6 @@ const quizSchema = mongoose.Schema({
         //     enum: ["Basic", "Double"],
         //     required: true,
         // },
-        timer: {
-            type: String,
-            min: 10,
-            max: 30,
-            required: true,
-        },
         backgroundQuestion: {
             type: String,
         },

@@ -9,6 +9,7 @@ const createQuiz = async (req, res) => {
         creatorId,
         creatorName,
         scorePerQuestion,
+        timer,
         questionList,
     } = req.body
 
@@ -20,6 +21,7 @@ const createQuiz = async (req, res) => {
         creatorName,
         numberOfQuestion: questionList.length,
         scorePerQuestion,
+        timer,
         dataCreated: new Date().toISOString,
         questionList,
     })

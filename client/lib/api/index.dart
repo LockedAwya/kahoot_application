@@ -46,6 +46,7 @@ Future<List<Quiz>> getQuizesByHostId(String hostId) async {
     List<Quiz> reversedList =
         (res.data as List).map((e) => Quiz.fromJson(e)).toList();
     reversedList = reversedList.reversed.toList();
+    print(reversedList);
     return reversedList;
   } else {
     // If the server did not return a 200 OK response,
@@ -82,6 +83,7 @@ Future<Response> addQuizAPI(
     String creatorId,
     String creatorName,
     int scorePerQuestion,
+    int timer,
     int numberOfQuestion,
     List questionList) {
   return dio.post(
@@ -93,6 +95,7 @@ Future<Response> addQuizAPI(
       "creatorId": creatorId,
       "creatorName": creatorName,
       "scorePerQuestion": scorePerQuestion,
+      "timer": timer,
       "numberOfQuestion": numberOfQuestion,
       "questionList": questionList
     },
@@ -126,15 +129,14 @@ Future<Response> deleteQuizByIdAPI(String quizId) {
 }
 
 Future<Quiz> updateQuizByIdAPI(
-  String quizId,
-  String name,
-  String description,
-  String background,
-  int scorePerQuestion,
-  int timer,
-  int numberOfQuestion,
-  List questionList
-) async {
+    String quizId,
+    String name,
+    String description,
+    String background,
+    int scorePerQuestion,
+    int timer,
+    int numberOfQuestion,
+    List questionList) async {
   //TODO
   //update quiz when question is updated.
   var res = await dio.patch(
@@ -161,6 +163,6 @@ Future<Quiz> updateQuizByIdAPI(
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
-    throw Exception('Failed to delete quiz');
+    throw Exception('Failed to update quiz');
   }
 }

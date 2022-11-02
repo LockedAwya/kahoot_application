@@ -535,10 +535,40 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
   }
 
   void goBackToQuiz() {
+    List<dynamic> temp = [];
     for (int i = 0; i < listQuiz.length; ++i) {
-      print(listQuiz[i].text);
-      print(listQuiz[i].answer1);
+      // print(listQuiz[i].text);
+      // print(listQuiz[i].answer1);
+      temp.add({
+        "backgroundQuestion": "",
+        "question": listQuiz[i].text,
+        "answerList": [
+          {
+            "name": "A",
+            "body": listQuiz[i].answer1,
+            "isCorrect": listQuiz[i].isCorrect
+          },
+          {
+            "name": "B",
+            "body": listQuiz[i].answer2,
+            "isCorrect": listQuiz[i].isCorrect2
+          },
+          {
+            "name": "C",
+            "body": listQuiz[i].answer3,
+            "isCorrect": listQuiz[i].isCorrect3
+          },
+          {
+            "name": "D",
+            "body": listQuiz[i].answer4,
+            "isCorrect": listQuiz[i].isCorrect4
+          },
+        ],
+        "questionIndex": i + 1,
+      });
     }
+    box.write("questionsList", temp);
+    print(box.read("questionsList"));
     Navigator.push(
       context,
       MaterialPageRoute(

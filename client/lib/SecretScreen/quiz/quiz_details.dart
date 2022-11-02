@@ -114,11 +114,10 @@ class _QuizDetailsState extends State<QuizDetails> {
                         quizTitleController.text,
                         quizDescriptionController.text,
                         "",
-                        10,
-                        15,
-                        5, 
-                        []
-                        );
+                        10 /**score per question */,
+                        20 /**time per question */,
+                        0 /** number of questions */,
+                        box.read("questionsList"));
                     print(res);
                     Navigator.push(
                         context,
