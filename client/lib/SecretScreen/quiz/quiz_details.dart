@@ -6,6 +6,7 @@ import 'my_kahoots.dart';
 import '../../utils/global_variables.dart';
 import '../../api/index.dart';
 import '../../model/quiz_model.dart';
+import './components/quiz_page_2.dart';
 //import '../../api/index.dart';
 
 class QuizDetails extends StatefulWidget {
@@ -22,6 +23,7 @@ class _QuizDetailsState extends State<QuizDetails> {
   late TextEditingController quizTitleController;
   late TextEditingController quizDescriptionController;
   //late var quizData;
+  List<QuizModel> quizModelList = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -219,13 +221,14 @@ class _QuizDetailsState extends State<QuizDetails> {
                               child: AppButton(
                                 width: 180,
                                 height: 60,
-                                text: 'Add Question',
+                                text: 'View Questions',
                                 onTap: () {
                                   box.write("quiz_details", {
                                     "id": widget.quizId,
                                     "title": widget.quizName,
                                     "description": widget.quizDescription,
-                                    "background": snapshot.data!.background,
+                                    "background":
+                                        snapshot.data!.background ?? "",
                                     "numberOfQuestion":
                                         snapshot.data!.numberOfQuestion,
                                     "scorePerQuestion":
@@ -234,9 +237,44 @@ class _QuizDetailsState extends State<QuizDetails> {
                                   });
 
                                   //print("LOfasdfasdL");
+                                  List<dynamic> questionList =
+                                      box.read("quiz_details")["questionList"];
+                                  print(box.read("quiz_details"));
+                                  print(questionList);
+                                  setState(() {
+                                    // value = widget.listValue ?? [];
+                                    // value.add(QuizModel());
+                                    if (questionList.length != 0) {
+                                      for (int i = 0;
+                                          i < questionList.length;
+                                          i++) {
+                                        quizModelList.add(QuizModel(
+                                          text: questionList[i]["question"],
+                                          answer1: questionList[i]["answerList"]
+                                              [0]["body"],
+                                          answer2: questionList[i]["answerList"]
+                                              [1]["body"],
+                                          answer3: questionList[i]["answerList"]
+                                              [2]["body"],
+                                          answer4: questionList[i]["answerList"]
+                                              [3]["body"],
+                                          isCorrect: questionList[i]
+                                              ["answerList"][0]["isCorrect"],
+                                          isCorrect2: questionList[i]
+                                              ["answerList"][1]["isCorrect"],
+                                          isCorrect3: questionList[i]
+                                              ["answerList"][2]["isCorrect"],
+                                          isCorrect4: questionList[i]
+                                              ["answerList"][3]["isCorrect"],
+                                        ));
+                                      }
+                                    }
+                                  });
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const AddQuestion()));
+                                      builder: (context) => QuizPage2(
+                                            listValue: quizModelList,
+                                            currentIndexPage: 0,
+                                          )));
                                 },
                               ),
                             ),

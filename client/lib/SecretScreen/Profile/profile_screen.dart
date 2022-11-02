@@ -129,7 +129,8 @@ class _ProfileScreen extends State<ProfileScreen> {
                       resetGlobalVariable();
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const InitialScreen()));
-                      quizListGlobal = [];
+                      //quizListGlobal = [];
+                      box.erase();
                     },
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 10.0),
