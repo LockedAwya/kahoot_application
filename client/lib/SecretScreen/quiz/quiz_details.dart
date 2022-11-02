@@ -35,257 +35,283 @@ class _QuizDetailsState extends State<QuizDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Color(0xFFF4F4F4),
-        appBar: AppBar(
-          elevation: 1.2,
-          titleSpacing: 20,
-          leadingWidth: 70,
-          backgroundColor: Colors.white,
-          title: ListTile(
-            onTap: () {
-              print("Tap create Kahoot");
-            },
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.zero,
-                  child: Text(
-                    "Create Kahoo",
+    return WillPopScope(
+        onWillPop: _onWillPop,
+        child: Scaffold(
+            backgroundColor: Color(0xFFF4F4F4),
+            appBar: AppBar(
+              elevation: 1.2,
+              titleSpacing: 20,
+              leadingWidth: 70,
+              backgroundColor: Colors.white,
+              title: ListTile(
+                onTap: () {
+                  print("Tap create Kahoot");
+                },
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.zero,
+                      child: Text(
+                        "Create Kahoo",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(30.0),
+                      child: const Divider(
+                        color: Color(0xFFF4F4F4),
+                        thickness: 6,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              centerTitle: true,
+              leading: IconButton(
+                alignment: Alignment.center,
+                iconSize: 30,
+                icon: const Text(
+                  "Cancel",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  print("Tap cancel");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyKahootScreen()),
+                  );
+                },
+              ),
+              actions: [
+                IconButton(
+                  alignment: Alignment.center,
+                  iconSize: 36,
+                  icon: const Text(
+                    "Save",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14),
+                        fontSize: 14,
+                        color: Color(0xFFE2E2E2),
+                        fontWeight: FontWeight.bold),
                   ),
+                  onPressed: () async {
+                    print("Tap Save");
+                    var res = await updateQuizByIdAPI(
+                        widget.quizId,
+                        quizTitleController.text,
+                        quizDescriptionController.text,
+                        "",
+                        10,
+                        15,
+                        5, 
+                        []
+                        );
+                    print(res);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyKahootScreen()));
+                  },
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30.0),
-                  child: const Divider(
-                    color: Color(0xFFF4F4F4),
-                    thickness: 6,
-                  ),
-                )
               ],
             ),
-          ),
-          centerTitle: true,
-          leading: IconButton(
-            alignment: Alignment.center,
-            iconSize: 30,
-            icon: const Text(
-              "Cancel",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            ),
-            onPressed: () {
-              print("Tap cancel");
-            },
-          ),
-          actions: [
-            IconButton(
-              alignment: Alignment.center,
-              iconSize: 36,
-              icon: const Text(
-                "Save",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFFE2E2E2),
-                    fontWeight: FontWeight.bold),
-              ),
-              onPressed: () async {
-                print("Tap Save");
-                var res = await updateQuizByIdAPI(widget.quizId,
-                    quizTitleController.text, quizDescriptionController.text);
-                print(res);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyKahootScreen()));
-              },
-            ),
-          ],
-        ),
-        body: FutureBuilder<Quiz>(
-            future: getQuizById(widget.quizId),
-            builder: (context, snapshot) {
-              return snapshot.hasData
-                  ? (SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            child: ListTile(
-                              tileColor: Colors.white,
-                              onTap: () {
-                                print("Tap select image");
-                              },
-                              dense: true,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              horizontalTitleGap: 1.0,
-                              title: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                height: 260,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.zero,
-                                      child: Image.asset(
-                                          "assets/icons/ic_pic.png"),
+            body: FutureBuilder<Quiz>(
+                future: getQuizById(widget.quizId),
+                builder: (context, snapshot) {
+                  return snapshot.hasData
+                      ? (SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: ListTile(
+                                  tileColor: Colors.white,
+                                  onTap: () {
+                                    print("Tap select image");
+                                  },
+                                  dense: true,
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+                                  horizontalTitleGap: 1.0,
+                                  title: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    height: 260,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.zero,
+                                          child: Image.asset(
+                                              "assets/icons/ic_pic.png"),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        const Text(
+                                          "Add cover Image",
+                                          style: TextStyle(
+                                              color: Color(0xFF6B6B6B),
+                                              fontSize: 16),
+                                        )
+                                      ],
                                     ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    const Text(
-                                      "Add cover Image",
-                                      style: TextStyle(
-                                          color: Color(0xFF6B6B6B),
-                                          fontSize: 16),
-                                    )
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Title",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          textField2(quizTitleController.text),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Description",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          textField1(quizDescriptionController.text),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Question (0)",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Column(
-                            children: List.generate(
-                                snapshot.data!.questionList.length, (index) {
-                              return Text(
-                                snapshot.data!.questionList[index].toString(),
-                                style: const TextStyle(fontSize: 22),
-                              );
-                            }),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: AppButton(
-                                width: 180,
-                                height: 60,
-                                text: 'View Questions',
-                                onTap: () {
-                                  box.write("quiz_details", {
-                                    "id": widget.quizId,
-                                    "title": widget.quizName,
-                                    "description": widget.quizDescription,
-                                    "background":
-                                        snapshot.data!.background ?? "",
-                                    "numberOfQuestion":
-                                        snapshot.data!.numberOfQuestion,
-                                    "scorePerQuestion":
-                                        snapshot.data!.scorePerQuestion,
-                                    "questionList": snapshot.data!.questionList
-                                  });
-
-                                  //print("LOfasdfasdL");
-                                  List<dynamic> questionList =
-                                      box.read("quiz_details")["questionList"];
-                                  print(box.read("quiz_details"));
-                                  print(questionList);
-                                  setState(() {
-                                    // value = widget.listValue ?? [];
-                                    // value.add(QuizModel());
-                                    if (questionList.length != 0) {
-                                      for (int i = 0;
-                                          i < questionList.length;
-                                          i++) {
-                                        quizModelList.add(QuizModel(
-                                          text: questionList[i]["question"],
-                                          answer1: questionList[i]["answerList"]
-                                              [0]["body"],
-                                          answer2: questionList[i]["answerList"]
-                                              [1]["body"],
-                                          answer3: questionList[i]["answerList"]
-                                              [2]["body"],
-                                          answer4: questionList[i]["answerList"]
-                                              [3]["body"],
-                                          isCorrect: questionList[i]
-                                              ["answerList"][0]["isCorrect"],
-                                          isCorrect2: questionList[i]
-                                              ["answerList"][1]["isCorrect"],
-                                          isCorrect3: questionList[i]
-                                              ["answerList"][2]["isCorrect"],
-                                          isCorrect4: questionList[i]
-                                              ["answerList"][3]["isCorrect"],
-                                        ));
-                                      }
-                                    }
-                                  });
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => QuizPage2(
-                                            listValue: quizModelList,
-                                            currentIndexPage: 0,
-                                          )));
-                                },
+                              const SizedBox(
+                                height: 10,
                               ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ))
-                  : (const Center(
-                      child: CircularProgressIndicator(),
-                    ));
-            }));
+                              const Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Title",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              textField2(quizTitleController.text),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Description",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              textField1(quizDescriptionController.text),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Question (0)",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Column(
+                                children: List.generate(
+                                    snapshot.data!.questionList.length,
+                                    (index) {
+                                  return Text(
+                                    snapshot.data!.questionList[index]
+                                        .toString(),
+                                    style: const TextStyle(fontSize: 22),
+                                  );
+                                }),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: AppButton(
+                                    width: 180,
+                                    height: 60,
+                                    text: 'View Questions',
+                                    onTap: () {
+                                      box.write("quiz_details", {
+                                        "id": widget.quizId,
+                                        "title": widget.quizName,
+                                        "description": widget.quizDescription,
+                                        "background":
+                                            snapshot.data!.background ?? "",
+                                        "numberOfQuestion":
+                                            snapshot.data!.numberOfQuestion,
+                                        "scorePerQuestion":
+                                            snapshot.data!.scorePerQuestion,
+                                        "questionList":
+                                            snapshot.data!.questionList
+                                      });
+
+                                      //print("LOfasdfasdL");
+                                      List<dynamic> questionList = box
+                                          .read("quiz_details")["questionList"];
+                                      print(box.read("quiz_details"));
+                                      print(questionList);
+                                      setState(() {
+                                        // value = widget.listValue ?? [];
+                                        // value.add(QuizModel());
+                                        if (questionList.length != 0) {
+                                          for (int i = 0;
+                                              i < questionList.length;
+                                              i++) {
+                                            quizModelList.add(QuizModel(
+                                              text: questionList[i]["question"],
+                                              answer1: questionList[i]
+                                                  ["answerList"][0]["body"],
+                                              answer2: questionList[i]
+                                                  ["answerList"][1]["body"],
+                                              answer3: questionList[i]
+                                                  ["answerList"][2]["body"],
+                                              answer4: questionList[i]
+                                                  ["answerList"][3]["body"],
+                                              isCorrect: questionList[i]
+                                                      ["answerList"][0]
+                                                  ["isCorrect"],
+                                              isCorrect2: questionList[i]
+                                                      ["answerList"][1]
+                                                  ["isCorrect"],
+                                              isCorrect3: questionList[i]
+                                                      ["answerList"][2]
+                                                  ["isCorrect"],
+                                              isCorrect4: questionList[i]
+                                                      ["answerList"][3]
+                                                  ["isCorrect"],
+                                            ));
+                                          }
+                                        }
+                                      });
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) => QuizPage2(
+                                                    listValue: quizModelList,
+                                                    currentIndexPage: 0,
+                                                  )));
+                                    },
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ))
+                      : (const Center(
+                          child: CircularProgressIndicator(),
+                        ));
+                })));
   }
 
   Widget textField1(String text) => Padding(
@@ -433,6 +459,27 @@ class _QuizDetailsState extends State<QuizDetails> {
         );
       },
     );
+  }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: new Text('Are you sure?'),
+              content: new Text('Do you want go back to my kahoots page?'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () =>
+                      Navigator.of(context).pop(false), //<-- SEE HERE
+                  child: new Text('No'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => MyKahootScreen())), // <-- SEE HERE
+                  child: new Text('Yes'),
+                ),
+              ],
+            )));
   }
 
   @override

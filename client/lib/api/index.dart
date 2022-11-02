@@ -129,10 +129,11 @@ Future<Quiz> updateQuizByIdAPI(
   String quizId,
   String name,
   String description,
-  // String background,
-  // int scorePerQuestion,
-  // int numberOfQuestion,
-  // List questionList
+  String background,
+  int scorePerQuestion,
+  int timer,
+  int numberOfQuestion,
+  List questionList
 ) async {
   //TODO
   //update quiz when question is updated.
@@ -141,10 +142,11 @@ Future<Quiz> updateQuizByIdAPI(
     data: {
       "name": name,
       "description": description,
-      // "background": background,
-      // "scorePerQuestion": scorePerQuestion,
-      // "numberOfQuestion": numberOfQuestion,
-      // "questionList": questionList
+      "background": background,
+      "scorePerQuestion": scorePerQuestion,
+      "timer": timer,
+      "numberOfQuestion": numberOfQuestion,
+      "questionList": questionList
     },
     options: Options(
       followRedirects: false,

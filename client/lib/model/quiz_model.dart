@@ -6,6 +6,7 @@ class Quiz {
   String creatorId = "";
   String creatorName = "";
   int scorePerQuestion = 10;
+  int timer = 10;
   int numberOfQuestion = 0;
   List questionList = [];
 
@@ -17,6 +18,7 @@ class Quiz {
       required this.creatorId,
       required this.creatorName,
       required this.scorePerQuestion,
+      required this.timer,
       required this.numberOfQuestion,
       required this.questionList});
 
@@ -29,6 +31,7 @@ class Quiz {
       creatorId: json["creatorId"],
       creatorName: json["creatorName"],
       scorePerQuestion: json["scorePerQuestion"] as int,
+      timer: json["timer"] as int,
       numberOfQuestion: json["numberOfQuestion"] as int,
       questionList: json["questionList"] as List,
     );

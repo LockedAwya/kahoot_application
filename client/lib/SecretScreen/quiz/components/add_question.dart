@@ -1,7 +1,7 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled_folder/model/add_question_model.dart';
-import 'package:untitled_folder/SecretScreen/quiz/components/quiz_page.dart';
+import 'package:untitled_folder/SecretScreen/quiz/components/quiz_page_2.dart';
 import 'package:untitled_folder/model/quiz_model.dart';
 import '../../../utils/widget.dart';
 import '../../../utils/global_variables.dart';
@@ -186,7 +186,7 @@ class _AddQuestionState extends State<AddQuestion> {
           value.add(QuizModel());
         });
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => QuizPage(
+            builder: (context) => QuizPage2(
                   listValue: value,
                   currentIndexPage: value.length - 1,
                 )));

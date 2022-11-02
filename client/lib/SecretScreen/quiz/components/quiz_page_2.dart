@@ -535,6 +535,10 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
   }
 
   void goBackToQuiz() {
+    for (int i = 0; i < listQuiz.length; ++i) {
+      print(listQuiz[i].text);
+      print(listQuiz[i].answer1);
+    }
     Navigator.push(
       context,
       MaterialPageRoute(
