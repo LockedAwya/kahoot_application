@@ -111,8 +111,8 @@ const getQuiz = async (req, res) => {
 const addQuestion = async (req, res) => {
     const { quizId } = req.params
     const {
-        questionType,
-        scoreType,
+        //questionType,
+        //scoreType,
         timer,
         backgroundQuestion,
         question,
@@ -130,8 +130,8 @@ const addQuestion = async (req, res) => {
             })
         }
         quiz.questionList.push({
-            questionType,
-            scoreType,
+            // questionType,
+            // scoreType,
             timer,
             backgroundQuestion,
             question,

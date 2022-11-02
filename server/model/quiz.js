@@ -32,17 +32,17 @@ const quizSchema = mongoose.Schema({
         default: new Date()
     },
     questionList: [{
-        questionType: {
-            type: String,
-            enum: ["True/False", "Quiz"],
-            required: true,
-        },
+        // questionType: {
+        //     type: String,
+        //     enum: ["True/False", "Quiz"],
+        //     required: true,
+        // },
 
-        scoreType: {
-            type: String,
-            enum: ["Basic", "Double"],
-            required: true,
-        },
+        // scoreType: {
+        //     type: String,
+        //     enum: ["Basic", "Double"],
+        //     required: true,
+        // },
         timer: {
             type: String,
             min: 10,
