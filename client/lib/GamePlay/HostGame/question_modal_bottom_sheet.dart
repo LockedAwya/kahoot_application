@@ -1,5 +1,6 @@
 //import '../WaitingRoom/waiting_room.dart';
 import 'package:flutter/material.dart';
+import '../WaitingRoom/game_pin.dart';
 import '../../utils/routing_names.dart';
 
 class QuestionModalBottomSheet extends StatefulWidget {
@@ -33,11 +34,11 @@ class _QuestionModalBottomSheet extends State<QuestionModalBottomSheet> {
                 ),
               ),
               onPressed: () => {
-                Navigator.pushNamed(context, WaitingRoomScreenView)
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => WaitingRoomScreen()),
-                // )
+                //Navigator.pushNamed(context, WaitingRoomScreenView)
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GamePin()),
+                )
               },
             ),
           ),

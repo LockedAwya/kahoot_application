@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-//import '../create_kahoot/create_kahoot.dart';
+import '../../../GamePlay/HostGame/question_modal_bottom_sheet.dart';
 import '../quiz_details.dart';
-//import '../../../utils/global_variables.dart';
+import '../../../utils/global_variables.dart';
 
 class QuizComponent extends StatelessWidget {
   //final String text1;
@@ -17,11 +17,29 @@ class QuizComponent extends StatelessWidget {
       //padding: EdgeInsets.all(5),
       // alignment: Alignment.topLeft,
       onTap: (() {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                QuizDetails(quizId, quizName, quizDescription))
-                );
-        print("Quiz id is: " + quizId);
+        if (globalState == "host_game_screen") {
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (context) => QuestionModalBottomSheet()));
+          showModalBottomSheet<dynamic>(
+              isScrollControlled: true,
+              context: context,
+              builder: (context) => Container(
+                  height: MediaQuery.of(context).size.height * 0.90,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: const Radius.circular(25.0),
+                      topRight: const Radius.circular(25.0),
+                    ),
+                  ),
+                  child: QuestionModalBottomSheet()));
+        }
+        if (globalState == "my_kahoots") {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  QuizDetails(quizId, quizName, quizDescription)));
+          print("Quiz id is: " + quizId);
+        }
       }),
       child: Row(
         children: <Widget>[

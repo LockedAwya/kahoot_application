@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../WaitingRoom/waiting_room.dart';
-import '../game_pin.dart';
+import '../WaitingRoom/game_pin.dart';
 
 class JoinGameScreen extends StatefulWidget {
   final double borderWidth = 0.5;

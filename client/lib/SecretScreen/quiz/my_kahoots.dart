@@ -32,7 +32,7 @@ class _MyKahootScreen extends State<MyKahootScreen> {
     if (box.hasData("quiz_details")) {
       box.remove("quiz_details");
     }
-    //initial();
+    globalState = "my_kahoots";
     //quizListInitial();
   }
 
