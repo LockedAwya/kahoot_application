@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./index.js",
     "dev": "nodemon ./index.js",
+    "serve": "nodemon ./socketIOServer.js",
+    "start": "concurrently \"npm:dev\"  \"npm:serve\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -13,6 +14,7 @@
   "dependencies": {
     "@socket.io/admin-ui": "^0.5.1",
     "bcryptjs": "^2.4.3",
+    "concurrently": "^7.5.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "https": "^1.0.0",

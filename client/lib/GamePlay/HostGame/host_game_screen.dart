@@ -17,80 +17,80 @@ class HostGameScreen extends StatefulWidget {
   State<HostGameScreen> createState() => _HostGameScreen();
 }
 
-class QuestionComponent extends StatelessWidget {
-  //final String text1;
-  const QuestionComponent({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      //padding: EdgeInsets.all(5),
-      // alignment: Alignment.topLeft,
-      onTap: () {
-        //print("Click ${text1}");
-        showModalBottomSheet<dynamic>(
-            isScrollControlled: true,
-            context: context,
-            // builder: (context) =>
-            builder: (context) => Container(
-                height: MediaQuery.of(context).size.height * 0.90,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: const Radius.circular(25.0),
-                    topRight: const Radius.circular(25.0),
-                  ),
-                ),
-                child: QuestionModalBottomSheet()));
-      },
-      child: Row(
-        children: <Widget>[
-          Image.asset(
-            'assets/images/img1.jpg',
-            height: 100,
-            width: 100,
-          ),
-          Container(
-              padding: const EdgeInsets.only(left: 10),
-              child: Column(children: <Widget>[
-                Container(
-                  alignment: Alignment.topLeft,
-                  child: const Text(
-                    "Something",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.black),
-                  ),
-                ),
-                const SizedBox(height: 25), // <-- Set height
-                Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: 0),
-                    child: Text(
-                      "Something",
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
-                    )),
-                const SizedBox(height: 25),
-                Container(
-                  padding: EdgeInsets.only(left: 0),
-                  //apply padding horizontal or vertical only
-                  child: Text(
-                    "LockedAway00",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.grey),
-                  ),
-                ),
-              ])),
-        ],
-      ),
-      // decoration: BoxDecoration(
-      //   border: Border.all(color: Colors.grey), //BorderRadius.all
-      // ),
-    );
-  }
-}
+// class QuestionComponent extends StatelessWidget {
+//   //final String text1;
+//   const QuestionComponent({super.key});
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       //padding: EdgeInsets.all(5),
+//       // alignment: Alignment.topLeft,
+//       onTap: () {
+//         //print("Click ${text1}");
+//         showModalBottomSheet<dynamic>(
+//             isScrollControlled: true,
+//             context: context,
+//             // builder: (context) =>
+//             builder: (context) => Container(
+//                 height: MediaQuery.of(context).size.height * 0.90,
+//                 decoration: BoxDecoration(
+//                   color: Colors.white,
+//                   borderRadius: BorderRadius.only(
+//                     topLeft: const Radius.circular(25.0),
+//                     topRight: const Radius.circular(25.0),
+//                   ),
+//                 ),
+//                 child: QuestionModalBottomSheet()));
+//       },
+//       child: Row(
+//         children: <Widget>[
+//           Image.asset(
+//             'assets/images/img1.jpg',
+//             height: 100,
+//             width: 100,
+//           ),
+//           Container(
+//               padding: const EdgeInsets.only(left: 10),
+//               child: Column(children: <Widget>[
+//                 Container(
+//                   alignment: Alignment.topLeft,
+//                   child: const Text(
+//                     "Something",
+//                     style: TextStyle(
+//                         fontWeight: FontWeight.bold,
+//                         fontSize: 20,
+//                         color: Colors.black),
+//                   ),
+//                 ),
+//                 const SizedBox(height: 25), // <-- Set height
+//                 Container(
+//                     alignment: Alignment.centerLeft,
+//                     padding: EdgeInsets.only(left: 0),
+//                     child: Text(
+//                       "Something",
+//                       style: TextStyle(fontSize: 12, color: Colors.grey),
+//                     )),
+//                 const SizedBox(height: 25),
+//                 Container(
+//                   padding: EdgeInsets.only(left: 0),
+//                   //apply padding horizontal or vertical only
+//                   child: Text(
+//                     "LockedAway00",
+//                     style: TextStyle(
+//                         fontWeight: FontWeight.bold,
+//                         fontSize: 12,
+//                         color: Colors.grey),
+//                   ),
+//                 ),
+//               ])),
+//         ],
+//       ),
+//       // decoration: BoxDecoration(
+//       //   border: Border.all(color: Colors.grey), //BorderRadius.all
+//       // ),
+//     );
+//   }
+// }
 
 class _HostGameScreen extends State<HostGameScreen> {
   final double borderWidth = 0.5;
@@ -108,6 +108,7 @@ class _HostGameScreen extends State<HostGameScreen> {
 
   void initial() {
     globalState = "host_game_screen";
+    print(globalState);
   }
 
   @override

@@ -83,10 +83,10 @@ class _JoinGameScreen extends State<JoinGameScreen> {
                   ),
                 ),
                 onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => GamePin()),
-                  )
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => GamePin()),
+                  // )
                 },
               ),
             ),

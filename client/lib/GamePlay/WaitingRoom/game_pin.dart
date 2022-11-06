@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import '../../utils/global_variables.dart';
+import '../../utils/socket_service.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class GamePin extends StatefulWidget {
-  const GamePin({Key? key}) : super(key: key);
+  //final int gameId;
+  //final String username;
+  var gameData;
+  GamePin({Key? key, required this.gameData}) : super(key: key);
 
   @override
   _GamePinState createState() => _GamePinState();
@@ -18,6 +24,46 @@ class _GamePinState extends State<GamePin> {
     'pLayer 3'
   ];
   //List<String> gamePin = []; //display "Waiting for player if there are no players"
+
+  void initSocket() {
+    socket = IO.io(
+      'http://10.0.2.2:3003',
+      IO.OptionBuilder()
+          .setTransports(['websocket'])
+          //.disableAutoConnect()
+          // .setQuery(
+          //     {'username': widget.username})
+          .enableForceNew()
+          .build(),
+    );
+    socket.connect();
+    socket.onConnect(
+        (data) => print('Connection established with id ${socket.id}'));
+    socket.onConnectError((data) => print('Connect Error: $data'));
+    socket.onDisconnect(
+        (data) => print('Socket.IO server disconnected with id ${socket.id}'));
+    socket.emit("msg", "test1234");
+    print("Game data is: ");
+    print(widget.gameData);
+    socket.emit("create-game", widget.gameData);
+    //_connectSocket();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    //print("LMAO");
+    super.initState();
+    setState(() => {initSocket()});
+  }
+
+  // @override
+  // void didUpdateWidget(GamePin oldWidget) {
+  //   debugPrint('State didUpdateWidget');
+  //   super.didUpdateWidget(oldWidget);
+  //   initSocket();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +76,16 @@ class _GamePinState extends State<GamePin> {
             alignment: Alignment.center,
             iconSize: 20,
             onPressed: () {
+              setState(() => {
+                    socket.emit("delete-game", widget.gameData["gameId"]),
+                    socket.dispose(),
+                    print(socket.connected)
+                  });
               Navigator.of(context).pop();
+              // Navigator.pushReplacement(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (BuildContext context) => super.widget));
             },
             icon: Container(
                 width: 20,
@@ -55,9 +110,9 @@ class _GamePinState extends State<GamePin> {
             padding: EdgeInsets.zero,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  "Game pin: 12345678",
+                  "Game pin: ${widget.gameData['gameId']}",
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,

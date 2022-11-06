@@ -32,7 +32,7 @@ class QuizComponent extends StatelessWidget {
                       topRight: const Radius.circular(25.0),
                     ),
                   ),
-                  child: QuestionModalBottomSheet()));
+                  child: QuestionModalBottomSheet(quizId: quizId)));
         }
         if (globalState == "my_kahoots") {
           Navigator.of(context).push(MaterialPageRoute(
