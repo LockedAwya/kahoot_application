@@ -58,13 +58,15 @@ class _QuestionModalBottomSheet extends State<QuestionModalBottomSheet> {
                 // },
                 gameId = random(1000000, 9999999),
                 //initSocket(),
+                box.write("gameData", {
+                            "quizId": widget.quizId,
+                            "gameId": gameId.toString(),
+                          }),
+                box.write("perspective", "host"),
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => GamePin(gameData: {
-                            "quizId": widget.quizId,
-                            "gameId": gameId,
-                          })),
+                      builder: (context) => GamePin()),
                 )
               },
             ),
