@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return OKToast(
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         navigatorKey: globalKey,
         // theme: ThemeData(

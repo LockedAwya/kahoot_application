@@ -2,7 +2,8 @@ import 'package:dio/dio.dart';
 import '../model/quiz_model.dart';
 import 'dart:convert';
 
-String api_url = 'http://10.0.2.2:3000';
+String api_url =
+    'http://127.0.0.1:3000'; //http://10.0.2.2:3000 //http://127.0.0.1:3000
 var dio = Dio();
 
 Future<Response> loginAPI(String email, String password) {
@@ -43,6 +44,7 @@ Future<List<Quiz>> getQuizesByHostId(String hostId) async {
     ),
   );
   if (res.statusCode == 200) {
+    
     List<Quiz> reversedList =
         (res.data as List).map((e) => Quiz.fromJson(e)).toList();
     reversedList = reversedList.reversed.toList();

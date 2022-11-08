@@ -10,9 +10,9 @@ let game;
 let leaderboard;
 let players = [];
 
-const addPlayer = (userName, socketId) => {
+const addPlayer = (username, socketId) => {
   !players.some((player) => player.socketId === socketId) &&
-    players.push({ userName, socketId })
+    players.push({ username, socketId })
   console.log(players);
 }
 
@@ -27,10 +27,15 @@ io.on("connection", (socket) => {
     //socket.destroy();
     //console.log(error)
   })
-  socket.on('msg', (data) => {
-    console.log('data from default ', data);
-    socket.emit('fromServer', "ok");
-  });
+  // socket.on('msg', (data) => {
+  //   console.log('data from default ', data);
+  //   socket.emit('fromServer', "ok");
+  // });
+
+  // socket.on('lmao', (data, ack) => {
+  //   console.log("Lmao data ", data);
+  //   ack('test1234')
+  // })
 
   socket.on("create-game", (newGame) => {
     game = JSON.parse(JSON.stringify(newGame))
@@ -100,14 +105,14 @@ io.on("connection", (socket) => {
     players = [];
   })
 
-  socket.on('leave-game',(gameId) => {  
-    try{
-      console.log('[socket]','leave room :', gameId);
-      socket.leave(gameId);
-      socket.to(gameId).emit('user-left', socket.id);
-    }catch(e){
-      console.log('[error]','leave room :', e);
-      socket.emit('error','couldnt perform requested action');
+  socket.on('leave-game', (userInfo) => {
+    try {
+      console.log('[socket]', 'leave room :', userInfo);
+      socket.leave(userInfo.gameId);
+      socket.to(userInfo.gameId).emit('user-left', userInfo);
+    } catch (e) {
+      console.log('[error]', 'leave room :', e);
+      socket.emit('error', 'couldnt perform requested action');
     }
   })
 });
