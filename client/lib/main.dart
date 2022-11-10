@@ -41,6 +41,7 @@ import 'package:untitled_folder/InitialScreen/initial_screen.dart';
 import 'package:untitled_folder/add_question/add_question.dart';
 import 'package:untitled_folder/create_kahoot/create_kahoot.dart';
 import 'package:untitled_folder/highscore_page.dart';
+import 'package:untitled_folder/player_screen/player_screen.dart';
 import 'package:untitled_folder/quiz_page/create_answer_1.dart';
 import 'package:untitled_folder/quiz_page/create_answer_3.dart';
 import 'package:untitled_folder/quiz_page/quiz_page.dart';
@@ -67,7 +68,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primarySwatch: Colors.blue,
             scaffoldBackgroundColor: Colors.deepPurpleAccent),
-        home: const SafeArea(child: CreateKahoot()),
+        home: const SafeArea(child: PlayerScreen()),
         // onGenerateRoute: router.generateRoute,
         // initialRoute: InitialScreenView,
       ),
