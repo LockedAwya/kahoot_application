@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:untitled_folder/highscore_page.dart';
-import 'package:untitled_folder/player_screen/initial_screen.dart';
-import 'package:untitled_folder/score_board.dart';
+import '../highscore_page.dart';
+import 'package:untitled_folder/GamePlay/player_screen/initial_screen.dart';
+import '../score_board.dart';
 
 class PlayerScreen extends StatefulWidget {
   const PlayerScreen({Key? key}) : super(key: key);

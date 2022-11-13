@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_folder/score_board.dart';
+import '../score_board.dart';
 
 class InitialScreen extends StatefulWidget {
   const InitialScreen({Key? key}) : super(key: key);

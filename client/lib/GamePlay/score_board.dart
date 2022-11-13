@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:untitled_folder/highscore_page.dart';
+import './highscore_page.dart';
 import 'package:untitled_folder/model/score_board_model.dart';
-import 'package:untitled_folder/player_screen/player_screen.dart';
+import 'package:untitled_folder/GamePlay/player_screen/player_screen.dart';
 
 class ScoreBoard extends StatefulWidget {
   const ScoreBoard({Key? key}) : super(key: key);
