@@ -92,6 +92,8 @@ io.on("connection", (socket) => {
       let getRoomRes = getRoom(userInfo.roomId);
       console.log(getRoomRes);
       if (getRoomRes !== undefined) {
+        const message = "success"
+        socket.emit("join-game-validation", message);
         socket.on("add-player", (userInfo) => {
           /**
            * userInfo : { 
@@ -153,7 +155,7 @@ io.on("connection", (socket) => {
         // }
       } else {
         const message = "There is no room with ID " + userInfo.roomId
-        socket.emit("no-room-available", message);
+        socket.emit("join-game-validation", message);
       }
     }
   })

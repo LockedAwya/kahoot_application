@@ -10,18 +10,20 @@ const gameSchema = mongoose.Schema({
         ref: "Quiz"
     },
     pin: {
-        type: String
+        type: String,
+        unique: true,
     },
     playerList: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        //the socket connection id will be playerId
+        playerId: { type: String, unique: true },
+        playerName: { type: String, unique: true },
     }],
     date: {
         type: Date,
         required: true,
         default: Date.now
     },
-    playerResult: [{
+    playerResultList: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "PlayerResult"
     }]

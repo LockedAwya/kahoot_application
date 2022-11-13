@@ -9,15 +9,21 @@ const DB = "mongodb+srv://elipsical:jerry100@cluster0.p18hqnw.mongodb.net/?retry
 //import from files
 const authRouter = require('./routes/auth')
 const quizRouter = require('./routes/quiz')
+const gameRouter = require('./routes/game')
+const leaderboardRouter = require('./routes/leaderboard')
+const playerResultRouter = require('./routes/playerResult')
 
 app.use(cors({
-    origin: 'http://localhost:55866'
+    origin: '*'
 }));
 
 //middleware
 app.use(express.json())
 app.use(authRouter)
 app.use("/api/quizes", quizRouter);
+app.use("/api/games", gameRouter);
+app.use("/api/leaderboard", leaderboardRouter)
+app.use("/api/playerResult", playerResultRouter);
 
 //Connection
 mongoose

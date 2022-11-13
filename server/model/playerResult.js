@@ -2,8 +2,8 @@ const mongoose = require("mongoose")
 
 const playerResultSchema = mongoose.Schema ({
     playerId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        type: String,
+        //ref: "User"
     },
     gameId: {
         type: mongoose.Schema.Types.ObjectId,
