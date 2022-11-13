@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled_folder/highscore_page.dart';
 import 'package:untitled_folder/model/score_board_model.dart';
+import 'package:untitled_folder/player_screen/player_screen.dart';
 
 class ScoreBoard extends StatefulWidget {
   const ScoreBoard({Key? key}) : super(key: key);
@@ -19,6 +22,26 @@ class _ScoreBoardState extends State<ScoreBoard> {
       score: '0',
     )
   ];
+  int countClick = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _read();
+  }
+
+  _read() async {
+    final prefs = await SharedPreferences.getInstance();
+    var values = prefs.getInt("point") ?? 0;
+    if (values != null) {
+      setState(() {
+        countClick = values;
+      });
+    }
+    print('read: $values');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +59,20 @@ class _ScoreBoardState extends State<ScoreBoard> {
             )),
         actions: [
           InkWell(
-            onTap: () {},
+            onTap: () {
+              if (countClick == 2) {
+                countClick = 0;
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HighScorePage()));
+                return;
+              }
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PlayerScreen()),
+                  (route) => false);
+            },
             child: Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
