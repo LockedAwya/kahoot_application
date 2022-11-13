@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../WaitingRoom/waiting_room.dart';
 import '../WaitingRoom/game_pin.dart';
 import '../../utils/global_variables.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import '../../utils/stream_socket.dart';
+import 'dart:async';
+import '../../utils/router.dart';
 
 class JoinGameScreen extends StatefulWidget {
   final double borderWidth = 0.5;
@@ -13,42 +17,100 @@ class JoinGameScreen extends StatefulWidget {
 }
 
 class _JoinGameScreen extends State<JoinGameScreen> {
-  final TextEditingController gameIdController = TextEditingController();
+  final TextEditingController roomIdController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
-
-  // void initSocket() {
-  //   socket = IO.io(
-  //     'http://10.0.2.2:3003',
-  //     IO.OptionBuilder()
-  //         .setTransports(['websocket'])
-  //         //.disableAutoConnect()
-  //         // .setQuery(
-  //         //     {'username': widget.username})
-  //         .enableForceNew()
-  //         .build(),
-  //   );
-  //   socket.connect();
-  //   socket.onConnect(
-  //       (data) => print('Connection established with id ${socket.id}'));
-  //   socket.onConnectError((data) => print('Connect Error: $data'));
-  //   socket.onDisconnect(
-  //       (data) => print('Socket.IO server disconnected with id ${socket.id}'));
-  // }
+  StreamSocket streamSocket = StreamSocket();
+  //final completer = Completer<dynamic>();
+  String msg = "";
 
   @override
   void initState() {
     // TODO: implement initState
     //print("LMAO");
     super.initState();
-    //setState(() => {initSocket()});
-    //initSocket();
   }
 
-  void cb(String notify, String username, String gameId) {}
+  void initSocket() {
+    socket = IO.io(
+      'http://127.0.0.1:3003', //http://10.0.2.2:3003 //http://127.0.0.1:3003
+      IO.OptionBuilder()
+          .setTransports(['websocket'])
+          //.disableAutoConnect()
+          // .setQuery(
+          //     {'username': widget.username})
+          .enableForceNew()
+          .build(),
+    );
+    socket.connect();
+    socket.onConnect(
+        (data) => print('Connection established with id ${socket.id}'));
+    socket.onConnectError((data) => print('Connect Error: $data'));
+    socket.onDisconnect((data) =>
+        print('Socket.IO server (room) disconnected with id ${socket.id}'));
+  }
+
+  //void cb(String notify, String username, String gameId) {}
+  void joinRoomValidation(BuildContext context) async {
+    final completer = new Completer();
+    socket.on(
+        "no-room-available",
+        (data) => {
+              //print(data),
+              //streamSocket.addResponse(data),
+              completer.complete(data),
+              socket.dispose,
+            });
+    socket.on(
+        "duplicated-username",
+        (data) => {
+              //print(data),
+              //streamSocket.addResponse(data),
+              completer.complete(data),
+              socket.dispose
+            });
+    // new Timer(Duration(seconds: 3), () {
+    //   print("Yeah, this line is printed after 3 seconds");
+    //   completer.complete("you should see me final");
+    // });
+    completer.future
+        .then((dynamic result) => {
+              msg = result,
+            })
+        .whenComplete(() => {
+              //print(msg),
+              if (msg == null)
+                {
+                  box.write("perspective", "player"),
+                  //box.write("added-username")
+                  box.write('gameData', {
+                    "roomId": roomIdController.text,
+                    "username": usernameController.text,
+                    //"socketId": socket.id,
+                  }),
+                  print(box.read('gameData')),
+                  //Get.to(GamePin()),
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => GamePin())),
+                  Navigator.of(context).pushNamed("/waiting_room"),
+                }
+              else
+                {
+                  print("Cannot go!!!"),
+                  print(msg),
+                }
+              // Navigator.push(context,
+              //       MaterialPageRoute(builder: (context) => GamePin())),
+            });
+    //return completer.future;
+  }
+
   @override
   Widget build(BuildContext context) {
     // const double height = MediaQuery.of(context).size.height;
     // const double width = MediaQuery.of(context).size.width;
+    // return StreamBuilder(
+    //     stream: streamSocket.socketResponse,
+    //     builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
     return Scaffold(
       backgroundColor: Colors.purple[900],
       resizeToAvoidBottomInset: false,
@@ -73,7 +135,7 @@ class _JoinGameScreen extends State<JoinGameScreen> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
               child: TextField(
-                controller: gameIdController,
+                controller: roomIdController,
                 obscureText: false,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -117,24 +179,95 @@ class _JoinGameScreen extends State<JoinGameScreen> {
                   ),
                 ),
                 onPressed: () => {
-                  //username, socketId, gameId, cb
-                  // setState(() => {
-                  //       initSocket(),
-                  //     }),
-                  print("Lmao player"),
-
-                  box.write("perspective", "player"),
-                  //box.write("added-username")
-                  box.write('gameData', {
-                    "gameId": gameIdController.text,
+                  initSocket(),
+                  socket.emit("join-game-validation", {
                     "username": usernameController.text,
-                    //"socketId": socket.id,
+                    "socketId": socket.id,
+                    "roomId": roomIdController.text
                   }),
-                  print(box.read('gameData')),
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => GamePin()),
-                  )
+                  joinRoomValidation(context),
+                  // joinRoomValidation().then((dynamic result) {
+                  //   msg = result;
+                  //   //print(result);
+                  // }).whenComplete(() => {
+                  //       //print(msg),
+                  //       if (msg == "")
+                  //         {
+                  //           box.write("perspective", "player"),
+                  //           //box.write("added-username")
+                  //           box.write('gameData', {
+                  //             "roomId": roomIdController.text,
+                  //             "username": usernameController.text,
+                  //             //"socketId": socket.id,
+                  //           }),
+                  //           print(box.read('gameData')),
+                  //           //Get.to(GamePin()),
+                  //           // Navigator.push(
+                  //           //     context,
+                  //           //     MaterialPageRoute(
+                  //           //         builder: (context) => GamePin())),
+                  //           Navigator.of(context).pushNamed("/waitingroom"),
+                  //         }
+                  //       else
+                  //         {
+                  //           print("Cannot go!!!"),
+                  //           print(msg),
+                  //         }
+                  //     }),
+                  // socket.emit("join-game-validation", {
+                  //   "username": usernameController.text,
+                  //   "socketId": socket.id,
+                  //   "roomId": roomIdController.text
+                  // }),
+                  // socket.on(
+                  //     "no-room-available",
+                  //     (data) => {
+                  //           print(data),
+                  //           //streamSocket.addResponse(data),
+                  //           completer.complete(data),
+                  //           socket.dispose,
+                  //         }),
+                  // socket.on(
+                  //     "duplicated-username",
+                  //     (data) => {
+                  //           print(data),
+                  //           //streamSocket.addResponse(data),
+                  //           completer.complete(data),
+                  //           socket.dispose
+                  //         }),
+                  //print(completer.future),
+                  // socket.on("player-added", (data) {
+                  //   box.write("perspective", "player");
+                  //   //box.write("added-username")
+                  //   box.write('gameData', {
+                  //     "roomId": roomIdController.text,
+                  //     "username": usernameController.text,
+                  //     //"socketId": socket.id,
+                  //   });
+                  //   print(box.read('gameData'));
+                  //   Navigator.push(context,
+                  //       MaterialPageRoute(builder: (context) => GamePin()));
+                  // }),
+                  //print(streamSocket.getResponse),
+                  // if (isInRoom == false)
+                  //   {
+                  //     print("Cannot go to game"),
+                  //   }
+                  // else
+                  //   {
+                  //     box.write("perspective", "player"),
+                  //     //box.write("added-username")
+                  //     box.write('gameData', {
+                  //       "roomId": roomIdController.text,
+                  //       "username": usernameController.text,
+                  //       //"socketId": socket.id,
+                  //     }),
+                  //     print(box.read('gameData')),
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(builder: (context) => GamePin()),
+                  //     )
+                  //   }
                 },
               ),
             ),
@@ -142,12 +275,13 @@ class _JoinGameScreen extends State<JoinGameScreen> {
         ),
       ),
     );
+    // });
   }
 
   @override
   void dispose() {
     super.dispose();
-    gameIdController.dispose();
+    roomIdController.dispose();
     usernameController.dispose();
   }
 }

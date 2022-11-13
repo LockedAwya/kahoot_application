@@ -1,7 +1,7 @@
 //import '../WaitingRoom/waiting_room.dart';
 import 'package:flutter/material.dart';
 import '../WaitingRoom/game_pin.dart';
-import '../../utils/routing_names.dart';
+//import '../../utils/routing_names.dart';
 import '../../utils/global_variables.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -19,9 +19,28 @@ class QuestionModalBottomSheet extends StatefulWidget {
 }
 
 class _QuestionModalBottomSheet extends State<QuestionModalBottomSheet> {
-  late int gameId;
+  late int roomId;
   late String quizId;
   //late var gameData;
+
+  void initSocket() {
+    socket = IO.io(
+      'http://127.0.0.1:3003', //http://10.0.2.2:3003 //http://127.0.0.1:3003
+      IO.OptionBuilder()
+          .setTransports(['websocket'])
+          //.disableAutoConnect()
+          // .setQuery(
+          //     {'username': widget.username})
+          .enableForceNew()
+          .build(),
+    );
+    socket.connect();
+    socket.onConnect(
+        (data) => print('Connection established with id ${socket.id}'));
+    socket.onConnectError((data) => print('Connect Error: $data'));
+    socket.onDisconnect((data) =>
+        print('Socket.IO server (room) disconnected with id ${socket.id}'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,28 +64,18 @@ class _QuestionModalBottomSheet extends State<QuestionModalBottomSheet> {
                 ),
               ),
               onPressed: () => {
-                //Navigator.pushNamed(context, WaitingRoomScreenView)
-                // gameData = {
-                //   quizId: quiz._id,
-                //   isLive: true,
-                //   pin: String(Math.floor(Math.random() * 9000) + 1000)
-                // }
                 print("Lmao"),
-                // gameData = {
-                //   "quizId": widget.quizId,
-                //   "gameId": gameId,
-                // },
-                gameId = random(1000000, 9999999),
+                initSocket(),
+                roomId = random(1000000, 9999999),
                 //initSocket(),
                 box.write("gameData", {
-                            "quizId": widget.quizId,
-                            "gameId": gameId.toString(),
-                          }),
+                  "quizId": widget.quizId,
+                  "roomId": roomId.toString(),
+                }),
                 box.write("perspective", "host"),
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => GamePin()),
+                  MaterialPageRoute(builder: (context) => GamePin()),
                 )
               },
             ),

@@ -20,14 +20,7 @@ class GamePin extends StatefulWidget {
 //dynamic findUser(int id) => GamePin.firstWhere((user) => user.id == id);
 
 class _GamePinState extends State<GamePin> {
-  List<dynamic> gamePin = [
-    // 'KhoaAssassin',
-    // 'Vuong Vu Duc Hoang',
-    // 'Ngo Duc Manh',
-    // 'player 1',
-    // 'player 2',
-    // 'pLayer 3'
-  ];
+  List<dynamic> gamePin = [];
   //StreamSocket streamSocket = StreamSocket();
   //List<String> gamePin = []; //display "Waiting for player if there are no players"
   //late int gameId;
@@ -35,22 +28,22 @@ class _GamePinState extends State<GamePin> {
   bool isGameLive = true;
 
   void initSocket() {
-    socket = IO.io(
-      'http://127.0.0.1:3003', //http://10.0.2.2:3003 //http://127.0.0.1:3003
-      IO.OptionBuilder()
-          .setTransports(['websocket'])
-          //.disableAutoConnect()
-          // .setQuery(
-          //     {'username': widget.username})
-          .enableForceNew()
-          .build(),
-    );
-    socket.connect();
-    socket.onConnect(
-        (data) => print('Connection established with id ${socket.id}'));
-    socket.onConnectError((data) => print('Connect Error: $data'));
-    socket.onDisconnect((data) =>
-        print('Socket.IO server (room) disconnected with id ${socket.id}'));
+    // socket = IO.io(
+    //   'http://127.0.0.1:3003', //http://10.0.2.2:3003 //http://127.0.0.1:3003
+    //   IO.OptionBuilder()
+    //       .setTransports(['websocket'])
+    //       //.disableAutoConnect()
+    //       // .setQuery(
+    //       //     {'username': widget.username})
+    //       .enableForceNew()
+    //       .build(),
+    // );
+    // socket.connect();
+    // socket.onConnect(
+    //     (data) => print('Connection established with id ${socket.id}'));
+    // socket.onConnectError((data) => print('Connect Error: $data'));
+    // socket.onDisconnect((data) =>
+    //     print('Socket.IO server (room) disconnected with id ${socket.id}'));
 
     if (box.read('perspective') == "host") {
       socket.emit("create-game", box.read("gameData"));
@@ -73,7 +66,7 @@ class _GamePinState extends State<GamePin> {
       socket.emit("add-player", {
         "username": box.read('gameData')['username'],
         "socketId": socket.id,
-        "gameId": box.read('gameData')['gameId'],
+        "roomId": box.read('gameData')['roomId'],
       });
     }
 
@@ -92,20 +85,17 @@ class _GamePinState extends State<GamePin> {
     //     print("Null");
     //   }
     // });
-    socket.on("delete-game", (data) {
-      print("Game with id ${data} deleted.");
-      socket.dispose();
-      gamePin.clear();
-      // if (box.read('perspective') == 'host') {
-      //   Get.to(JoinGameScreen());
-      // }
-      if (box.read('perspective') == 'player') {
-        Get.to(JoinGameScreen());
-      }
-      // isGameLive = false;
-      // streamSocket.addResponse(isGameLive);
-      //Navigator.of(context).pop();
-    });
+    // socket.on("delete-game", (data) {
+    //   print("Game with id ${data} deleted.");
+    //   socket.dispose();
+    //   gamePin.clear();
+    //   // if (box.read('perspective') == 'host') {
+    //   //   Get.to(JoinGameScreen());
+    //   // }
+    //   // isGameLive = false;
+    //   // streamSocket.addResponse(isGameLive);
+    //   Navigator.of(context).pop();
+    // });
     //=> gamePin.add(_["userName"]),
     //print(data);
     //return streamSocket.addResponse;
@@ -143,13 +133,19 @@ class _GamePinState extends State<GamePin> {
 
   @override
   Widget build(BuildContext context) {
+    socket.on("delete-game", (data) {
+      print("Game with id ${data} deleted.");
+      socket.dispose();
+      gamePin.clear();
+      Navigator.of(context).pop();
+    });
     return StreamBuilder(
         stream: streamSocket.socketResponse,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           // if (snapshot.data == false) {
           //   Navigator.of(context).pop();
           // }
-          print(snapshot.data);
+          //print(snapshot.data);
           return Scaffold(
             backgroundColor: Colors.deepPurple,
             appBar: AppBar(
@@ -206,7 +202,7 @@ class _GamePinState extends State<GamePin> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Game pin: ${box.read('gameData')['gameId']}",
+                        "Game pin: ${box.read('gameData')['roomId']}",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -220,66 +216,77 @@ class _GamePinState extends State<GamePin> {
                   height: 20,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.zero,
-                        width: 60,
-                        height: 30,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: Colors.white),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/icons/ic_user.png',
-                              width: 16,
-                              height: 16,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            const Text(
-                              "0",
-                              style: TextStyle(
-                                  fontSize: 10, fontWeight: FontWeight.normal),
-                            )
-                          ],
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 20),
-                        child: Text(
-                          'Kahoot!',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 24),
-                        ),
-                      ),
-                      Material(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.0),
-                        child: InkWell(
-                          onTap: () {},
-                          child: Container(
-                            width: 60,
-                            height: 30,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: box.read('perspective') == 'host'
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.zero,
+                                width: 60,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    color: Colors.white),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/ic_user.png',
+                                      width: 16,
+                                      height: 16,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    const Text(
+                                      "0",
+                                      style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.normal),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: Text(
+                                  'Kahoot!',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 24),
+                                ),
+                              ),
+                              Material(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5.0),
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    width: 60,
+                                    height: 30,
+                                    alignment: Alignment.center,
+                                    child: Text("Start",
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.normal)),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Container(
                             alignment: Alignment.center,
-                            child: Text("Start",
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.normal)),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                            child: const Text(
+                              "",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20),
+                            ),
+                          )),
                 const SizedBox(
                   height: 30,
                 ),
