@@ -68,7 +68,7 @@ class _GamePinState extends State<GamePin> {
       socket.emit("add-player", {
         "username": box.read('gameData')['username'],
         "socketId": socket.id,
-        "roomId": box.read('gameData')['roomId'],
+        "gamePin": box.read('gameData')['gamePin'],
       });
     }
 

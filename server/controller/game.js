@@ -1,3 +1,4 @@
+const e = require("express")
 const mongoose = require("mongoose")
 const Game = require("../model/game")
 const PlayerResult = require("../model/playerResult")
@@ -85,15 +86,19 @@ const updateGame = async (req, res) => {
 }
 
 const addPlayer = async (req, res) => {
-  const { gameId } = req.params
+  const { gamePin } = req.params
   const { playerId, playerName } = req.body
-
   let game
   try {
-    game = await Game.findById(gameId)
-    game.playerList.push({ playerId, playerName })
-    const updatedGame = await game.save()
-    res.send(updatedGame)
+    game = await Game.findOne({ pin: gamePin }).exec();
+    if (game == null) {
+      return res.status(404).json({ message: "There is no game with game pin ${gamePin}" })
+    } else {
+      console.log({ playerId, playerName })
+      game.playerList.push({ playerId, playerName })
+      const updatedGame = await game.save()
+      res.send(updatedGame)
+    }
   } catch (error) {
     res.status(400).json({ message: error.message })
   }

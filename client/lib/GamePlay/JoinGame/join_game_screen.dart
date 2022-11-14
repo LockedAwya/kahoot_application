@@ -7,6 +7,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../utils/stream_socket.dart';
 import 'dart:async';
 import '../../utils/router.dart';
+import '../../api/index.dart';
 
 class JoinGameScreen extends StatefulWidget {
   final double borderWidth = 0.5;
@@ -179,88 +180,24 @@ class _JoinGameScreen extends State<JoinGameScreen> {
                     color: Colors.white,
                   ),
                 ),
-                onPressed: () => {
-                  initSocket(),
-                  // socket.emit("join-game-validation", {
-                  //   "username": usernameController.text,
-                  //   "socketId": socket.id,
-                  //   "roomId": roomIdController.text
-                  // }),
-                  // joinRoomValidation(context),
-                  // Navigator.of(context).pushNamed("/waiting_room"),
-                  // joinRoomValidation().then((dynamic result) {
-                  //   msg = result;
-                  //   //print(result);
-                  // }).whenComplete(() => {
-                  //       //print(msg),
-                  //       if (msg == "")
-                  //         {
-                  //           box.write("perspective", "player"),
-                  //           //box.write("added-username")
-                  //           box.write('gameData', {
-                  //             "roomId": roomIdController.text,
-                  //             "username": usernameController.text,
-                  //             //"socketId": socket.id,
-                  //           }),
-                  //           print(box.read('gameData')),
-                  //           //Get.to(GamePin()),
-                  //           // Navigator.push(
-                  //           //     context,
-                  //           //     MaterialPageRoute(
-                  //           //         builder: (context) => GamePin())),
-                  //           Navigator.of(context).pushNamed("/waitingroom"),
-                  //         }
-                  //       else
-                  //         {
-                  //           print("Cannot go!!!"),
-                  //           print(msg),
-                  //         }
-                  //     }),
-                  socket.emit("join-game-validation", {
-                    "username": usernameController.text,
-                    "socketId": socket.id,
-                    "roomId": roomIdController.text
-                  }),
-                  // socket.on(
-                  //     "no-room-available",
-                  //     (data) => {
-                  //           print(data),
-                  //           //streamSocket.addResponse(data),
-                  //           completer.complete(data),
-                  //           socket.dispose,
-                  //         }),
-                  socket.on(
-                      "join-game-validation",
-                      (data) => {
-                            print(data),
-                            //streamSocket.addResponse(data),
-                            setState(() {
-                              msg = data;
-                              socket.dispose;
-                            }),
-                            //completer.complete(data),
-                          }),
-                  // socket.on(
-                  //     "duplicated-username",
-                  //     (data) => {
-                  //           print(data),
-                  //           //streamSocket.addResponse(data),
-                  //           completer.complete(data),
-                  //           socket.dispose
-                  //         }),
-                  print("Data is " + msg),
-                  //print(completer.future),
-                  //print(streamSocket.getResponse),
-                  // box.write("perspective", "player"),
-                  // box.write('gameData', {
-                  //   "roomId": roomIdController.text,
-                  //   "username": usernameController.text,
-                  //   //"socketId": socket.id,
-                  // }),
-                  // print(box.read('gameData')),
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => GamePin()),
+                onPressed: () async {
+                  initSocket();
+                  print("Data is " + msg);
+                  var res = await addPlayerApi(roomIdController.text,
+                      socket.id, usernameController.text);
+                  if (res?.statusCode == 200) {
+                    box.write("perspective", "player");
+                    box.write('gameData', {
+                      "gamePin": roomIdController.text,
+                      "username": usernameController.text,
+                      "socketId": socket.id,
+                    });
+                    print(box.read('gameData'));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => GamePin()));
+                  } else {
+                    print("Invalid game pin");
+                  }
                   // )
                 },
               ),

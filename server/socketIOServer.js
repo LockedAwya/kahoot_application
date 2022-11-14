@@ -37,7 +37,7 @@ const getPlayer = (socketId) => {
   return players.find((player) => player.socketId === socketId)
 }
 
-const getRoom = (gamePin) => {
+const getGame = (gamePin) => {
   return games.find((game) => game === gamePin);
 }
 
@@ -87,77 +87,30 @@ io.on("connection", (socket) => {
   //username, socketId, gamePin, cb
   //userInfo = [username, socketId, gamePin, cb]
 
-  socket.on("join-game-validation", (userInfo) => {
-    if (games != []) {
-      let getRoomRes = getRoom(userInfo.gamePin);
-      console.log(getRoomRes);
-      if (getRoomRes !== undefined) {
-        const message = "success"
-        socket.emit("join-game-validation", message);
-        socket.on("add-player", (userInfo) => {
-          /**
-           * userInfo : { 
-           * username
-           * gamePin
-           * socketId
-           * }
-           */
-          addPlayer(userInfo.username, userInfo.gamePin, socket.id)
-          socket.join(userInfo.gamePin)
-          console.log(
-            "User " +
-            userInfo.username +
-            " with ID " +
-            socket.id +
-            " joined game " +
-            userInfo.gamePin
-          )
-          let player = getPlayer(socket.id)
-          //io.emit("player-added", player)
-          console.log("Player added?", player)
-          //socket.emit('player-added', "ok from serverrrrrr");
-          socket.emit("player-added", player)
-          socket.to(userInfo.gamePin).emit('player-added', player)
-          //TODO: Validation check
-        });
-        // if (checkDuplicatedUsername(userInfo.username, userInfo.gamePin) === false) {
-        //   socket.on("add-player", (userInfo) => {
-        //     /**
-        //      * userInfo : { 
-        //      * username
-        //      * gamePin
-        //      * socketId
-        //      * }
-        //      */
-        //     addPlayer(userInfo.username, userInfo.gamePin, socket.id)
-        //     socket.join(userInfo.gamePin)
-        //     console.log(
-        //       "User " +
-        //       userInfo.username +
-        //       " with ID " +
-        //       socket.id +
-        //       " joined room " +
-        //       userInfo.gamePin
-        //     )
-        //     let player = getPlayer(socket.id)
-        //     //io.emit("player-added", player)
-        //     console.log("Player added?", player)
-        //     //socket.emit('player-added', "ok from serverrrrrr");
-        //     socket.emit("player-added", player)
-        //     socket.to(userInfo.gamePin).emit('player-added', player)
-        //     //TODO: Validation check
-        //   }
-        //   )
-
-        // } else {
-        //   const message = "User with name " + userInfo.username + " already exists in room " + userInfo.gamePin + ". Please try another name";
-        //   socket.emit("duplicated-username", message);
-        // }
-      } else {
-        const message = "There is no room with ID " + userInfo.gamePin
-        socket.emit("join-game-validation", message);
-      }
-    }
+  socket.on("add-player", (userInfo) => {
+    /**
+     * userInfo : { 
+     * username
+     * gamePin
+     * socketId
+     * }
+     */
+    addPlayer(userInfo.username, userInfo.gamePin, socket.id)
+    socket.join(userInfo.gamePin)
+    console.log(
+      "User " +
+      userInfo.username +
+      " with ID " +
+      socket.id +
+      " joined game " +
+      userInfo.gamePin
+    )
+    let player = getPlayer(socket.id)
+    //io.emit("player-added", player)
+    console.log("Player added?", player)
+    //socket.emit('player-added', "ok from serverrrrrr");
+    socket.emit("player-added", player)
+    socket.to(userInfo.gamePin).emit('player-added', player)
   })
 
   socket.on("delete-game", (gamePin) => {

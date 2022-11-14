@@ -11,7 +11,7 @@ router
   .post(createGame)
 
 router
-  .route("/:gameId/players")
+  .route("/:gamePin/players")
   .patch(addPlayer)
 
 router

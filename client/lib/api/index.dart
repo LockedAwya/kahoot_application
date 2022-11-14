@@ -208,18 +208,23 @@ Future<Response>? deleteGameApi(String gameId) {
   }
 }
 
-// Future<Response>? addPlayerApi(String gamePin, String userId, String username) {
-//   try {
-//     return dio.delete(
-//       api_url + "/api/games" + gameId,
-//       options: Options(
-//         followRedirects: false,
-//         validateStatus: (status) {
-//           return status == 200 || status == 404 || status == 500;
-//         },
-//       ),
-//     );
-//   } catch (err) {
-//     print(err);
-//   }
-// }
+Future<Response>? addPlayerApi(
+    String gamePin, String? userId, String username) {
+  try {
+    return dio.patch(
+      api_url + "/api/games/" + gamePin + "/players",
+      data: {
+        "playerId": userId,
+        "playerName": username,
+      },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status == 200 || status == 404 || status == 500;
+        },
+      ),
+    );
+  } catch (err) {
+    print(err);
+  }
+}
