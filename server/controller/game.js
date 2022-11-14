@@ -13,26 +13,27 @@ const createGame = async (req, res) => {
    */
   const { hostId, quizId, pin, playerList, playerResultList } = req.body
 
-  const newGame = new Game({
+  const game = new Game({
     hostId,
     quizId,
     date: new Date().toISOString(),
     pin,
     playerList,
-    playerResultList
+    playerResultList,
   })
 
   try {
-    const saveNewGame = await newGame.save()
-    res.status(201).json(saveNewGame)
+    const newGame = await game.save()
+    res.status(200).json(newGame)
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
 }
 
 const getGame = async (req, res) => {
+  const { id } = req.params
   try {
-    const game = await Game.findOne(req.params.gamePin).exec();
+    const game = await Game.findById(id);
     if (game == null) {
       return res.status(404).json({ message: "Cannot find the game!" })
     }

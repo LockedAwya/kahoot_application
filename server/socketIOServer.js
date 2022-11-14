@@ -9,7 +9,7 @@ const io = require("socket.io")(http)
 let game;
 let leaderboard;
 let players = [];
-let rooms = [];
+let games = [];
 
 //https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value
 function dynamicSort(property) {
@@ -27,9 +27,9 @@ function dynamicSort(property) {
   }
 }
 
-const addPlayer = (username, roomId, socketId) => {
+const addPlayer = (username, gamePin, socketId) => {
   !players.some((player) => player.socketId === socketId) &&
-    players.push({ username, roomId, socketId })
+    players.push({ username, gamePin, socketId })
   console.log(players);
 }
 
@@ -37,20 +37,20 @@ const getPlayer = (socketId) => {
   return players.find((player) => player.socketId === socketId)
 }
 
-const getRoom = (roomId) => {
-  return rooms.find((room) => room === roomId);
+const getRoom = (gamePin) => {
+  return games.find((game) => game === gamePin);
 }
 
-const checkDuplicatedUsername = (username, roomId) => {
+const checkDuplicatedUsername = (username, gamePin) => {
   // for (let i = 0; i < players.length; i++) {
-  //   if (players[i].gameId === roomId) {
+  //   if (players[i].gamePin === gamePin) {
 
   //   }
   // }
-  let rooms_temp = rooms;
-  rooms_temp.sort(dynamicSort("roomId"));
-  for (let i = 0; i < rooms_temp.length; i++) {
-    if (rooms_temp[i].roomId === roomId && rooms_temp[i].username === username) {
+  let games_temp = games;
+  games_temp.sort(dynamicSort("game"));
+  for (let i = 0; i < games_temp.length; i++) {
+    if (games_temp[i].game === gamePin && games_temp[i].username === username) {
       return true;
     }
   }
@@ -77,19 +77,19 @@ io.on("connection", (socket) => {
     game = JSON.parse(JSON.stringify(newGame))
     //leaderboard = JSON.parse(JSON.stringify(newLeaderboard))
     console.log("Game data is ", newGame);
-    rooms.push(newGame.roomId);
-    socket.join(newGame.roomId)
+    games.push(newGame.gamePin);
+    socket.join(newGame.gamePin)
     console.log(
-      "Host with id " + socket.id + " started game and joined room: " + newGame.roomId
+      "Host with id " + socket.id + " started game and joined gamePin: " + newGame.gamePin
     )
   })
 
-  //username, socketId, roomId, cb
-  //userInfo = [username, socketId, roomId, cb]
+  //username, socketId, gamePin, cb
+  //userInfo = [username, socketId, gamePin, cb]
 
   socket.on("join-game-validation", (userInfo) => {
-    if (rooms != []) {
-      let getRoomRes = getRoom(userInfo.roomId);
+    if (games != []) {
+      let getRoomRes = getRoom(userInfo.gamePin);
       console.log(getRoomRes);
       if (getRoomRes !== undefined) {
         const message = "success"
@@ -98,80 +98,80 @@ io.on("connection", (socket) => {
           /**
            * userInfo : { 
            * username
-           * roomId
+           * gamePin
            * socketId
            * }
            */
-          addPlayer(userInfo.username, userInfo.roomId, socket.id)
-          socket.join(userInfo.roomId)
+          addPlayer(userInfo.username, userInfo.gamePin, socket.id)
+          socket.join(userInfo.gamePin)
           console.log(
             "User " +
             userInfo.username +
             " with ID " +
             socket.id +
-            " joined room " +
-            userInfo.roomId
+            " joined game " +
+            userInfo.gamePin
           )
           let player = getPlayer(socket.id)
           //io.emit("player-added", player)
           console.log("Player added?", player)
           //socket.emit('player-added', "ok from serverrrrrr");
           socket.emit("player-added", player)
-          socket.to(userInfo.roomId).emit('player-added', player)
+          socket.to(userInfo.gamePin).emit('player-added', player)
           //TODO: Validation check
         });
-        // if (checkDuplicatedUsername(userInfo.username, userInfo.roomId) === false) {
+        // if (checkDuplicatedUsername(userInfo.username, userInfo.gamePin) === false) {
         //   socket.on("add-player", (userInfo) => {
         //     /**
         //      * userInfo : { 
         //      * username
-        //      * roomId
+        //      * gamePin
         //      * socketId
         //      * }
         //      */
-        //     addPlayer(userInfo.username, userInfo.roomId, socket.id)
-        //     socket.join(userInfo.roomId)
+        //     addPlayer(userInfo.username, userInfo.gamePin, socket.id)
+        //     socket.join(userInfo.gamePin)
         //     console.log(
         //       "User " +
         //       userInfo.username +
         //       " with ID " +
         //       socket.id +
         //       " joined room " +
-        //       userInfo.roomId
+        //       userInfo.gamePin
         //     )
         //     let player = getPlayer(socket.id)
         //     //io.emit("player-added", player)
         //     console.log("Player added?", player)
         //     //socket.emit('player-added', "ok from serverrrrrr");
         //     socket.emit("player-added", player)
-        //     socket.to(userInfo.roomId).emit('player-added', player)
+        //     socket.to(userInfo.gamePin).emit('player-added', player)
         //     //TODO: Validation check
         //   }
         //   )
 
         // } else {
-        //   const message = "User with name " + userInfo.username + " already exists in room " + userInfo.roomId + ". Please try another name";
+        //   const message = "User with name " + userInfo.username + " already exists in room " + userInfo.gamePin + ". Please try another name";
         //   socket.emit("duplicated-username", message);
         // }
       } else {
-        const message = "There is no room with ID " + userInfo.roomId
+        const message = "There is no room with ID " + userInfo.gamePin
         socket.emit("join-game-validation", message);
       }
     }
   })
 
-  socket.on("delete-game", (roomId) => {
-    io.socketsLeave(roomId);
-    console.log("Game id deleted ", roomId);
-    socket.emit("delete-game", roomId);
+  socket.on("delete-game", (gamePin) => {
+    io.socketsLeave(gamePin);
+    console.log("Game id deleted ", gamePin);
+    socket.emit("delete-game", gamePin);
     players = [];
   })
 
   socket.on('leave-game', (userInfo) => {
     try {
       console.log('[socket]', 'leave room :', userInfo);
-      socket.leave(userInfo.roomId);
-      socket.to(userInfo.roomId).emit('user-left', userInfo);
+      socket.leave(userInfo.gamePin);
+      socket.to(userInfo.gamePin).emit('user-left', userInfo);
     } catch (e) {
       console.log('[error]', 'leave room :', e);
       socket.emit('error', 'couldnt perform requested action');

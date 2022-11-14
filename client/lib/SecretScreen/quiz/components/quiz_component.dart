@@ -33,6 +33,7 @@ class QuizComponent extends StatelessWidget {
                     ),
                   ),
                   child: QuestionModalBottomSheet(quizId: quizId)));
+            print("Quiz id in host is: " + quizId);
         }
         if (globalState == "my_kahoots") {
           Navigator.of(context).push(MaterialPageRoute(

@@ -6,6 +6,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../utils/stream_socket.dart';
 import 'package:get/get.dart';
 import '../JoinGame/join_game_screen.dart';
+import '../../api/index.dart';
 
 class GamePin extends StatefulWidget {
   //final int gameId;
@@ -46,6 +47,7 @@ class _GamePinState extends State<GamePin> {
     //     print('Socket.IO server (room) disconnected with id ${socket.id}'));
 
     if (box.read('perspective') == "host") {
+      //gameData: gamePin, gameId, quizId
       socket.emit("create-game", box.read("gameData"));
 
       socket.on("user-left", (data) {
@@ -155,11 +157,16 @@ class _GamePinState extends State<GamePin> {
                 IconButton(
                   alignment: Alignment.center,
                   iconSize: 20,
-                  onPressed: () {
+                  onPressed: () async {
                     if (box.read('perspective') == 'host') {
                       socket.emit(
-                          "delete-game", box.read("gameData")["gameId"]);
+                          "delete-game", box.read("gameData")["gamePin"]);
                       gamePin = [];
+                      var res =
+                          await deleteGameApi(box.read("gameData")["gameId"]);
+                      if (res?.statusCode == 200) {
+                        print("Delete game successfully");
+                      }
                       Navigator.of(context).pop();
                     }
                     if (box.read('perspective') == 'player') {
@@ -202,7 +209,7 @@ class _GamePinState extends State<GamePin> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Game pin: ${box.read('gameData')['roomId']}",
+                        "Game pin: ${box.read('gameData')['gamePin']}",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,

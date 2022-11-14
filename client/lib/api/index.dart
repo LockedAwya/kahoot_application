@@ -44,7 +44,6 @@ Future<List<Quiz>> getQuizesByHostId(String hostId) async {
     ),
   );
   if (res.statusCode == 200) {
-    
     List<Quiz> reversedList =
         (res.data as List).map((e) => Quiz.fromJson(e)).toList();
     reversedList = reversedList.reversed.toList();
@@ -168,3 +167,59 @@ Future<Quiz> updateQuizByIdAPI(
     throw Exception('Failed to update quiz');
   }
 }
+
+Future<Response>? createGameApi(String hostId, String quizId, String pin,
+    List playerList, List playerResultList) {
+  try {
+    return dio.post(
+      api_url + "/api/games",
+      data: {
+        "hostId": hostId,
+        "quizId": quizId,
+        "pin": pin,
+        "playerList": playerList,
+        "playerResultList": playerResultList
+      },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status == 200 || status == 400;
+        },
+      ),
+    );
+  } catch (err) {
+    print(err);
+  }
+}
+
+Future<Response>? deleteGameApi(String gameId) {
+  try {
+    return dio.delete(
+      api_url + "/api/games/" + gameId,
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status == 200 || status == 404 || status == 500;
+        },
+      ),
+    );
+  } catch (err) {
+    print(err);
+  }
+}
+
+// Future<Response>? addPlayerApi(String gamePin, String userId, String username) {
+//   try {
+//     return dio.delete(
+//       api_url + "/api/games" + gameId,
+//       options: Options(
+//         followRedirects: false,
+//         validateStatus: (status) {
+//           return status == 200 || status == 404 || status == 500;
+//         },
+//       ),
+//     );
+//   } catch (err) {
+//     print(err);
+//   }
+// }

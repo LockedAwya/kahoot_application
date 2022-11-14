@@ -13,20 +13,24 @@ const gameSchema = mongoose.Schema({
         type: String,
         unique: true,
     },
-    playerList: [{
-        //the socket connection id will be playerId
-        playerId: { type: String, unique: true },
-        playerName: { type: String, unique: true },
-    }],
+    playerList: [
+        {
+            //the socket connection id will be playerId
+            playerId: { type: String },
+            playerName: { type: String },
+        }
+    ],
     date: {
         type: Date,
         required: true,
         default: Date.now
     },
-    playerResultList: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "PlayerResult"
-    }]
+    playerResultList: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "PlayerResult"
+        }
+    ]
 })
 
 const Game = mongoose.model("Game", gameSchema)

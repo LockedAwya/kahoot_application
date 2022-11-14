@@ -4,6 +4,7 @@ import '../WaitingRoom/game_pin.dart';
 //import '../../utils/routing_names.dart';
 import '../../utils/global_variables.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import '../../api/index.dart';
 
 class QuestionModalBottomSheet extends StatefulWidget {
   final double borderWidth = 0.5;
@@ -19,7 +20,7 @@ class QuestionModalBottomSheet extends StatefulWidget {
 }
 
 class _QuestionModalBottomSheet extends State<QuestionModalBottomSheet> {
-  late int roomId;
+  late int gamePin;
   late String quizId;
   //late var gameData;
 
@@ -42,6 +43,10 @@ class _QuestionModalBottomSheet extends State<QuestionModalBottomSheet> {
         print('Socket.IO server (room) disconnected with id ${socket.id}'));
   }
 
+  // void createGame() async {
+  //   var res = await createGameApi(userId, "", roomId.toString(), [], []);
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,20 +68,29 @@ class _QuestionModalBottomSheet extends State<QuestionModalBottomSheet> {
                   color: Colors.white,
                 ),
               ),
-              onPressed: () => {
-                print("Lmao"),
-                initSocket(),
-                roomId = random(1000000, 9999999),
-                //initSocket(),
-                box.write("gameData", {
-                  "quizId": widget.quizId,
-                  "roomId": roomId.toString(),
-                }),
-                box.write("perspective", "host"),
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => GamePin()),
-                )
+              onPressed: () async {
+                print("Lmao");
+                initSocket();
+                gamePin = random(1000000, 9999999);
+
+                //             createGameApi(String hostId, String quizId, String pin,
+                // String playerList, String playerResultList)
+                var res = await createGameApi(userId, widget.quizId,
+                    gamePin.toString(), [] as dynamic, [] as dynamic);
+                print(res?.data);
+                if (res?.statusCode == 200) {
+                  box.write("gameData", {
+                    "quizId": widget.quizId,
+                    "gamePin": gamePin.toString(),
+                    "gameId": res?.data["_id"],
+                  });
+                  box.write("perspective", "host");
+                  print(box.read("gameData"));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => GamePin()));
+                } else {
+                  print(res?.statusMessage);
+                }
               },
             ),
           ),

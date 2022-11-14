@@ -7,7 +7,7 @@ const {
 
 router
   .route("/")
-//  .get(getGames)
+  //  .get(getGames)
   .post(createGame)
 
 router
@@ -19,5 +19,7 @@ router
   .get(getGame)
   .patch(updateGame)
   .delete(deleteGame)
+
+//router.route("/:gamePin").get(getGame).patch(updateGame).delete(deleteGame)
 
 module.exports = router
