@@ -19,7 +19,7 @@ const playerResultSchema = mongoose.Schema ({
             type: Boolean,
             default: false
         },
-        answer: [{
+        answers: [{
             name: {type: String},
             body: {type: String}
         }],
@@ -27,6 +27,9 @@ const playerResultSchema = mongoose.Schema ({
             name: {type: String},
             body: {type: String}
         }],
+        time: {
+            tyoe: Number
+        },
         currentScore: {
             type: Number,
             default: 0

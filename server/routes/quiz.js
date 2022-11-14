@@ -14,3 +14,5 @@ router.route("/").get(getQuizes).post(createQuiz)
 router.route("/:id").get(getQuiz)
 router.route("/:quizId/questions").get(getQuestions).post(addQuestion)
 router.route("/:quizId/questions/:questionId").get(getQuestion)
+
+module.exports = router

@@ -41,7 +41,7 @@ const quizSchema = mongoose.Schema({
 
         scoreType: {
             type: String,
-            enum: ["Basic", "Double"],
+            enum: ["Basic", "BaseOnTimes"],
             required: true,
         },
         timer: {
