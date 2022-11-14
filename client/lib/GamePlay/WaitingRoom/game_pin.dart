@@ -27,6 +27,7 @@ class _GamePinState extends State<GamePin> {
   //late int gameId;
   StreamSocket streamSocket = StreamSocket();
   bool isGameLive = true;
+  // int playersCount = 0;
 
   void initSocket() {
     // socket = IO.io(
@@ -247,8 +248,8 @@ class _GamePinState extends State<GamePin> {
                                     const SizedBox(
                                       width: 5,
                                     ),
-                                    const Text(
-                                      "0",
+                                    Text(
+                                      snapshot.data == null ? "0" : snapshot.data.length.toString(),
                                       style: TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.normal),
