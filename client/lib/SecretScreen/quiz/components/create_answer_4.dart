@@ -160,7 +160,7 @@ class _CreateAnswer4State extends State<CreateAnswer4> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ButtonItem(
                 onTap: (){
-                  QuizModel quizModel = QuizModel(text: answerController.text.trim(),isCorrect: status);
+                  QuestionModel quizModel = QuestionModel(text: answerController.text.trim(),isCorrect: status);
                   Navigator.pop(context,quizModel);
                 },
                 colors: Colors.lightBlue[900],text: 'Done'),

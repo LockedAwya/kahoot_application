@@ -169,7 +169,7 @@ class _CreateAnswer2State extends State<CreateAnswer2> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ButtonItem(
                   onTap: () {
-                    QuizModel quizModel = QuizModel(
+                    QuestionModel quizModel = QuestionModel(
                         text: answerController.text.trim(), isCorrect: status);
                     Navigator.pop(context, quizModel);
                   },
