@@ -8,8 +8,9 @@ import '../../../utils/widget.dart';
 import '../../../utils/global_variables.dart';
 
 class AddQuestion extends StatefulWidget {
-  final List<QuizModel>? listValue;
-  const AddQuestion({Key? key, this.listValue}) : super(key: key);
+  final List<QuestionModel>? listValue;
+  final List<dynamic>? cacheListValue;
+  const AddQuestion({Key? key, this.listValue, this.cacheListValue}) : super(key: key);
 
   @override
   _AddQuestionState createState() => _AddQuestionState();
@@ -35,7 +36,7 @@ class _AddQuestionState extends State<AddQuestion> {
   List<AddQuestionModel> listPresentInfo = [
     AddQuestionModel(title: 'Slide', image: 'assets/images/img_6.png')
   ];
-  List<QuizModel> value = [];
+  List<QuestionModel> value = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -184,7 +185,7 @@ class _AddQuestionState extends State<AddQuestion> {
       case 0:
         setState(() {
           value = widget.listValue ?? [];
-          value.add(QuizModel());
+          value.add(QuestionModel());
         });
         if (globalState == "update-quiz") {
           Navigator.of(context).push(MaterialPageRoute(
@@ -195,8 +196,11 @@ class _AddQuestionState extends State<AddQuestion> {
         } else if (globalState == "create-quiz") {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => QuizPage(
-                    listValue: value,
-                    currentIndexPage: value.length - 1,
+                  listValue: value,
+                  currentIndexPage: value.length - 1,
+                  cacheListValue: box.hasData("listOfQuestionsCache")
+                      ? box.read("listOfQuestionsCache")
+                      : [] //todo
                   )));
         }
 

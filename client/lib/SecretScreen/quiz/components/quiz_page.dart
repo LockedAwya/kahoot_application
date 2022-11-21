@@ -16,10 +16,14 @@ import '../../../utils/global_variables.dart';
 import '../create_kahoot.dart';
 
 class QuizPage extends StatefulWidget {
-  final List<QuizModel> listValue;
+  final List<QuestionModel> listValue;
   final int currentIndexPage;
+  final List<dynamic> cacheListValue;
   const QuizPage(
-      {Key? key, required this.listValue, required this.currentIndexPage})
+      {Key? key,
+      required this.listValue,
+      required this.currentIndexPage,
+      required this.cacheListValue})
       : super(key: key);
 
   @override
@@ -33,7 +37,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   String? answer2 = 'Add answer';
   String? answer3 = 'Add answer \n(optional)';
   String? answer4 = 'Add answer \n(optional)';
-  List<QuizModel> listQuiz = [];
+  List<QuestionModel> listQuiz = [];
   TabController? tabController;
   int currentpage = 0;
   @override
@@ -284,7 +288,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                                   //choice 1
                                   ButtonItem(
                                     onTap: () async {
-                                      final QuizModel value =
+                                      final QuestionModel value =
                                           await Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -319,7 +323,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                                   //choice 2
                                   ButtonItem(
                                     onTap: () async {
-                                      final QuizModel value =
+                                      final QuestionModel value =
                                           await Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -360,7 +364,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                                 children: [
                                   ButtonItem(
                                     onTap: () async {
-                                      final QuizModel value =
+                                      final QuestionModel value =
                                           await Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -395,7 +399,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                                   //choice 4
                                   ButtonItem(
                                     onTap: () async {
-                                      final QuizModel value =
+                                      final QuestionModel value =
                                           await Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -568,8 +572,8 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
         "questionIndex": i + 1,
       });
     }
-    box.write("questionsList", temp);
-    print(box.read("questionsList"));
+    box.write("listOfQuestionsCache", temp);
+    print(box.read("listOfQuestionsCache"));
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CreateKahoot()),

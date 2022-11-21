@@ -38,22 +38,26 @@ class Quiz {
   }
 }
 
-class QuizModel {
+class QuestionModel {
+  String? backgroundQuestion;
   String? text;
   String? answer1;
   String? answer2;
   String? answer3;
   String? answer4;
+  int? questionIndex;
   bool isCorrect;
   bool isCorrect2;
   bool isCorrect3;
   bool isCorrect4;
-  QuizModel(
-      {this.text,
+  QuestionModel(
+      {this.backgroundQuestion,
+      this.text,
       this.answer1,
       this.answer2,
       this.answer3,
       this.answer4,
+      this.questionIndex,
       this.isCorrect = false,
       this.isCorrect2 = false,
       this.isCorrect3 = false,

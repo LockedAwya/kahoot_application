@@ -23,7 +23,7 @@ class _QuizDetailsState extends State<QuizDetails> {
   late TextEditingController quizTitleController;
   late TextEditingController quizDescriptionController;
   //late var quizData;
-  List<QuizModel> quizModelList = [];
+  List<QuestionModel> quizModelList = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -55,7 +55,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                     const Padding(
                       padding: EdgeInsets.zero,
                       child: Text(
-                        "Create Kahoo",
+                        "Create Kahoot",
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -121,6 +121,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                             .length /** number of questions */,
                         box.read("questionsList"));
                     print(res);
+                    box.remove("listOfQuestionsCache");
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -224,15 +225,22 @@ class _QuizDetailsState extends State<QuizDetails> {
                                 height: 20,
                               ),
                               Column(
-                                children: List.generate(
-                                    snapshot.data!.questionList.length,
-                                    (index) {
-                                  return Text(
-                                    snapshot.data!.questionList[index]
-                                        .toString(),
-                                    style: const TextStyle(fontSize: 22),
-                                  );
-                                }),
+                                children: box.hasData("listOfQuestionsCache") ==
+                                        false
+                                    ? List.generate(
+                                        snapshot.data!.questionList.length,
+                                        (index) {
+                                        return Text(
+                                          snapshot.data!.questionList[index]
+                                              .toString(),
+                                          style: const TextStyle(fontSize: 22),
+                                        );
+                                      })
+                                    : <Widget>[
+                                        for (var question
+                                            in box.read("listOfQuestionsCache"))
+                                          Text(question.toString())
+                                      ],
                               ),
                               Align(
                                 alignment: Alignment.bottomRight,
@@ -270,7 +278,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                                           for (int i = 0;
                                               i < questionList.length;
                                               i++) {
-                                            quizModelList.add(QuizModel(
+                                            quizModelList.add(QuestionModel(
                                               text: questionList[i]["question"],
                                               answer1: questionList[i]
                                                   ["answerList"][0]["body"],

@@ -15,7 +15,7 @@ import 'package:untitled_folder/SecretScreen/quiz/components/create_answer_3.dar
 import '../../../utils/global_variables.dart';
 
 class QuizPage2 extends StatefulWidget {
-  final List<QuizModel> listValue;
+  final List<QuestionModel> listValue;
   final int currentIndexPage;
   const QuizPage2(
       {Key? key, required this.listValue, required this.currentIndexPage})
@@ -32,7 +32,7 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
   String? answer2 = 'Add answer';
   String? answer3 = 'Add answer \n(optional)';
   String? answer4 = 'Add answer \n(optional)';
-  List<QuizModel> listQuiz = [];
+  List<QuestionModel> listQuiz = [];
   TabController? tabController;
   int currentpage = 0;
   @override
@@ -283,7 +283,7 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
                                   //choice 1
                                   ButtonItem(
                                     onTap: () async {
-                                      final QuizModel value =
+                                      final QuestionModel value =
                                           await Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -318,7 +318,7 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
                                   //choice 2
                                   ButtonItem(
                                     onTap: () async {
-                                      final QuizModel value =
+                                      final QuestionModel value =
                                           await Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -359,7 +359,7 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
                                 children: [
                                   ButtonItem(
                                     onTap: () async {
-                                      final QuizModel value =
+                                      final QuestionModel value =
                                           await Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -394,7 +394,7 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
                                   //choice 4
                                   ButtonItem(
                                     onTap: () async {
-                                      final QuizModel value =
+                                      final QuestionModel value =
                                           await Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -567,8 +567,8 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
         "questionIndex": i + 1,
       });
     }
-    box.write("questionsList", temp);
-    print(box.read("questionsList"));
+    box.write("listOfQuestionsCache", temp);
+    print(box.read("listOfQuestionsCache"));
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -596,32 +596,44 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Yes'),
-                onPressed: () {
-                  print(questionIndex);
-                  if (currentpage != 0) {
-                    int listQuizLength = listQuiz.length;
+                  child: const Text('Yes'),
+                  onPressed: () {
+                    print(questionIndex);
+                    // if (currentpage != 0) {
+                    int previousQuizLength = listQuiz.length;
                     listQuiz.removeAt(currentpage);
+                    int currentListQuizLength = listQuiz.length;
                     print(listQuiz.length);
                     setState(() {
-                      if (currentpage != listQuiz.length - 1 &&
-                          currentpage != listQuizLength - 1) {
+                      if (currentpage != currentListQuizLength - 1 &&
+                          currentpage != previousQuizLength - 1) {
                         tabController = TabController(
                             initialIndex: currentpage + 1,
-                            length: listQuiz.length,
+                            length: currentListQuizLength,
                             vsync: this);
-                      } else if (currentpage == listQuizLength - 1) {
-                        tabController = TabController(
-                            initialIndex: currentpage - 1,
-                            length: listQuiz.length,
-                            vsync: this);
+                      } else if (currentpage == previousQuizLength - 1) {
+                        if (currentListQuizLength == 0) {
+                          tabController = TabController(
+                              initialIndex: 0,
+                              length: currentListQuizLength,
+                              vsync: this);
+                          // tabController = TabController(
+                          //   initialIndex: 0,
+                          //   length: listQuiz.length,
+                          //   vsync: this);
+                        } else {
+                          tabController = TabController(
+                              initialIndex: currentpage - 1,
+                              length: currentListQuizLength,
+                              vsync: this);
+                        }
                       }
                       //tabController?.animateTo(currentpage);
                     });
                     Navigator.of(context).pop();
                   }
-                },
-              ),
+                  // },
+                  ),
               TextButton(
                 child: const Text('No'),
                 onPressed: () {

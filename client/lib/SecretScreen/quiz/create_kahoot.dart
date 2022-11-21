@@ -20,7 +20,7 @@ class CreateKahoot extends StatefulWidget {
 
 class _CreateKahootState extends State<CreateKahoot> {
   late TextEditingController quizTitleController;
-  List<QuizModel> quizModelList = [];
+  List<QuestionModel> quizModelList = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -29,6 +29,11 @@ class _CreateKahootState extends State<CreateKahoot> {
       quizTitleController = TextEditingController(text: box.read("quiz-name"));
     } else {
       quizTitleController = TextEditingController(text: "");
+    }
+    if (box.hasData("listOfQuestionsCache")) {
+      print(box.read("listOfQuestionsCache"));
+    } else {
+      print("Question list does not exist!!");
     }
   }
 
@@ -49,6 +54,7 @@ class _CreateKahootState extends State<CreateKahoot> {
       Quiz quiz = Quiz.fromJson(res.data);
       print(quiz.name);
       if (!mounted) return;
+      box.remove("listOfQuestionsCache");
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => MyKahootScreen()));
     } else {
@@ -133,9 +139,12 @@ class _CreateKahootState extends State<CreateKahoot> {
                   username,
                   10 /** */,
                   20 /**timer */,
-                  box.read("questionsList").length /**number of question */,
-                  box.read("questionsList") /**question list */,
+                  box
+                      .read("listOfQuestionsCache")
+                      .length /**number of question */,
+                  box.read("listOfQuestionsCache") /**question list */,
                   context);
+
               //             saveQuizFunc(
               // String name,
               // String description,
@@ -223,6 +232,24 @@ class _CreateKahootState extends State<CreateKahoot> {
             const SizedBox(
               height: 20,
             ),
+            Column(
+              //children: (box.read("questionsList") as List).map((item) => new Text(item).toList()),
+              //     List.generate(snapshot.data!.questionList.length, (index) {
+              //   return Text(
+              //     snapshot.data!.questionList[index].toString(),
+              //     style: const TextStyle(fontSize: 22),
+              //   );
+              // }),
+              children: box.hasData("listOfQuestionsCache") == true
+                  ? <Widget>[
+                      // (box.read("questionsList") as List)
+                      //     .map((item) => new Text(item))
+                      //     .toList()
+                      for (var question in box.read("listOfQuestionsCache"))
+                        Text(question.toString())
+                    ]
+                  : <Widget>[Text("Hello")],
+            ),
             Align(
               alignment: Alignment.bottomRight,
               child: Padding(
@@ -238,8 +265,11 @@ class _CreateKahootState extends State<CreateKahoot> {
                     globalState = "create-quiz";
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => QuizPage(
-                              listValue: quizModelList,
-                              currentIndexPage: 0,
+                            listValue: quizModelList,
+                            currentIndexPage: 0,
+                            cacheListValue: box.hasData("listOfQuestionsCache")
+                                ? box.read("listOfQuestionsCache")
+                                : [] //todo
                             )));
                   },
                 ),

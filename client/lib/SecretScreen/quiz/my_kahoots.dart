@@ -66,6 +66,24 @@ class _MyKahootScreen extends State<MyKahootScreen> {
           ),
         ),
         centerTitle: true,
+        leading: IconButton(
+          alignment: Alignment.center,
+          iconSize: 30,
+          icon: const Text(
+            "Cancel",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+          onPressed: () {
+            print("Tap cancel");
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => MyKahootScreen()),
+            // );
+            Navigator.of(context).pushNamed("/secret");
+          },
+        ),
         actions: [
           IconButton(
             alignment: Alignment.center,
