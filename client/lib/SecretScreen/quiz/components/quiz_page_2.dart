@@ -38,7 +38,26 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    //listQuiz = widget.listValue;
+    // if (box.hasData("listOfQuestionsCache")) {
+    //   //listQuiz = widget.listValue;
+    //   if (globalState == "create-quiz-add-quiz") {
+    //     listQuiz = widget.listValue;
+    //   } else {
+    //     listQuiz = [];
+    //     for (int i = 0; i < box.read("listOfQuestionsCache").length; i++) {
+    //       listQuiz
+    //           .add(QuestionModel.fromJson(box.read("listOfQuestionsCache")[i]));
+    //     }
+    //   }
+    //   globalState = "create-quiz";
+    // } else {
+    //   listQuiz = widget.listValue;
+    // }
     listQuiz = widget.listValue;
+    // for (int i = 0; i < box.read("listOfQuestionsCache").length; i++) {
+    //   listQuiz.add(QuestionModel.fromJson(box.read("listOfQuestionsCache")[i]));
+    // }
     currentpage = widget.currentIndexPage;
     tabController =
         TabController(initialIndex: 0, length: listQuiz.length, vsync: this);
@@ -535,11 +554,13 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
   }
 
   void goBackToQuiz() {
-    List<dynamic> temp = [];
+    //List<dynamic> temp = [];
+    box.read("quiz_details")["questionList"] = [];
     for (int i = 0; i < listQuiz.length; ++i) {
       // print(listQuiz[i].text);
       // print(listQuiz[i].answer1);
-      temp.add({
+      //box.read("quiz_details")["questionList"].add("123");
+      box.read("quiz_details")["questionList"].add({
         "backgroundQuestion": "",
         "question": listQuiz[i].text,
         "answerList": [
@@ -567,8 +588,9 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
         "questionIndex": i + 1,
       });
     }
-    box.write("listOfQuestionsCache", temp);
-    print(box.read("listOfQuestionsCache"));
+    // box.write("listOfQuestionsCache", temp);
+    // print(box.read("listOfQuestionsCache"));
+    //box.read("quiz_details")["questionList"] = temp;
     Navigator.push(
       context,
       MaterialPageRoute(

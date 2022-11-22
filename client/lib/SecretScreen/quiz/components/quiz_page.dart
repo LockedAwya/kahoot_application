@@ -18,13 +18,13 @@ import '../create_kahoot.dart';
 class QuizPage extends StatefulWidget {
   final List<QuestionModel> listValue;
   final int currentIndexPage;
-  final List<dynamic> cacheListValue;
-  const QuizPage(
-      {Key? key,
-      required this.listValue,
-      required this.currentIndexPage,
-      required this.cacheListValue})
-      : super(key: key);
+  //final List<dynamic> cacheListValue;
+  const QuizPage({
+    Key? key,
+    required this.listValue,
+    required this.currentIndexPage,
+    //required this.cacheListValue
+  }) : super(key: key);
 
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -43,7 +43,22 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    listQuiz = widget.listValue;
+    //listQuiz = widget.listValue;
+    if (box.hasData("listOfQuestionsCache")) {
+      //listQuiz = widget.listValue;
+      if (globalState == "create-quiz-add-quiz") {
+        listQuiz = widget.listValue;
+      } else {
+        listQuiz = [];
+        for (int i = 0; i < box.read("listOfQuestionsCache").length; i++) {
+          listQuiz
+              .add(QuestionModel.fromJson(box.read("listOfQuestionsCache")[i]));
+        }
+      }
+      globalState = "create-quiz";
+    } else {
+      listQuiz = widget.listValue;
+    }
     currentpage = widget.currentIndexPage;
     tabController =
         TabController(initialIndex: 0, length: listQuiz.length, vsync: this);
@@ -515,6 +530,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(5.0),
                           onTap: () {
+                            //listQuiz = widget.listValue;
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => AddQuestion(
                                       listValue: listQuiz,
@@ -545,7 +561,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
       // print(listQuiz[i].text);
       // print(listQuiz[i].answer1);
       temp.add({
-        "backgroundQuestion": "",
+        "backgroundQuestion": listQuiz[i].backgroundQuestion,
         "question": listQuiz[i].text,
         "answerList": [
           {

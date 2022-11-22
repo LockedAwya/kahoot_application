@@ -117,11 +117,11 @@ class _QuizDetailsState extends State<QuizDetails> {
                         10 /**score per question */,
                         20 /**time per question */,
                         box
-                            .read("questionsList")
+                            .read("quiz_details")["questionList"]
                             .length /** number of questions */,
-                        box.read("questionsList"));
+                        box.read("quiz_details")["questionList"]);
                     print(res);
-                    box.remove("listOfQuestionsCache");
+                    box.remove("quiz_details");
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -225,8 +225,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                                 height: 20,
                               ),
                               Column(
-                                children: box.hasData("listOfQuestionsCache") ==
-                                        false
+                                children: box.hasData("quiz_details") == false
                                     ? List.generate(
                                         snapshot.data!.questionList.length,
                                         (index) {
@@ -237,8 +236,8 @@ class _QuizDetailsState extends State<QuizDetails> {
                                         );
                                       })
                                     : <Widget>[
-                                        for (var question
-                                            in box.read("listOfQuestionsCache"))
+                                        for (var question in box.read(
+                                            "quiz_details")["questionList"])
                                           Text(question.toString())
                                       ],
                               ),
@@ -252,20 +251,21 @@ class _QuizDetailsState extends State<QuizDetails> {
                                     height: 60,
                                     text: 'View Questions',
                                     onTap: () {
-                                      box.write("quiz_details", {
-                                        "id": widget.quizId,
-                                        "title": widget.quizName,
-                                        "description": widget.quizDescription,
-                                        "background":
-                                            snapshot.data!.background ?? "",
-                                        "numberOfQuestion":
-                                            snapshot.data!.numberOfQuestion,
-                                        "scorePerQuestion":
-                                            snapshot.data!.scorePerQuestion,
-                                        "questionList":
-                                            snapshot.data!.questionList
-                                      });
-
+                                      if (!box.hasData("quiz_details")) {
+                                        box.write("quiz_details", {
+                                          "id": widget.quizId,
+                                          "title": widget.quizName,
+                                          "description": widget.quizDescription,
+                                          "background":
+                                              snapshot.data!.background ?? "",
+                                          "numberOfQuestion":
+                                              snapshot.data!.numberOfQuestion,
+                                          "scorePerQuestion":
+                                              snapshot.data!.scorePerQuestion,
+                                          "questionList":
+                                              snapshot.data!.questionList
+                                        });
+                                      }
                                       //print("LOfasdfasdL");
                                       List<dynamic> questionList = box
                                           .read("quiz_details")["questionList"];
@@ -278,29 +278,34 @@ class _QuizDetailsState extends State<QuizDetails> {
                                           for (int i = 0;
                                               i < questionList.length;
                                               i++) {
-                                            quizModelList.add(QuestionModel(
-                                              text: questionList[i]["question"],
-                                              answer1: questionList[i]
-                                                  ["answerList"][0]["body"],
-                                              answer2: questionList[i]
-                                                  ["answerList"][1]["body"],
-                                              answer3: questionList[i]
-                                                  ["answerList"][2]["body"],
-                                              answer4: questionList[i]
-                                                  ["answerList"][3]["body"],
-                                              isCorrect: questionList[i]
-                                                      ["answerList"][0]
-                                                  ["isCorrect"],
-                                              isCorrect2: questionList[i]
-                                                      ["answerList"][1]
-                                                  ["isCorrect"],
-                                              isCorrect3: questionList[i]
-                                                      ["answerList"][2]
-                                                  ["isCorrect"],
-                                              isCorrect4: questionList[i]
-                                                      ["answerList"][3]
-                                                  ["isCorrect"],
-                                            ));
+                                            //                                   listQuiz
+                                            // .add(QuestionModel.fromJson(box.read("listOfQuestionsCache")[i]));
+                                            quizModelList.add(
+                                                QuestionModel.fromJson(
+                                                    questionList[i]));
+                                            // quizModelList.add(QuestionModel(
+                                            //   text: questionList[i]["question"],
+                                            //   answer1: questionList[i]
+                                            //       ["answerList"][0]["body"],
+                                            //   answer2: questionList[i]
+                                            //       ["answerList"][1]["body"],
+                                            //   answer3: questionList[i]
+                                            //       ["answerList"][2]["body"],
+                                            //   answer4: questionList[i]
+                                            //       ["answerList"][3]["body"],
+                                            //   isCorrect: questionList[i]
+                                            //           ["answerList"][0]
+                                            //       ["isCorrect"],
+                                            //   isCorrect2: questionList[i]
+                                            //           ["answerList"][1]
+                                            //       ["isCorrect"],
+                                            //   isCorrect3: questionList[i]
+                                            //           ["answerList"][2]
+                                            //       ["isCorrect"],
+                                            //   isCorrect4: questionList[i]
+                                            //           ["answerList"][3]
+                                            //       ["isCorrect"],
+                                            // ));
                                           }
                                         }
                                       });

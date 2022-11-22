@@ -62,4 +62,25 @@ class QuestionModel {
       this.isCorrect2 = false,
       this.isCorrect3 = false,
       this.isCorrect4 = false});
+
+  factory QuestionModel.fromJson(Map<dynamic, dynamic> json) {
+    return QuestionModel(
+        // token: json["token"],
+        // id: json["_id"],
+        // email: json["email"],
+        // username: json["username"],
+        // password: json["password"]
+        backgroundQuestion: json["backgroundQuestion"],
+        text: json["question"],
+        answer1: json["answerList"][0]["body"],
+        answer2: json["answerList"][1]["body"],
+        answer3: json["answerList"][2]["body"],
+        answer4: json["answerList"][3]["body"],
+        questionIndex: json["questionIndex"],
+        isCorrect: json["answerList"][0]["isCorrect"],
+        isCorrect2: json["answerList"][1]["isCorrect"],
+        isCorrect3: json["answerList"][2]["isCorrect"],
+        isCorrect4: json["answerList"][3]["isCorrect"],
+      );
+  }
 }

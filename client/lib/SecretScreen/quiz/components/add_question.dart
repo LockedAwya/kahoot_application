@@ -10,7 +10,8 @@ import '../../../utils/global_variables.dart';
 class AddQuestion extends StatefulWidget {
   final List<QuestionModel>? listValue;
   final List<dynamic>? cacheListValue;
-  const AddQuestion({Key? key, this.listValue, this.cacheListValue}) : super(key: key);
+  const AddQuestion({Key? key, this.listValue, this.cacheListValue})
+      : super(key: key);
 
   @override
   _AddQuestionState createState() => _AddQuestionState();
@@ -185,7 +186,21 @@ class _AddQuestionState extends State<AddQuestion> {
       case 0:
         setState(() {
           value = widget.listValue ?? [];
+          // if (box.hasData("listOfQuestionsCache")) {
+          //   //print(box.read("listOfQuestionsCache"));
+          //   for (int i = 0; i < box.read("listOfQuestionsCache").length; i++) {
+          //     value.add(
+          //         QuestionModel.fromJson(box.read("listOfQuestionsCache")[i]));
+          //   }
+          //   value.add(QuestionModel());
+          // } else {
+          //   //print("Question list does not exist!!");
+          //   value.add(QuestionModel());
+          // }
+          print(QuestionModel());
           value.add(QuestionModel());
+          print("Value is...");
+          print(value);
         });
         if (globalState == "update-quiz") {
           Navigator.of(context).push(MaterialPageRoute(
@@ -194,13 +209,14 @@ class _AddQuestionState extends State<AddQuestion> {
                     currentIndexPage: value.length - 1,
                   )));
         } else if (globalState == "create-quiz") {
+          globalState = "create-quiz-add-quiz";
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => QuizPage(
-                  listValue: value,
-                  currentIndexPage: value.length - 1,
-                  cacheListValue: box.hasData("listOfQuestionsCache")
-                      ? box.read("listOfQuestionsCache")
-                      : [] //todo
+                    listValue: value,
+                    currentIndexPage: value.length - 1,
+                    // cacheListValue: box.hasData("listOfQuestionsCache")
+                    //     ? box.read("listOfQuestionsCache")
+                    //     : [] //todo
                   )));
         }
 

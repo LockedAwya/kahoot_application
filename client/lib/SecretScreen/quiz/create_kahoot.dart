@@ -265,11 +265,11 @@ class _CreateKahootState extends State<CreateKahoot> {
                     globalState = "create-quiz";
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => QuizPage(
-                            listValue: quizModelList,
-                            currentIndexPage: 0,
-                            cacheListValue: box.hasData("listOfQuestionsCache")
-                                ? box.read("listOfQuestionsCache")
-                                : [] //todo
+                              listValue: quizModelList,
+                              currentIndexPage: 0,
+                              // cacheListValue: box.hasData("listOfQuestionsCache")
+                              //     ? box.read("listOfQuestionsCache")
+                              //     : [] //todo
                             )));
                   },
                 ),
