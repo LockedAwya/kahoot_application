@@ -49,6 +49,17 @@ const quizSchema = mongoose.Schema({
         //     enum: ["Basic", "Double"],
         //     required: true,
         // },
+        // scoreType: {
+        //     type: String,
+        //     enum: ["Basic", "BaseOnTimes"],
+        //     required: true,
+        // },
+        // timer: {
+        //     type: String,
+        //     min: 10,
+        //     max: 30,
+        //     required: true,
+        // },
         backgroundQuestion: {
             type: String,
         },
