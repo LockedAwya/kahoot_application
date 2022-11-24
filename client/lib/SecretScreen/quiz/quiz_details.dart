@@ -7,6 +7,7 @@ import '../../utils/global_variables.dart';
 import '../../api/index.dart';
 import '../../model/quiz_model.dart';
 import './components/quiz_page_2.dart';
+import './components/question_component.dart';
 //import '../../api/index.dart';
 
 class QuizDetails extends StatefulWidget {
@@ -89,6 +90,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                 ),
                 onPressed: () {
                   print("Tap cancel");
+                  box.erase();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => MyKahootScreen()),
@@ -104,7 +106,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 14,
-                        color: Color(0xFFE2E2E2),
+                        color: Color.fromARGB(255, 0, 0, 0),
                         fontWeight: FontWeight.bold),
                   ),
                   onPressed: () async {
@@ -116,16 +118,24 @@ class _QuizDetailsState extends State<QuizDetails> {
                         "",
                         10 /**score per question */,
                         20 /**time per question */,
-                        box
-                            .read("quiz_details")["questionList"]
-                            .length /** number of questions */,
-                        box.read("quiz_details")["questionList"]);
+                        box.hasData("quiz_details")
+                            ? box.read("quiz_details")["questionList"].length
+                            : box.read("questionList").length,
+                        // box.hasData("quiz_details") ? box
+                        //     .read("quiz_details")["questionList"]
+                        //     .length : snapshot.data!
+                        //                                   .questionList[index].length /** number of questions */,
+                        box.hasData("quiz_details")
+                            ? box.read("quiz_details")["questionList"]
+                            : box.read("questionList"));
                     print(res);
-                    box.remove("quiz_details");
+                    //box.remove("quiz_details");
+                    box.erase();
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => MyKahootScreen()));
+                    //box.remove("quiz_details");
                   },
                 ),
               ],
@@ -211,10 +221,12 @@ class _QuizDetailsState extends State<QuizDetails> {
                                 ),
                               ),
                               textField1(quizDescriptionController.text),
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.only(left: 10),
                                 child: Text(
-                                  "Question (0)",
+                                  "Question " +
+                                      snapshot.data!.questionList.length
+                                          .toString(),
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.black,
@@ -229,16 +241,74 @@ class _QuizDetailsState extends State<QuizDetails> {
                                     ? List.generate(
                                         snapshot.data!.questionList.length,
                                         (index) {
-                                        return Text(
-                                          snapshot.data!.questionList[index]
-                                              .toString(),
-                                          style: const TextStyle(fontSize: 22),
+                                        // return Text(
+                                        //   snapshot.data!.questionList[index]
+                                        //       .toString(),
+                                        //   style: const TextStyle(fontSize: 22),
+                                        // );
+                                        print(
+                                            snapshot.data!.questionList[index]);
+                                        // return Column(
+                                        //     crossAxisAlignment:
+                                        //         CrossAxisAlignment.center,
+                                        //     mainAxisAlignment:
+                                        //         MainAxisAlignment.start,
+                                        //     //padding: EdgeInsets.all(8.0),
+                                        //     children: [
+                                        //       QuestionComponent(
+                                        //           // box.read(
+                                        //           // "quiz_details")["questionList"]
+                                        //           // snapshot.data!.questionList[index]
+                                        //           //     ["backgroundQuestion"],
+                                        //           "",
+                                        //           snapshot.data!
+                                        //                   .questionList[index]
+                                        //               ["question"],
+                                        //           snapshot.data!
+                                        //                   .questionList[index]
+                                        //               ["questionIndex"]),
+                                        //       const SizedBox(
+                                        //         height: 5,
+                                        //       ),
+                                        //     ]);
+                                        return Container(
+                                          margin: EdgeInsets.all(2),
+                                          padding: EdgeInsets.all(2),
+                                          color: Colors.white,
+                                          child: Column(
+                                            children: [
+                                              QuestionComponent(
+                                                  // box.read(
+                                                  // "quiz_details")["questionList"]
+                                                  // snapshot.data!.questionList[index]
+                                                  //     ["backgroundQuestion"],
+                                                  "",
+                                                  snapshot.data!
+                                                          .questionList[index]
+                                                      ["question"],
+                                                  snapshot.data!
+                                                          .questionList[index]
+                                                      ["questionIndex"]),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                            ],
+                                          ),
                                         );
                                       })
                                     : <Widget>[
                                         for (var question in box.read(
                                             "quiz_details")["questionList"])
-                                          Text(question.toString())
+                                          //Text(question.toString())
+
+                                          Container(
+                                              child: QuestionComponent(
+                                                  // box.read(
+                                                  // "quiz_details")["questionList"]
+                                                  question[
+                                                      "backgroundQuestion"],
+                                                  question["question"],
+                                                  question["questionIndex"])),
                                       ],
                               ),
                               Align(
@@ -254,7 +324,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                                       if (!box.hasData("quiz_details")) {
                                         box.write("quiz_details", {
                                           "id": widget.quizId,
-                                          "title": widget.quizName,
+                                          "name": widget.quizName,
                                           "description": widget.quizDescription,
                                           "background":
                                               snapshot.data!.background ?? "",
@@ -421,15 +491,15 @@ class _QuizDetailsState extends State<QuizDetails> {
         //Navigator.pop(context);
       },
       child: Container(
-        width: 58,
-        height: 58,
-        alignment: Alignment.center,
+        width: 50,
+        height: 50,
+        alignment: Alignment.bottomCenter,
         // margin: EdgeInsets.only(top: 10),
         decoration:
             const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
         child: Image.asset(
-          "assets/icons/ic_settings.png",
-          scale: 1.6,
+          "assets/images/trashimg.png",
+          scale: 1.4,
         ),
       ));
   Future<void> _showDeleteWarning() async {

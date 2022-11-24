@@ -20,15 +20,19 @@ class CreateKahoot extends StatefulWidget {
 
 class _CreateKahootState extends State<CreateKahoot> {
   late TextEditingController quizTitleController;
+  late TextEditingController quizDescriptionController;
   List<QuestionModel> quizModelList = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (box.hasData("quiz-name")) {
+    if (box.hasData("quiz-name") || box.hasData("quiz-description")) {
       quizTitleController = TextEditingController(text: box.read("quiz-name"));
+      quizDescriptionController =
+          TextEditingController(text: box.read("quiz-description"));
     } else {
       quizTitleController = TextEditingController(text: "");
+      quizDescriptionController = TextEditingController(text: "");
     }
     if (box.hasData("listOfQuestionsCache")) {
       print(box.read("listOfQuestionsCache"));
@@ -54,7 +58,9 @@ class _CreateKahootState extends State<CreateKahoot> {
       Quiz quiz = Quiz.fromJson(res.data);
       print(quiz.name);
       if (!mounted) return;
-      box.remove("listOfQuestionsCache");
+      // box.remove("listOfQuestionsCache");
+      // box.remove("")
+      box.erase();
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => MyKahootScreen()));
     } else {
@@ -115,6 +121,11 @@ class _CreateKahootState extends State<CreateKahoot> {
           ),
           onPressed: () {
             print("Tap cancel");
+            box.erase();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyKahootScreen()),
+            );
           },
         ),
         actions: [
@@ -248,7 +259,9 @@ class _CreateKahootState extends State<CreateKahoot> {
                       for (var question in box.read("listOfQuestionsCache"))
                         Text(question.toString())
                     ]
-                  : <Widget>[Text("Hello")],
+                  : <Widget>[
+                      Text("You have no questions yet! Please make some!")
+                    ],
             ),
             Align(
               alignment: Alignment.bottomRight,
@@ -262,6 +275,8 @@ class _CreateKahootState extends State<CreateKahoot> {
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (context) => const QuizPage2()));
                     box.write("quiz-name", quizTitleController.text);
+                    box.write(
+                        "quiz-description", quizDescriptionController.text);
                     globalState = "create-quiz";
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => QuizPage(
@@ -320,6 +335,38 @@ class _CreateKahootState extends State<CreateKahoot> {
             const SizedBox(
               width: 10,
             ),
+            // TextFormField(
+            //   controller: quizDescriptionController,
+            //   decoration: InputDecoration(
+            //     hintStyle: const TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.w500,
+            //         color: Color(0xFF5E5E5E)),
+            //     hintText: "Enter description",
+            //     filled: true,
+            //     contentPadding:
+            //         const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
+            //     fillColor: Colors.white,
+            //     focusedBorder: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(4),
+            //       borderSide: const BorderSide(
+            //         color: Colors.blue,
+            //         width: 1.5,
+            //       ),
+            //     ),
+            //     enabledBorder: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(4),
+            //       borderSide: BorderSide(
+            //         color: Colors.grey.shade300,
+            //         width: 1.5,
+            //       ),
+            //     ),
+            //     errorBorder: null,
+            //   ),
+            // ),
+            // const SizedBox(
+            //   width: 10,
+            // ),
             Container(
               width: 58,
               height: 58,

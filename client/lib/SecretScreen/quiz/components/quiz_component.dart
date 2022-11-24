@@ -33,7 +33,7 @@ class QuizComponent extends StatelessWidget {
                     ),
                   ),
                   child: QuestionModalBottomSheet(quizId: quizId)));
-            print("Quiz id in host is: " + quizId);
+          print("Quiz id in host is: " + quizId);
         }
         if (globalState == "my_kahoots") {
           Navigator.of(context).push(MaterialPageRoute(
@@ -51,38 +51,40 @@ class QuizComponent extends StatelessWidget {
           ),
           Container(
               padding: const EdgeInsets.only(left: 10),
-              child: Column(children: <Widget>[
-                Container(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    quizName,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.black),
-                  ),
-                ),
-                const SizedBox(height: 25), // <-- Set height
-                Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: 0),
-                    child: Text(
-                      quizDescription,
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
-                    )),
-                const SizedBox(height: 20),
-                Container(
-                  padding: EdgeInsets.only(left: 0),
-                  //apply padding horizontal or vertical only
-                  child: Text(
-                    quizCreator,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.grey),
-                  ),
-                ),
-              ])),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        quizName,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.black),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    // <-- Set height
+                    Container(
+                        padding: EdgeInsets.only(left: 0),
+                        child: Text(
+                          quizDescription,
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        )),
+                    const SizedBox(height: 20),
+
+                    Container(
+                      padding: EdgeInsets.only(left: 0),
+                      //apply padding horizontal or vertical only
+                      child: Text(
+                        quizCreator,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: Colors.grey),
+                      ),
+                    ),
+                  ])),
         ],
       ),
       // decoration: BoxDecoration(

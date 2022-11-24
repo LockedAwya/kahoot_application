@@ -34,7 +34,7 @@ class _JoinGameScreen extends State<JoinGameScreen> {
 
   void initSocket() {
     socket = IO.io(
-      'http://127.0.0.1:3003', //http://10.0.2.2:3003 //http://127.0.0.1:3003
+      'http://127.0.0.1:3000', //http://10.0.2.2:3003 //http://127.0.0.1:3003
       IO.OptionBuilder()
           .setTransports(['websocket'])
           //.disableAutoConnect()

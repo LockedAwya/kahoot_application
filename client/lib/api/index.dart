@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import '../model/quiz_model.dart';
 import 'dart:convert';
+import '../utils/global_variables.dart';
 
 String api_url =
     'http://127.0.0.1:3000'; //http://10.0.2.2:3000 //http://127.0.0.1:3000
@@ -69,6 +70,9 @@ Future<Quiz> getQuizById(String quizId) async {
   );
   if (res.statusCode == 200) {
     Quiz _quiz = Quiz.fromJson(res.data);
+    print("Quiz detail is:");
+    box.write("questionList", res.data["questionList"]);
+    print(box.read("questionList"));
     return _quiz;
   } else {
     // If the server did not return a 200 OK response,
@@ -131,13 +135,13 @@ Future<Response> deleteQuizByIdAPI(String quizId) {
 
 Future<Quiz> updateQuizByIdAPI(
     String quizId,
-    String name,
-    String description,
-    String background,
-    int scorePerQuestion,
-    int timer,
-    int numberOfQuestion,
-    List questionList) async {
+    String? name,
+    String? description,
+    String? background,
+    int? scorePerQuestion,
+    int? timer,
+    int? numberOfQuestion,
+    List? questionList) async {
   //TODO
   //update quiz when question is updated.
   var res = await dio.patch(
@@ -160,6 +164,8 @@ Future<Quiz> updateQuizByIdAPI(
   );
   if (res.statusCode == 200) {
     Quiz _quiz = Quiz.fromJson(res.data);
+    print("Quiz detail is:");
+    print(_quiz);
     return _quiz;
   } else {
     // If the server did not return a 200 OK response,

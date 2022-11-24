@@ -249,7 +249,9 @@ class _GamePinState extends State<GamePin> {
                                       width: 5,
                                     ),
                                     Text(
-                                      snapshot.data == null ? "0" : snapshot.data.length.toString(),
+                                      snapshot.data == null
+                                          ? "0"
+                                          : snapshot.data.length.toString(),
                                       style: TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.normal),

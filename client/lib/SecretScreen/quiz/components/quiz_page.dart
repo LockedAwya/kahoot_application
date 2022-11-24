@@ -585,7 +585,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
             "isCorrect": listQuiz[i].isCorrect4
           },
         ],
-        "questionIndex": i + 1,
+        "questionIndex": (i + 1),
       });
     }
     box.write("listOfQuestionsCache", temp);

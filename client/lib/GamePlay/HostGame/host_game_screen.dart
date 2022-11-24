@@ -172,8 +172,8 @@ class _HostGameScreen extends State<HostGameScreen> {
                         itemCount: quizList.length,
                         itemBuilder: (context, index) {
                           return Container(
-                            margin: EdgeInsets.all(8),
-                            padding: EdgeInsets.all(8),
+                            margin: EdgeInsets.all(1),
+                            padding: EdgeInsets.all(5),
                             color: Colors.white,
                             child: Column(
                               children: [

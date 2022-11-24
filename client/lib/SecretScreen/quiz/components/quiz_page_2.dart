@@ -585,18 +585,18 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
             "isCorrect": listQuiz[i].isCorrect4
           },
         ],
-        "questionIndex": i + 1,
+        "questionIndex": (i + 1),
       });
     }
     // box.write("listOfQuestionsCache", temp);
-    // print(box.read("listOfQuestionsCache"));
+    print(box.read("quiz_details")["questionList"]);
     //box.read("quiz_details")["questionList"] = temp;
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => QuizDetails(
               box.read("quiz_details")["id"],
-              box.read("quiz_details")["title"],
+              box.read("quiz_details")["name"], //title quiz
               box.read("quiz_details")["description"])),
     );
   }
