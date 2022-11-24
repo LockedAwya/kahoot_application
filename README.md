@@ -67,9 +67,12 @@ Demo một số giao diện đã làm:
 </table>
 
 Demo tương tác giữa các màn hình:
+
 https://user-images.githubusercontent.com/58223975/203826514-8806630a-afe2-45f7-91ce-95483267f6b4.mp4
 
 Demo những API sử dụng trong ứng dụng:
+
 ![image](https://user-images.githubusercontent.com/58223975/203826907-845262c0-0eb4-4136-8aa0-13ca3f4e0781.png)
+
 ![image](https://user-images.githubusercontent.com/58223975/203827152-a47cf5b9-f531-4058-b09a-3181f385f3a6.png)
 
