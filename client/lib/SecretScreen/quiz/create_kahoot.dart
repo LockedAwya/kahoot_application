@@ -274,10 +274,10 @@ class _CreateKahootState extends State<CreateKahoot> {
                   onTap: () {
                     // Navigator.of(context).push(MaterialPageRoute(
                     //     builder: (context) => const QuizPage2()));
+//                    globalState = "create-quiz";
                     box.write("quiz-name", quizTitleController.text);
                     box.write(
                         "quiz-description", quizDescriptionController.text);
-                    globalState = "create-quiz";
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => QuizPage(
                               listValue: quizModelList,

@@ -55,10 +55,10 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
               .add(QuestionModel.fromJson(box.read("listOfQuestionsCache")[i]));
         }
       }
-      globalState = "create-quiz";
     } else {
       listQuiz = widget.listValue;
     }
+    globalState = "create-quiz";
     currentpage = widget.currentIndexPage;
     tabController =
         TabController(initialIndex: 0, length: listQuiz.length, vsync: this);
@@ -302,36 +302,40 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                                 children: [
                                   //choice 1
                                   ButtonItem(
-                                    onTap: () async {
-                                      final QuestionModel value =
-                                          await Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CreateAnswer1(
-                                                        isCorrect: listQuiz[
-                                                                listQuiz
-                                                                    .indexOf(e)]
-                                                            .isCorrect,
-                                                        textanswer: listQuiz[
-                                                                listQuiz
-                                                                    .indexOf(e)]
-                                                            .answer1,
-                                                      )));
-                                      listQuiz[listQuiz.indexOf(e)].isCorrect =
-                                          value.isCorrect;
-                                      if (value.text?.isEmpty ?? false) return;
-                                      if (value.text?.isNotEmpty ?? false) {
-                                        setState(() {
-                                          listQuiz[listQuiz.indexOf(e)]
-                                              .answer1 = value.text;
-                                        });
-                                      }
-                                    },
-                                    colors: Colors.red[500],
-                                    text:
-                                        listQuiz[listQuiz.indexOf(e)].answer1 ??
-                                            'Add answer',
-                                  ),
+                                      onTap: () async {
+                                        final QuestionModel value =
+                                            await Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        CreateAnswer1(
+                                                          isCorrect: listQuiz[
+                                                                  listQuiz
+                                                                      .indexOf(
+                                                                          e)]
+                                                              .isCorrect,
+                                                          textanswer: listQuiz[
+                                                                  listQuiz
+                                                                      .indexOf(
+                                                                          e)]
+                                                              .answer1,
+                                                        )));
+                                        listQuiz[listQuiz.indexOf(e)]
+                                            .isCorrect = value.isCorrect;
+                                        if (value.text?.isEmpty ?? false)
+                                          return;
+                                        if (value.text?.isNotEmpty ?? false) {
+                                          setState(() {
+                                            listQuiz[listQuiz.indexOf(e)]
+                                                .answer1 = value.text;
+                                          });
+                                        }
+                                      },
+                                      colors: Colors.red[500],
+                                      text: listQuiz[listQuiz.indexOf(e)]
+                                              .answer1 ??
+                                          'Add answer',
+                                      isCorrect: listQuiz[listQuiz.indexOf(e)]
+                                          .isCorrect),
                                   const SizedBox(
                                     width: 10,
                                   ),
@@ -366,6 +370,8 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                                     text:
                                         listQuiz[listQuiz.indexOf(e)].answer2 ??
                                             'Add answer',
+                                    isCorrect: listQuiz[listQuiz.indexOf(e)]
+                                        .isCorrect2,
                                   ),
                                 ],
                               ),
@@ -407,6 +413,8 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                                     text:
                                         listQuiz[listQuiz.indexOf(e)].answer3 ??
                                             'Add answer\n(optional)',
+                                    isCorrect: listQuiz[listQuiz.indexOf(e)]
+                                        .isCorrect3,
                                   ),
                                   const SizedBox(
                                     width: 10,
@@ -442,6 +450,8 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                                     text:
                                         listQuiz[listQuiz.indexOf(e)].answer4 ??
                                             'Add answer\n(optional)',
+                                    isCorrect: listQuiz[listQuiz.indexOf(e)]
+                                        .isCorrect4,
                                   ),
                                 ],
                               ),
@@ -709,8 +719,13 @@ class ButtonItem extends StatelessWidget {
   final Color? colors;
   final String text;
   final VoidCallback? onTap;
+  final bool isCorrect;
   const ButtonItem(
-      {Key? key, required this.colors, required this.text, this.onTap})
+      {Key? key,
+      required this.colors,
+      required this.text,
+      this.onTap,
+      required this.isCorrect})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -724,10 +739,31 @@ class ButtonItem extends StatelessWidget {
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width * 0.43,
           height: 60,
-          child: Text(
-            text,
-            style: const TextStyle(
-                color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400),
+          child: Stack(
+            //  alignment: Alignment,
+            children: [
+              Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    text,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400),
+                  )),
+              Visibility(
+                visible: isCorrect,
+                child: Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                        margin: const EdgeInsets.only(bottom: 20),
+                        child: Image.asset(
+                          'assets/icons/ic_tick.png',
+                          width: 20,
+                          height: 20,
+                        ))),
+              )
+            ],
           ),
         ),
       ),

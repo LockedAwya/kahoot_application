@@ -90,7 +90,7 @@ class _CreateAnswer1State extends State<CreateAnswer1> {
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
                           color: Color(0xFF6B6B6B)),
-                      hintText: "Tap to add question",
+                      hintText: "Tap to add answer",
                       filled: true,
                       contentPadding: EdgeInsets.all(20),
                       fillColor: Colors.white,
