@@ -49,5 +49,27 @@ Những chức năng đã kết nối được với backend:
 + Report coverage testing:
 ![image](https://user-images.githubusercontent.com/58223975/199228543-e72c8ba5-2e76-4a81-95bc-d3d5c35891a0.png)
 
+# Tuần 10: Kiểm tra giữa kì
 
+# Tuần 11: Kiểm tra giữa kì
+
+Demo một số giao diện đã làm:
++ Một số hình ảnh:
+
+<table>
+<tr>
+<td><img src="https://user-images.githubusercontent.com/58223975/203826058-762ffe7b-9efd-46a6-ab5a-cbf9b52efcf6.PNG" height="400"></td>
+<td><img src="https://user-images.githubusercontent.com/58223975/203826187-46a9abe7-0f37-49de-aaa4-0c01367fa374.PNG" height="400"></td>
+<td><img src="https://user-images.githubusercontent.com/58223975/203826233-05012262-d527-44b1-95d1-4bbde17331b7.PNG" height="400"></td>
+<td><img src="https://user-images.githubusercontent.com/58223975/203826274-3a4c409c-7baa-42ce-af6e-0ad7d32868d6.PNG" height="400"></td>
+<td><img src="https://user-images.githubusercontent.com/58223975/203826377-925c0917-8d55-4af9-9131-f4fc8210f9f1.PNG" height="400"></td>
+</tr>
+</table>
+
+Demo tương tác giữa các màn hình:
+https://user-images.githubusercontent.com/58223975/203826514-8806630a-afe2-45f7-91ce-95483267f6b4.mp4
+
+Demo những API sử dụng trong ứng dụng:
+![image](https://user-images.githubusercontent.com/58223975/203826907-845262c0-0eb4-4136-8aa0-13ca3f4e0781.png)
+![image](https://user-images.githubusercontent.com/58223975/203827152-a47cf5b9-f531-4058-b09a-3181f385f3a6.png)
 
