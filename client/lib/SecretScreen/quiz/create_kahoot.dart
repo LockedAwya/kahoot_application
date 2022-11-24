@@ -7,6 +7,7 @@ import 'my_kahoots.dart';
 import '../../utils/global_variables.dart';
 import '../../api/index.dart';
 import '../../model/quiz_model.dart';
+import './components/question_component.dart';
 
 class CreateKahoot extends StatefulWidget {
   //final List<Widget> quizList;
@@ -22,6 +23,7 @@ class _CreateKahootState extends State<CreateKahoot> {
   late TextEditingController quizTitleController;
   late TextEditingController quizDescriptionController;
   List<QuestionModel> quizModelList = [];
+  int numberOfQuestions = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -36,6 +38,7 @@ class _CreateKahootState extends State<CreateKahoot> {
     }
     if (box.hasData("listOfQuestionsCache")) {
       print(box.read("listOfQuestionsCache"));
+      numberOfQuestions = box.read("listOfQuestionsCache").length;
     } else {
       print("Question list does not exist!!");
     }
@@ -137,7 +140,7 @@ class _CreateKahootState extends State<CreateKahoot> {
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 14,
-                  color: Color(0xFFE2E2E2),
+                  color: Color.fromARGB(255, 8, 8, 8),
                   fontWeight: FontWeight.bold),
             ),
             onPressed: () {
@@ -188,7 +191,7 @@ class _CreateKahootState extends State<CreateKahoot> {
                 horizontalTitleGap: 1.0,
                 title: Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
-                  height: 260,
+                  height: 200,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -228,12 +231,29 @@ class _CreateKahootState extends State<CreateKahoot> {
             ),
             textField(),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             const Padding(
               padding: EdgeInsets.only(left: 10),
               child: Text(
-                "Question (0)",
+                "Description",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            textField1(),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                "Questions (" + numberOfQuestions.toString() + ")",
                 style: TextStyle(
                     fontSize: 16,
                     color: Colors.black,
@@ -257,39 +277,67 @@ class _CreateKahootState extends State<CreateKahoot> {
                       //     .map((item) => new Text(item))
                       //     .toList()
                       for (var question in box.read("listOfQuestionsCache"))
-                        Text(question.toString())
+                        //   Text(question.toString())
+                        Column(
+                          children: [
+                            QuestionComponent(
+                                // box.read(
+                                // "quiz_details")["questionList"]
+                                // snapshot.data!.questionList[index]
+                                //     ["backgroundQuestion"],
+                                "",
+                                question["question"],
+                                question["questionIndex"]),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
                     ]
-                  : <Widget>[
-                      Text("You have no questions yet! Please make some!")
-                    ],
+                  : <Widget>[],
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: AppButton(
-                  width: 180,
-                  height: 60,
-                  text: 'Add Question',
-                  onTap: () {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => const QuizPage2()));
+            Stack(children: [
+              const SizedBox(
+                height: 50,
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  //top: 200,
+                  // left: 500,
+                  // right: 100,
+                  padding: EdgeInsets.only(
+                    left: 0.0,
+                    top: 50,
+                    right: 5,
+                    bottom: 0,
+                  ),
+                  child: Positioned(
+                      top: 200,
+                      child: AppButton(
+                        width: 150,
+                        height: 50,
+                        text: 'Add Question',
+                        onTap: () {
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => const QuizPage2()));
 //                    globalState = "create-quiz";
-                    box.write("quiz-name", quizTitleController.text);
-                    box.write(
-                        "quiz-description", quizDescriptionController.text);
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => QuizPage(
-                              listValue: quizModelList,
-                              currentIndexPage: 0,
-                              // cacheListValue: box.hasData("listOfQuestionsCache")
-                              //     ? box.read("listOfQuestionsCache")
-                              //     : [] //todo
-                            )));
-                  },
+                          box.write("quiz-name", quizTitleController.text);
+                          box.write("quiz-description",
+                              quizDescriptionController.text);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => QuizPage(
+                                    listValue: quizModelList,
+                                    currentIndexPage: 0,
+                                    // cacheListValue: box.hasData("listOfQuestionsCache")
+                                    //     ? box.read("listOfQuestionsCache")
+                                    //     : [] //todo
+                                  )));
+                        },
+                      )),
                 ),
               ),
-            )
+            ]),
           ],
         ),
       ),
@@ -335,38 +383,6 @@ class _CreateKahootState extends State<CreateKahoot> {
             const SizedBox(
               width: 10,
             ),
-            // TextFormField(
-            //   controller: quizDescriptionController,
-            //   decoration: InputDecoration(
-            //     hintStyle: const TextStyle(
-            //         fontSize: 18,
-            //         fontWeight: FontWeight.w500,
-            //         color: Color(0xFF5E5E5E)),
-            //     hintText: "Enter description",
-            //     filled: true,
-            //     contentPadding:
-            //         const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
-            //     fillColor: Colors.white,
-            //     focusedBorder: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(4),
-            //       borderSide: const BorderSide(
-            //         color: Colors.blue,
-            //         width: 1.5,
-            //       ),
-            //     ),
-            //     enabledBorder: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(4),
-            //       borderSide: BorderSide(
-            //         color: Colors.grey.shade300,
-            //         width: 1.5,
-            //       ),
-            //     ),
-            //     errorBorder: null,
-            //   ),
-            // ),
-            // const SizedBox(
-            //   width: 10,
-            // ),
             Container(
               width: 58,
               height: 58,
@@ -378,7 +394,61 @@ class _CreateKahootState extends State<CreateKahoot> {
                 "assets/icons/ic_settings.png",
                 scale: 1.6,
               ),
-            )
+            ),
+            // const Padding(
+            //   padding: EdgeInsets.only(left: 10),
+            //   child: Text(
+            //     "Description",
+            //     style: TextStyle(
+            //         fontSize: 16,
+            //         color: Colors.black,
+            //         fontWeight: FontWeight.bold),
+            //   ),
+            // ),
+            //textField1(quizDescriptionController.text),
+          ],
+        ),
+      );
+
+  Widget textField1() => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+                child: TextFormField(
+              controller: quizDescriptionController,
+              decoration: InputDecoration(
+                hintStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF5E5E5E)),
+                hintText: "Enter description",
+                filled: true,
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
+                fillColor: Colors.white,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4),
+                  borderSide: const BorderSide(
+                    color: Colors.blue,
+                    width: 1.5,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4),
+                  borderSide: BorderSide(
+                    color: Colors.grey.shade300,
+                    width: 1.5,
+                  ),
+                ),
+                errorBorder: null,
+              ),
+            )),
+            const SizedBox(
+              width: 10,
+            ),
           ],
         ),
       );

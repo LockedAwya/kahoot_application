@@ -224,9 +224,10 @@ class _QuizDetailsState extends State<QuizDetails> {
                               Padding(
                                 padding: EdgeInsets.only(left: 10),
                                 child: Text(
-                                  "Question " +
+                                  "Questions (" +
                                       snapshot.data!.questionList.length
-                                          .toString(),
+                                          .toString() +
+                                      ")",
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.black,
@@ -241,36 +242,8 @@ class _QuizDetailsState extends State<QuizDetails> {
                                     ? List.generate(
                                         snapshot.data!.questionList.length,
                                         (index) {
-                                        // return Text(
-                                        //   snapshot.data!.questionList[index]
-                                        //       .toString(),
-                                        //   style: const TextStyle(fontSize: 22),
-                                        // );
                                         print(
                                             snapshot.data!.questionList[index]);
-                                        // return Column(
-                                        //     crossAxisAlignment:
-                                        //         CrossAxisAlignment.center,
-                                        //     mainAxisAlignment:
-                                        //         MainAxisAlignment.start,
-                                        //     //padding: EdgeInsets.all(8.0),
-                                        //     children: [
-                                        //       QuestionComponent(
-                                        //           // box.read(
-                                        //           // "quiz_details")["questionList"]
-                                        //           // snapshot.data!.questionList[index]
-                                        //           //     ["backgroundQuestion"],
-                                        //           "",
-                                        //           snapshot.data!
-                                        //                   .questionList[index]
-                                        //               ["question"],
-                                        //           snapshot.data!
-                                        //                   .questionList[index]
-                                        //               ["questionIndex"]),
-                                        //       const SizedBox(
-                                        //         height: 5,
-                                        //       ),
-                                        //     ]);
                                         return Container(
                                           margin: EdgeInsets.all(2),
                                           padding: EdgeInsets.all(2),
@@ -290,7 +263,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                                                           .questionList[index]
                                                       ["questionIndex"]),
                                               const SizedBox(
-                                                height: 5,
+                                                height: 10,
                                               ),
                                             ],
                                           ),
@@ -311,85 +284,104 @@ class _QuizDetailsState extends State<QuizDetails> {
                                                   question["questionIndex"])),
                                       ],
                               ),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child: AppButton(
-                                    width: 180,
-                                    height: 60,
-                                    text: 'View Questions',
-                                    onTap: () {
-                                      if (!box.hasData("quiz_details")) {
-                                        box.write("quiz_details", {
-                                          "id": widget.quizId,
-                                          "name": widget.quizName,
-                                          "description": widget.quizDescription,
-                                          "background":
-                                              snapshot.data!.background ?? "",
-                                          "numberOfQuestion":
-                                              snapshot.data!.numberOfQuestion,
-                                          "scorePerQuestion":
-                                              snapshot.data!.scorePerQuestion,
-                                          "questionList":
-                                              snapshot.data!.questionList
-                                        });
-                                      }
-                                      //print("LOfasdfasdL");
-                                      List<dynamic> questionList = box
-                                          .read("quiz_details")["questionList"];
-                                      print(box.read("quiz_details"));
-                                      print(questionList);
-                                      setState(() {
-                                        // value = widget.listValue ?? [];
-                                        // value.add(QuizModel());
-                                        if (questionList.length != 0) {
-                                          for (int i = 0;
-                                              i < questionList.length;
-                                              i++) {
-                                            //                                   listQuiz
-                                            // .add(QuestionModel.fromJson(box.read("listOfQuestionsCache")[i]));
-                                            quizModelList.add(
-                                                QuestionModel.fromJson(
-                                                    questionList[i]));
-                                            // quizModelList.add(QuestionModel(
-                                            //   text: questionList[i]["question"],
-                                            //   answer1: questionList[i]
-                                            //       ["answerList"][0]["body"],
-                                            //   answer2: questionList[i]
-                                            //       ["answerList"][1]["body"],
-                                            //   answer3: questionList[i]
-                                            //       ["answerList"][2]["body"],
-                                            //   answer4: questionList[i]
-                                            //       ["answerList"][3]["body"],
-                                            //   isCorrect: questionList[i]
-                                            //           ["answerList"][0]
-                                            //       ["isCorrect"],
-                                            //   isCorrect2: questionList[i]
-                                            //           ["answerList"][1]
-                                            //       ["isCorrect"],
-                                            //   isCorrect3: questionList[i]
-                                            //           ["answerList"][2]
-                                            //       ["isCorrect"],
-                                            //   isCorrect4: questionList[i]
-                                            //           ["answerList"][3]
-                                            //       ["isCorrect"],
-                                            // ));
-                                          }
-                                        }
-                                      });
-                                      globalState = "update-quiz";
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                              builder: (context) => QuizPage2(
-                                                    listValue: quizModelList,
-                                                    currentIndexPage: 0,
-                                                  )));
-                                    },
+                              Stack(children: [
+                                const SizedBox(
+                                  height: 50,
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Padding(
+                                    //top: 200,
+                                    // left: 500,
+                                    // right: 100,
+                                    padding: EdgeInsets.only(
+                                      left: 0.0,
+                                      top: 30,
+                                      right: 5,
+                                      bottom: 0,
+                                    ),
+                                    child: Positioned(
+                                        top: 200,
+                                        child: AppButton(
+                                          width: 150,
+                                          height: 50,
+                                          text: 'View Questions',
+                                          onTap: () {
+                                            if (!box.hasData("quiz_details")) {
+                                              box.write("quiz_details", {
+                                                "id": widget.quizId,
+                                                "name": widget.quizName,
+                                                "description":
+                                                    widget.quizDescription,
+                                                "background":
+                                                    snapshot.data!.background ??
+                                                        "",
+                                                "numberOfQuestion": snapshot
+                                                    .data!.numberOfQuestion,
+                                                "scorePerQuestion": snapshot
+                                                    .data!.scorePerQuestion,
+                                                "questionList":
+                                                    snapshot.data!.questionList
+                                              });
+                                            }
+                                            //print("LOfasdfasdL");
+                                            List<dynamic> questionList =
+                                                box.read("quiz_details")[
+                                                    "questionList"];
+                                            print(box.read("quiz_details"));
+                                            print(questionList);
+                                            setState(() {
+                                              // value = widget.listValue ?? [];
+                                              // value.add(QuizModel());
+                                              if (questionList.length != 0) {
+                                                for (int i = 0;
+                                                    i < questionList.length;
+                                                    i++) {
+                                                  //                                   listQuiz
+                                                  // .add(QuestionModel.fromJson(box.read("listOfQuestionsCache")[i]));
+                                                  quizModelList.add(
+                                                      QuestionModel.fromJson(
+                                                          questionList[i]));
+                                                  // quizModelList.add(QuestionModel(
+                                                  //   text: questionList[i]["question"],
+                                                  //   answer1: questionList[i]
+                                                  //       ["answerList"][0]["body"],
+                                                  //   answer2: questionList[i]
+                                                  //       ["answerList"][1]["body"],
+                                                  //   answer3: questionList[i]
+                                                  //       ["answerList"][2]["body"],
+                                                  //   answer4: questionList[i]
+                                                  //       ["answerList"][3]["body"],
+                                                  //   isCorrect: questionList[i]
+                                                  //           ["answerList"][0]
+                                                  //       ["isCorrect"],
+                                                  //   isCorrect2: questionList[i]
+                                                  //           ["answerList"][1]
+                                                  //       ["isCorrect"],
+                                                  //   isCorrect3: questionList[i]
+                                                  //           ["answerList"][2]
+                                                  //       ["isCorrect"],
+                                                  //   isCorrect4: questionList[i]
+                                                  //           ["answerList"][3]
+                                                  //       ["isCorrect"],
+                                                  // ));
+                                                }
+                                              }
+                                            });
+                                            globalState = "update-quiz";
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        QuizPage2(
+                                                          listValue:
+                                                              quizModelList,
+                                                          currentIndexPage: 0,
+                                                        )));
+                                          },
+                                        )),
                                   ),
                                 ),
-                              )
+                              ]),
                             ],
                           ),
                         ))

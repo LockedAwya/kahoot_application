@@ -150,7 +150,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                 alignment: Alignment.center,
                 iconSize: 20,
                 icon: Image.asset(
-                  'assets/icons/ic_three_dot.png',
+                  'assets/images/trashimg.png',
                   width: 20,
                   height: 20,
                 ),
@@ -166,303 +166,329 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
             // crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Expanded(
-                //bottom
-                child: TabBarView(
-                  controller: tabController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    ...listQuiz.map((e) {
-                      //fieldController.text = e.text ?? "";
-                      return SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
-                              child: ListTile(
-                                onTap: () {
-                                  print("Tap select image");
-                                },
-                                dense: true,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0),
-                                horizontalTitleGap: 1.0,
-                                title: Container(
+              listQuiz.length != 0
+                  ? Expanded(
+                      //bottom
+                      child: TabBarView(
+                        controller: tabController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [
+                          ...listQuiz.map((e) {
+                            //fieldController.text = e.text ?? "";
+                            return SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
                                     margin: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    height: 190,
-                                    alignment: Alignment.center,
-                                    child: Column(
-                                      children: [
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        Image.asset('assets/icons/ic_pick.png',
-                                            fit: BoxFit.cover),
-                                        Container(
-                                          width: 30,
+                                        horizontal: 10, vertical: 10),
+                                    child: ListTile(
+                                      onTap: () {
+                                        print("Tap select image");
+                                      },
+                                      dense: true,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 10.0),
+                                      horizontalTitleGap: 1.0,
+                                      title: Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 10),
+                                          height: 190,
+                                          alignment: Alignment.center,
+                                          child: Column(
+                                            children: [
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              Image.asset(
+                                                  'assets/icons/ic_pick.png',
+                                                  fit: BoxFit.cover),
+                                              Container(
+                                                width: 30,
+                                                height: 30,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.blue,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0)),
+                                                child: const Icon(
+                                                  Icons.add_rounded,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              const Text(
+                                                "Add Media",
+                                                style: TextStyle(
+                                                    color: Color(0xFF6B6B6B),
+                                                    fontSize: 16),
+                                              )
+                                            ],
+                                          )),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: Material(
+                                      color: Colors.deepPurple,
+                                      borderRadius: BorderRadius.circular(40),
+                                      child: InkWell(
+                                        onTap: () {},
+                                        borderRadius: BorderRadius.circular(40),
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          width: 80,
                                           height: 30,
-                                          decoration: BoxDecoration(
-                                              color: Colors.blue,
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0)),
-                                          child: const Icon(
-                                            Icons.add_rounded,
-                                            color: Colors.white,
+                                          child: const Text(
+                                            '20 sec',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14),
+                                            textAlign: TextAlign.center,
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        const Text(
-                                          "Add Media",
-                                          style: TextStyle(
-                                              color: Color(0xFF6B6B6B),
-                                              fontSize: 16),
-                                        )
-                                      ],
-                                    )),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Material(
-                                color: Colors.deepPurple,
-                                borderRadius: BorderRadius.circular(40),
-                                child: InkWell(
-                                  onTap: () {},
-                                  borderRadius: BorderRadius.circular(40),
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    width: 80,
-                                    height: 30,
-                                    child: const Text(
-                                      '20 sec',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 14),
-                                      textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: TextFormField(
-                                onChanged: (value) {
-                                  print("asdfasdf:$value");
-                                  setState(() {
-                                    listQuiz[listQuiz.indexOf(e)].text =
-                                        fieldController.text;
-                                  });
-                                },
-                                controller: fieldController,
-                                textInputAction: TextInputAction.done,
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  hintStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal,
-                                      color: Color(0xFF6B6B6B)),
-                                  hintText: "Tap to add question",
-                                  filled: true,
-                                  contentPadding: EdgeInsets.all(20),
-                                  fillColor: Colors.white,
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(4),
-                                    borderSide: const BorderSide(
-                                      color: Colors.blue,
-                                      width: 1.5,
-                                    ),
+                                  const SizedBox(
+                                    height: 20,
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(4),
-                                    borderSide: BorderSide(
-                                      color: Colors.grey.shade300,
-                                      width: 0.5,
-                                    ),
-                                  ),
-                                  errorBorder: null,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  //choice 1
-                                  ButtonItem(
-                                      onTap: () async {
-                                        final QuestionModel value =
-                                            await Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        CreateAnswer1(
-                                                          isCorrect: listQuiz[
-                                                                  listQuiz
-                                                                      .indexOf(
-                                                                          e)]
-                                                              .isCorrect,
-                                                          textanswer: listQuiz[
-                                                                  listQuiz
-                                                                      .indexOf(
-                                                                          e)]
-                                                              .answer1,
-                                                        )));
-                                        listQuiz[listQuiz.indexOf(e)]
-                                            .isCorrect = value.isCorrect;
-                                        if (value.text?.isEmpty ?? false)
-                                          return;
-                                        if (value.text?.isNotEmpty ?? false) {
-                                          setState(() {
-                                            listQuiz[listQuiz.indexOf(e)]
-                                                .answer1 = value.text;
-                                          });
-                                        }
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: TextFormField(
+                                      onChanged: (value) {
+                                        print("asdfasdf:$value");
+                                        setState(() {
+                                          listQuiz[listQuiz.indexOf(e)].text =
+                                              fieldController.text;
+                                        });
                                       },
-                                      colors: Colors.red[500],
-                                      text: listQuiz[listQuiz.indexOf(e)]
-                                              .answer1 ??
-                                          'Add answer',
-                                      isCorrect: listQuiz[listQuiz.indexOf(e)]
-                                          .isCorrect),
-                                  const SizedBox(
-                                    width: 10,
+                                      controller: fieldController,
+                                      textInputAction: TextInputAction.done,
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                        hintStyle: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                            color: Color(0xFF6B6B6B)),
+                                        hintText: "Tap to add question",
+                                        filled: true,
+                                        contentPadding: EdgeInsets.all(20),
+                                        fillColor: Colors.white,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                          borderSide: const BorderSide(
+                                            color: Colors.blue,
+                                            width: 1.5,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                          borderSide: BorderSide(
+                                            color: Colors.grey.shade300,
+                                            width: 0.5,
+                                          ),
+                                        ),
+                                        errorBorder: null,
+                                      ),
+                                    ),
                                   ),
-                                  //choice 2
-                                  ButtonItem(
-                                    onTap: () async {
-                                      final QuestionModel value =
-                                          await Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CreateAnswer2(
-                                                        isCorrect: listQuiz[
-                                                                listQuiz
-                                                                    .indexOf(e)]
-                                                            .isCorrect2,
-                                                        textanswer: listQuiz[
-                                                                listQuiz
-                                                                    .indexOf(e)]
-                                                            .answer2,
-                                                      )));
-                                      listQuiz[listQuiz.indexOf(e)].isCorrect2 =
-                                          value.isCorrect;
-                                      if (value.text?.isEmpty ?? false) return;
-                                      if (value.text?.isNotEmpty ?? false) {
-                                        setState(() {
-                                          listQuiz[listQuiz.indexOf(e)]
-                                              .answer2 = value.text;
-                                        });
-                                      }
-                                    },
-                                    colors: Colors.lightBlue[900],
-                                    text:
-                                        listQuiz[listQuiz.indexOf(e)].answer2 ??
-                                            'Add answer',
-                                    isCorrect: listQuiz[listQuiz.indexOf(e)]
-                                        .isCorrect2,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        //choice 1
+                                        ButtonItem(
+                                            onTap: () async {
+                                              final QuestionModel value =
+                                                  await Navigator.of(context)
+                                                      .push(MaterialPageRoute(
+                                                          builder:
+                                                              (context) =>
+                                                                  CreateAnswer1(
+                                                                    isCorrect: listQuiz[
+                                                                            listQuiz.indexOf(e)]
+                                                                        .isCorrect,
+                                                                    textanswer:
+                                                                        listQuiz[listQuiz.indexOf(e)]
+                                                                            .answer1,
+                                                                  )));
+                                              listQuiz[listQuiz.indexOf(e)]
+                                                  .isCorrect = value.isCorrect;
+                                              if (value.text?.isEmpty ?? false)
+                                                return;
+                                              if (value.text?.isNotEmpty ??
+                                                  false) {
+                                                setState(() {
+                                                  listQuiz[listQuiz.indexOf(e)]
+                                                      .answer1 = value.text;
+                                                });
+                                              }
+                                            },
+                                            colors: Colors.red[500],
+                                            text: listQuiz[listQuiz.indexOf(e)]
+                                                    .answer1 ??
+                                                'Add answer',
+                                            isCorrect:
+                                                listQuiz[listQuiz.indexOf(e)]
+                                                    .isCorrect),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        //choice 2
+                                        ButtonItem(
+                                          onTap: () async {
+                                            final QuestionModel value =
+                                                await Navigator.of(context)
+                                                    .push(MaterialPageRoute(
+                                                        builder:
+                                                            (context) =>
+                                                                CreateAnswer2(
+                                                                  isCorrect: listQuiz[
+                                                                          listQuiz
+                                                                              .indexOf(e)]
+                                                                      .isCorrect2,
+                                                                  textanswer: listQuiz[
+                                                                          listQuiz
+                                                                              .indexOf(e)]
+                                                                      .answer2,
+                                                                )));
+                                            listQuiz[listQuiz.indexOf(e)]
+                                                .isCorrect2 = value.isCorrect;
+                                            if (value.text?.isEmpty ?? false)
+                                              return;
+                                            if (value.text?.isNotEmpty ??
+                                                false) {
+                                              setState(() {
+                                                listQuiz[listQuiz.indexOf(e)]
+                                                    .answer2 = value.text;
+                                              });
+                                            }
+                                          },
+                                          colors: Colors.lightBlue[900],
+                                          text: listQuiz[listQuiz.indexOf(e)]
+                                                  .answer2 ??
+                                              'Add answer',
+                                          isCorrect:
+                                              listQuiz[listQuiz.indexOf(e)]
+                                                  .isCorrect2,
+                                        ),
+                                      ],
+                                    ),
                                   ),
+                                  //choice 3
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        ButtonItem(
+                                          onTap: () async {
+                                            final QuestionModel value =
+                                                await Navigator.of(context)
+                                                    .push(MaterialPageRoute(
+                                                        builder:
+                                                            (context) =>
+                                                                CreateAnswer3(
+                                                                  isCorrect: listQuiz[
+                                                                          listQuiz
+                                                                              .indexOf(e)]
+                                                                      .isCorrect3,
+                                                                  textanswer: listQuiz[
+                                                                          listQuiz
+                                                                              .indexOf(e)]
+                                                                      .answer3,
+                                                                )));
+                                            listQuiz[listQuiz.indexOf(e)]
+                                                .isCorrect3 = value.isCorrect;
+                                            if (value.text?.isEmpty ?? false)
+                                              return;
+                                            if (value.text?.isNotEmpty ??
+                                                false) {
+                                              setState(() {
+                                                listQuiz[listQuiz.indexOf(e)]
+                                                    .answer3 = value.text;
+                                              });
+                                            }
+                                          },
+                                          colors: Colors.yellow[800],
+                                          text: listQuiz[listQuiz.indexOf(e)]
+                                                  .answer3 ??
+                                              'Add answer\n(optional)',
+                                          isCorrect:
+                                              listQuiz[listQuiz.indexOf(e)]
+                                                  .isCorrect3,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        //choice 4
+                                        ButtonItem(
+                                          onTap: () async {
+                                            final QuestionModel value =
+                                                await Navigator.of(context)
+                                                    .push(MaterialPageRoute(
+                                                        builder:
+                                                            (context) =>
+                                                                CreateAnswer4(
+                                                                  isCorrect: listQuiz[
+                                                                          listQuiz
+                                                                              .indexOf(e)]
+                                                                      .isCorrect4,
+                                                                  textanswer: listQuiz[
+                                                                          listQuiz
+                                                                              .indexOf(e)]
+                                                                      .answer4,
+                                                                )));
+                                            listQuiz[listQuiz.indexOf(e)]
+                                                .isCorrect4 = value.isCorrect;
+                                            if (value.text?.isEmpty ?? false)
+                                              return;
+                                            if (value.text?.isNotEmpty ??
+                                                false) {
+                                              setState(() {
+                                                listQuiz[listQuiz.indexOf(e)]
+                                                    .answer4 = value.text;
+                                              });
+                                            }
+                                          },
+                                          colors: Colors.green[900],
+                                          text: listQuiz[listQuiz.indexOf(e)]
+                                                  .answer4 ??
+                                              'Add answer\n(optional)',
+                                          isCorrect:
+                                              listQuiz[listQuiz.indexOf(e)]
+                                                  .isCorrect4,
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
-                            ),
-                            //choice 3
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ButtonItem(
-                                    onTap: () async {
-                                      final QuestionModel value =
-                                          await Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CreateAnswer3(
-                                                        isCorrect: listQuiz[
-                                                                listQuiz
-                                                                    .indexOf(e)]
-                                                            .isCorrect3,
-                                                        textanswer: listQuiz[
-                                                                listQuiz
-                                                                    .indexOf(e)]
-                                                            .answer3,
-                                                      )));
-                                      listQuiz[listQuiz.indexOf(e)].isCorrect3 =
-                                          value.isCorrect;
-                                      if (value.text?.isEmpty ?? false) return;
-                                      if (value.text?.isNotEmpty ?? false) {
-                                        setState(() {
-                                          listQuiz[listQuiz.indexOf(e)]
-                                              .answer3 = value.text;
-                                        });
-                                      }
-                                    },
-                                    colors: Colors.yellow[800],
-                                    text:
-                                        listQuiz[listQuiz.indexOf(e)].answer3 ??
-                                            'Add answer\n(optional)',
-                                    isCorrect: listQuiz[listQuiz.indexOf(e)]
-                                        .isCorrect3,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  //choice 4
-                                  ButtonItem(
-                                    onTap: () async {
-                                      final QuestionModel value =
-                                          await Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CreateAnswer4(
-                                                        isCorrect: listQuiz[
-                                                                listQuiz
-                                                                    .indexOf(e)]
-                                                            .isCorrect4,
-                                                        textanswer: listQuiz[
-                                                                listQuiz
-                                                                    .indexOf(e)]
-                                                            .answer4,
-                                                      )));
-                                      listQuiz[listQuiz.indexOf(e)].isCorrect4 =
-                                          value.isCorrect;
-                                      if (value.text?.isEmpty ?? false) return;
-                                      if (value.text?.isNotEmpty ?? false) {
-                                        setState(() {
-                                          listQuiz[listQuiz.indexOf(e)]
-                                              .answer4 = value.text;
-                                        });
-                                      }
-                                    },
-                                    colors: Colors.green[900],
-                                    text:
-                                        listQuiz[listQuiz.indexOf(e)].answer4 ??
-                                            'Add answer\n(optional)',
-                                    isCorrect: listQuiz[listQuiz.indexOf(e)]
-                                        .isCorrect4,
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    }),
-                  ],
-                ),
-              ),
+                            );
+                          }),
+                        ],
+                      ),
+                    )
+                  : (Expanded(
+                      child: Center(
+                          child: Text(
+                      "Click the + below to add a question!",
+                      style: const TextStyle(fontSize: 20),
+                    )))),
               const Divider(
                 thickness: 0.5,
                 color: Colors.black12,
@@ -623,32 +649,44 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Yes'),
-                onPressed: () {
-                  print(questionIndex);
-                  if (currentpage != 0) {
-                    int listQuizLength = listQuiz.length;
+                  child: const Text('Yes'),
+                  onPressed: () {
+                    print(questionIndex);
+                    // if (currentpage != 0) {
+                    int previousQuizLength = listQuiz.length;
                     listQuiz.removeAt(currentpage);
+                    int currentListQuizLength = listQuiz.length;
                     print(listQuiz.length);
                     setState(() {
-                      if (currentpage != listQuiz.length - 1 &&
-                          currentpage != listQuizLength - 1) {
+                      if (currentpage != currentListQuizLength - 1 &&
+                          currentpage != previousQuizLength - 1) {
                         tabController = TabController(
                             initialIndex: currentpage + 1,
-                            length: listQuiz.length,
+                            length: currentListQuizLength,
                             vsync: this);
-                      } else if (currentpage == listQuizLength - 1) {
-                        tabController = TabController(
-                            initialIndex: currentpage - 1,
-                            length: listQuiz.length,
-                            vsync: this);
+                      } else if (currentpage == previousQuizLength - 1) {
+                        if (currentListQuizLength == 0) {
+                          tabController = TabController(
+                              initialIndex: 0,
+                              length: currentListQuizLength,
+                              vsync: this);
+                          // tabController = TabController(
+                          //   initialIndex: 0,
+                          //   length: listQuiz.length,
+                          //   vsync: this);
+                        } else {
+                          tabController = TabController(
+                              initialIndex: currentpage - 1,
+                              length: currentListQuizLength,
+                              vsync: this);
+                        }
                       }
                       //tabController?.animateTo(currentpage);
                     });
                     Navigator.of(context).pop();
                   }
-                },
-              ),
+                  // },
+                  ),
               TextButton(
                 child: const Text('No'),
                 onPressed: () {

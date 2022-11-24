@@ -8,6 +8,7 @@ import '../../utils/stream_socket.dart';
 import 'dart:async';
 import '../../utils/router.dart';
 import '../../api/index.dart';
+import 'package:oktoast/oktoast.dart';
 
 class JoinGameScreen extends StatefulWidget {
   final double borderWidth = 0.5;
@@ -34,7 +35,7 @@ class _JoinGameScreen extends State<JoinGameScreen> {
 
   void initSocket() {
     socket = IO.io(
-      'http://127.0.0.1:3000', //http://10.0.2.2:3003 //http://127.0.0.1:3003
+      'http://127.0.0.1:3003', //http://10.0.2.2:3003 //http://127.0.0.1:3003
       IO.OptionBuilder()
           .setTransports(['websocket'])
           //.disableAutoConnect()
@@ -183,8 +184,8 @@ class _JoinGameScreen extends State<JoinGameScreen> {
                 onPressed: () async {
                   initSocket();
                   print("Data is " + msg);
-                  var res = await addPlayerApi(roomIdController.text,
-                      socket.id, usernameController.text);
+                  var res = await addPlayerApi(roomIdController.text, socket.id,
+                      usernameController.text);
                   if (res?.statusCode == 200) {
                     box.write("perspective", "player");
                     box.write('gameData', {
@@ -196,7 +197,9 @@ class _JoinGameScreen extends State<JoinGameScreen> {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => GamePin()));
                   } else {
-                    print("Invalid game pin");
+                    showToast("Invalid game pin",
+                        position: ToastPosition.bottom);
+                    //print("Invalid game pin");
                   }
                   // )
                 },

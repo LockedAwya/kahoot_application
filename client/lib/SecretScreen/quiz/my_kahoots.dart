@@ -115,26 +115,45 @@ class _MyKahootScreen extends State<MyKahootScreen> {
                     return ListView.builder(
                         itemCount: quizList.length,
                         itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.all(1),
-                            padding: EdgeInsets.all(5),
-                            color: Colors.white,
-                            child: Column(
-                              children: [
-                                QuizComponent(
-                                    quizList[index].id,
-                                    quizList[index].name,
-                                    quizList[index].description,
-                                    quizList[index].creatorName),
-                                // SizedBox(height: 5),
-                              ],
-                            ),
-                          );
+                          if (quizList.isNotEmpty) {
+                            return Container(
+                              margin: EdgeInsets.all(1),
+                              padding: EdgeInsets.all(5),
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  QuizComponent(
+                                      quizList[index].id,
+                                      quizList[index].name,
+                                      quizList[index].description,
+                                      quizList[index].creatorName),
+                                  // SizedBox(height: 5),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return Container(
+                              margin: EdgeInsets.all(1),
+                              padding: EdgeInsets.all(5),
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  Text(
+                                      "No quizes added! Please add some quizes!"),
+                                  // SizedBox(height: 5),
+                                ],
+                              ),
+                            );
+                            // return Text(
+                            //     "No quizes added! Please add some quizes!");
+                          }
+                          // : (Text(
+                          //     "No quizes added! Please add some quizes!"));
                         });
                   }
                   if (snapshot.hasError) {
                     print(snapshot.error.toString());
-                    return Text('error');
+                    return Text('Something went wrong, please try again.');
                   }
                   return CircularProgressIndicator();
                 },
