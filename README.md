@@ -49,9 +49,17 @@ Những chức năng đã kết nối được với backend:
 + Report coverage testing:
 ![image](https://user-images.githubusercontent.com/58223975/199228543-e72c8ba5-2e76-4a81-95bc-d3d5c35891a0.png)
 
++ Report monkey testing
+
+![image](https://user-images.githubusercontent.com/58223975/203844058-4ce2814f-d086-49aa-856b-de3fc96533b7.png)
+
+![image](https://user-images.githubusercontent.com/58223975/203844122-176175a5-5536-4a84-9589-72becfc7345c.png)
+
+
+
 # Tuần 10: Kiểm tra giữa kì
 
-# Tuần 11: Kiểm tra giữa kì
+# Tuần 11: Một số màn hình giao diện đã làm và API
 
 Demo một số giao diện đã làm:
 + Một số hình ảnh:
@@ -75,4 +83,9 @@ Demo những API sử dụng trong ứng dụng:
 ![image](https://user-images.githubusercontent.com/58223975/203826907-845262c0-0eb4-4136-8aa0-13ca3f4e0781.png)
 
 ![image](https://user-images.githubusercontent.com/58223975/203827152-a47cf5b9-f531-4058-b09a-3181f385f3a6.png)
+
+Cơ sở dữ liệu: MongoDB
+
+![image](https://user-images.githubusercontent.com/58223975/203843719-95e09f4d-16cf-48d0-9d59-9e090dae590e.png)
+
 
