@@ -269,11 +269,14 @@ class _GamePinState extends State<GamePin> {
                                 child: InkWell(
                                   onTap: () async {
                                     //var questionList =
-                                    await getQuestionsByQuizId(
-                                        box.read('gameData')['quizId']);
+                                    // await getQuestionsByQuizId(
+                                    //     box.read('gameData')['quizId']);
+                                    // getQuestionsByQuizId(
+                                    //     box.read('gameData')['quizId']);
                                     socket.emit("start-game", {
                                       "quizId": box.read('gameData')['quizId'],
-                                      "gamePin": box.read('gameData')['gamePin']
+                                      "gamePin":
+                                          box.read('gameData')['gamePin'],
                                     });
                                     // if (questionList?.s == 200) {
                                     //   socket.emit("start-game", {

@@ -42,7 +42,8 @@ class _JoinGameScreen extends State<JoinGameScreen> {
           //.disableAutoConnect()
           // .setQuery(
           //     {'username': widget.username})
-          .enableForceNew()
+          //.enableForceNew()
+          .enableForceNewConnection()
           .build(),
     );
     socket.connect();

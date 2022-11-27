@@ -121,7 +121,9 @@ io.on("connection", (socket) => {
   socket.on("start-game", (gameInfo) => {
     /**
      * gameInfo {
-     * quiz
+     * quizId
+     * scorePerQuestion
+     * timer
      * gamePin
      * }
      */
@@ -132,6 +134,28 @@ io.on("connection", (socket) => {
       if (players[i].gamePin === gameInfo.gamePin) {
         //tempPlayers.push(players[i]);
         socket.to(gameInfo.gamePin).emit("move-to-gameplay", players[i].socketId)
+        // socket.leave(gamePin);
+        // socket.to(gamePin).emit('game-deleted', players[i].socketId);
+      }
+    }
+  })
+
+  socket.on("move-to-question-preview", (gameInfo) => {
+    /**
+     * gameInfo {
+     * quizId
+     * scorePerQuestion
+     * timer
+     * gamePin
+     * }
+     */
+    //quiz = JSON.parse(JSON.stringify(gameInfo.quizId))
+    console.log("Move players to the question preview")
+    console.log(gameInfo.gamePin)
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].gamePin === gameInfo.gamePin) {
+        //tempPlayers.push(players[i]);
+        socket.to(gameInfo.gamePin).emit("move-players-to-question-preview", players[i].socketId)
         // socket.leave(gamePin);
         // socket.to(gamePin).emit('game-deleted', players[i].socketId);
       }

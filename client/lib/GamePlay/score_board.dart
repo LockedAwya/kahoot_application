@@ -5,6 +5,8 @@ import 'package:untitled_folder/model/score_board_model.dart';
 import 'package:untitled_folder/GamePlay/player_screen/player_screen.dart';
 import '../../utils/global_variables.dart';
 import './host_screen/host_screen.dart';
+import 'dart:async';
+import 'dart:math' as math;
 
 class ScoreBoard extends StatefulWidget {
   final int questionIndex;
@@ -30,21 +32,46 @@ class _ScoreBoardState extends State<ScoreBoard> {
   @override
   void initState() {
     // TODO: implement initState
-    print("question index is");
-    print(widget.questionIndex);
+    // print("question index is");
+    // print(widget.questionIndex);
     super.initState();
-    _read();
+    //_read();
+    if (mounted) {
+      //setState(() => _products = []);
+      //setState(() => {init()});
+      init();
+    }
+    //setState(() => {init()});
   }
 
-  _read() async {
-    final prefs = await SharedPreferences.getInstance();
-    var values = prefs.getInt("point") ?? 0;
-    if (values != null) {
-      setState(() {
-        countClick = values;
+  // _read() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   var values = prefs.getInt("point") ?? 0;
+  //   if (values != null) {
+  //     setState(() {
+  //       countClick = values;
+  //     });
+  //   }
+  //   print('read: $values');
+  // }
+
+  void init() {
+    // _read();
+    if (box.read("perspective") == "player") {
+      socket.once("move-players-to-question-preview", (data) {
+        print(data);
+        print("All players are moving to the next question now!!!!!");
+        Timer(Duration(seconds: 3), () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PlayerScreen(
+                        questionIndex: widget.questionIndex + 1,
+                      )));
+          //Navigator.pop(context, widget.questionIndex + 1);
+        });
       });
     }
-    print('read: $values');
   }
 
   @override
@@ -65,7 +92,8 @@ class _ScoreBoardState extends State<ScoreBoard> {
         actions: [
           InkWell(
             onTap: () {
-              if (widget.questionIndex + 1 == box.read('questionList').length) {
+              if (widget.questionIndex + 1 ==
+                  box.read("quizDetails")['questionList'].length) {
                 countClick = 0;
                 Navigator.push(
                     context,
@@ -77,11 +105,30 @@ class _ScoreBoardState extends State<ScoreBoard> {
                 //     context,
                 //     MaterialPageRoute(builder: (context) => const PlayerScreen()),
                 //     (route) => false);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HostScreen(
-                            questionIndex: widget.questionIndex + 1)));
+                if (box.read("perspective") == "host") {
+                  Timer(Duration(seconds: 3), () {
+                    socket.emit("move-to-question-preview", {
+                      "currentquestionIndex": widget.questionIndex,
+                      "gamePin": box.read("gameData")["gamePin"]
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HostScreen(
+                                questionIndex: widget.questionIndex + 1)));
+                  });
+                }
+                // socket.emit("start-game", {
+                //   "quizId": box.read('gameData')['quizId'],
+                //   "gamePin": box.read('gameData')['gamePin'],
+                // });
+                // else {
+                //   Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => PlayerScreen(
+                //               questionIndex: widget.questionIndex + 1)));
+                // }
               }
             },
             child: Container(
@@ -156,5 +203,10 @@ class _ScoreBoardState extends State<ScoreBoard> {
             }),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

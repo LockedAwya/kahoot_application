@@ -32,7 +32,8 @@ class _QuestionModalBottomSheet extends State<QuestionModalBottomSheet> {
           //.disableAutoConnect()
           // .setQuery(
           //     {'username': widget.username})
-          .enableForceNew()
+          //.enableForceNew()
+          .enableForceNewConnection()
           .build(),
     );
     socket.connect();
@@ -86,6 +87,7 @@ class _QuestionModalBottomSheet extends State<QuestionModalBottomSheet> {
                   });
                   box.write("perspective", "host");
                   print(box.read("gameData"));
+                  getQuestionsByQuizId(box.read('gameData')['quizId']);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => GamePin()));
                 } else {

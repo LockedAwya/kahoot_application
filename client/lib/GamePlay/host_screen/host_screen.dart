@@ -16,27 +16,27 @@ class HostScreen extends StatefulWidget {
 
 class _HostScreenState extends State<HostScreen> {
   Timer? _timer;
-  int start = 20;
+  int start = box.read("quizDetails")["timer"];
   final key = 'point';
   int value = 0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _read();
+    //_read();
     startTimer();
   }
 
-  _read() async {
-    final prefs = await SharedPreferences.getInstance();
-    var values = prefs.getInt(key) ?? 0;
-    if (value != null) {
-      setState(() {
-        value = values;
-      });
-    }
-    print('read: $value');
-  }
+  // _read() async {
+  //   // final prefs = await SharedPreferences.getInstance();
+  //   // var values = prefs.getInt(key) ?? 0;
+  //   // if (value != null) {
+  //   //   setState(() {
+  //   //     value = values;
+  //   //   });
+  //   // }
+  //   // print('read: $value');
+  // }
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
@@ -111,7 +111,7 @@ class _HostScreenState extends State<HostScreen> {
                   left: 57,
                   child: Text(
                     "Question ${widget.questionIndex + 1}" +
-                        '${box.read('questionList')[widget.questionIndex]['question']}',
+                        '${box.read("quizDetails")['questionList'][widget.questionIndex]['question']}',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Color.fromRGBO(255, 255, 255, 1),
@@ -221,7 +221,7 @@ class _HostScreenState extends State<HostScreen> {
                             top: 239,
                             left: 295,
                             child: Text(
-                              '${box.read('questionList')[widget.questionIndex]['answerList'][3]['body']}',
+                              '${box.read("quizDetails")['questionList'][widget.questionIndex]['answerList'][3]['body']}',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: Color.fromRGBO(255, 255, 255, 1),
@@ -236,7 +236,7 @@ class _HostScreenState extends State<HostScreen> {
                             top: 70,
                             left: 284,
                             child: Text(
-                              '${box.read('questionList')[widget.questionIndex]['answerList'][1]['body']}',
+                              '${box.read("quizDetails")['questionList'][widget.questionIndex]['answerList'][1]['body']}',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: Color.fromRGBO(255, 255, 255, 1),
@@ -251,7 +251,7 @@ class _HostScreenState extends State<HostScreen> {
                             top: 69,
                             left: 80,
                             child: Text(
-                              '${box.read('questionList')[widget.questionIndex]['answerList'][0]['body']}',
+                              '${box.read("quizDetails")['questionList'][widget.questionIndex]['answerList'][0]['body']}',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: Color.fromRGBO(255, 255, 255, 1),
@@ -266,7 +266,7 @@ class _HostScreenState extends State<HostScreen> {
                             top: 231,
                             left: 80,
                             child: Text(
-                              '${box.read('questionList')[widget.questionIndex]['answerList'][2]['body']}',
+                              '${box.read("quizDetails")['questionList'][widget.questionIndex]['answerList'][2]['body']}',
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: Color.fromRGBO(255, 255, 255, 1),

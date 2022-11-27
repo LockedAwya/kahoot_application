@@ -24,22 +24,28 @@ class _PlayerScreenState extends State<PlayerScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _read();
-    startTimer();
+    //_read();
+    print("Question index is: ");
+    print(widget.questionIndex);
+    if (mounted) {
+      startTimer();
+    }
   }
 
-  _read() async {
-    final prefs = await SharedPreferences.getInstance();
-    var values = prefs.getInt(key) ?? 0;
-    if (value != null) {
-      setState(() {
-        value = values;
-      });
-    }
-    print('read: $value');
-  }
+  // _read() async {
+  //   // final prefs = await SharedPreferences.getInstance();
+  //   // var values = prefs.getInt(key) ?? 0;
+  //   // if (value != null) {
+  //   //   setState(() {
+  //   //     value = values;
+  //   //   });
+  //   // }
+  //   // print('read: $value');
+  // }
 
   void startTimer() {
+    // print("Question index is: ");
+    // print(widget.questionIndex);
     const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,

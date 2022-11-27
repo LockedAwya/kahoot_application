@@ -81,6 +81,30 @@ Future<Quiz> getQuizById(String quizId) async {
   }
 }
 
+void getQuestionsByQuizId(String quizId) async {
+  //List<Quiz> quizList = <Quiz>[];
+  Response res = await dio.get(
+    api_url + "/api/quizes/" + quizId,
+    options: Options(
+      followRedirects: false,
+      validateStatus: (status) {
+        return status == 200 || status == 400;
+      },
+    ),
+  );
+  if (res.statusCode == 200) {
+    //Quiz _quiz = Quiz.fromJson(res.data);
+    print("Quiz detail is:");
+    box.write("quizDetails", res.data);
+    print(box.read("quizDetails"));
+    //return _quiz;
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to find quiz');
+  }
+}
+
 Future<Response> addQuizAPI(
     String name,
     String description,
@@ -233,26 +257,26 @@ Future<Response>? addPlayerApi(String gamePin, String username) {
   }
 }
 
-Future<List<dynamic>>? getQuestionsByQuizId(String quizId) async {
-  var res = await dio.get(
-    api_url + "/api/quizes/" + quizId + "/questions",
-    options: Options(
-      followRedirects: false,
-      validateStatus: (status) {
-        return status == 200 || status == 500;
-      },
-    ),
-  );
-  if (res.statusCode == 200) {
-    // List<QuestionModel> questionList =
-    //     (res.data as List).map((e) => QuestionModel.fromJson(e)).toList();
-    //reversedList = reversedList.reversed.toList();
-    print(res.data);
-    box.write("questionList", res.data);
-    return res.data;
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load questions');
-  }
-}
+// Future<List<dynamic>>? getQuestionsByQuizId(String quizId) async {
+//   var res = await dio.get(
+//     api_url + "/api/quizes/" + quizId + "/questions",
+//     options: Options(
+//       followRedirects: false,
+//       validateStatus: (status) {
+//         return status == 200 || status == 500;
+//       },
+//     ),
+//   );
+//   if (res.statusCode == 200) {
+//     // List<QuestionModel> questionList =
+//     //     (res.data as List).map((e) => QuestionModel.fromJson(e)).toList();
+//     //reversedList = reversedList.reversed.toList();
+//     print(res.data);
+//     box.write("questionList", res.data);
+//     return res.data;
+//   } else {
+//     // If the server did not return a 200 OK response,
+//     // then throw an exception.
+//     throw Exception('Failed to load questions');
+//   }
+// }

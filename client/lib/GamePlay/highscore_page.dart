@@ -14,7 +14,19 @@ class _HighScorePageState extends State<HighScorePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+        // appBar: AppBar(
+        //   elevation: 1,
+        //   backgroundColor: Colors.deepPurple,
+        //   centerTitle: true,
+        //   title: const Text(
+        //     "Game Over",
+        //     style: TextStyle(
+        //         color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        //   ),
+        // ),
+        body: Column(
+      children: [
+        AppBar(
           elevation: 1,
           backgroundColor: Colors.deepPurple,
           centerTitle: true,
@@ -24,33 +36,31 @@ class _HighScorePageState extends State<HighScorePage> {
                 color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
-        body: Column(
+        Spacer(),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Spacer(),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                HighScoreItem(
-                  text: 'FunnyBizon',
-                  image: 'assets/icons/ic_game_2.png',
-                  height: medium,
-                ),
-                HighScoreItem(
-                  text: 'SpaceHazard',
-                  image: 'assets/icons/ic_game_1.png',
-                  height: max,
-                ),
-                HighScoreItem(
-                  text: 'Bronzelbex',
-                  image: 'assets/icons/ic_game_3.png',
-                  height: min,
-                ),
-              ],
-            )
+            HighScoreItem(
+              text: 'FunnyBizon',
+              image: 'assets/icons/ic_game_2.png',
+              height: medium,
+            ),
+            HighScoreItem(
+              text: 'SpaceHazard',
+              image: 'assets/icons/ic_game_1.png',
+              height: max,
+            ),
+            HighScoreItem(
+              text: 'Bronzelbex',
+              image: 'assets/icons/ic_game_3.png',
+              height: min,
+            ),
           ],
-        ));
+        )
+      ],
+    ));
   }
 }
 
