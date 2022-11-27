@@ -105,7 +105,11 @@ class _GamePinState extends State<GamePin> {
       print("All players are moving to the game now!!!!!");
       Timer(Duration(seconds: 3), () {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => PlayerScreen()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => PlayerScreen(
+                      questionIndex: 0,
+                    )));
       });
     });
   }
@@ -263,11 +267,22 @@ class _GamePinState extends State<GamePin> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(5.0),
                                 child: InkWell(
-                                  onTap: () {
+                                  onTap: () async {
+                                    //var questionList =
+                                    await getQuestionsByQuizId(
+                                        box.read('gameData')['quizId']);
                                     socket.emit("start-game", {
-                                      "quizId": "fasd",
+                                      "quizId": box.read('gameData')['quizId'],
                                       "gamePin": box.read('gameData')['gamePin']
                                     });
+                                    // if (questionList?.s == 200) {
+                                    //   socket.emit("start-game", {
+                                    //     "quizId":
+                                    //         box.read('gameData')['quizId'],
+                                    //     "gamePin":
+                                    //         box.read('gameData')['gamePin']
+                                    //   });
+                                    // }
                                     //call game api by game pin
                                     //if status = 200 call the loop below
                                     // for (int i = 0; i < snapshot.data.length; i++) {
@@ -284,11 +299,14 @@ class _GamePinState extends State<GamePin> {
                                     //   "quizId": "",
                                     //   "gamePin": box.read('gameData')['gamePin']
                                     // });
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HostScreen()),
-                                    );
+                                    Timer(Duration(seconds: 3), () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HostScreen(questionIndex: 0)),
+                                      );
+                                    });
                                   },
                                   child: Container(
                                     width: 60,

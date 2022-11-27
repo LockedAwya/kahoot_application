@@ -3,9 +3,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import './highscore_page.dart';
 import 'package:untitled_folder/model/score_board_model.dart';
 import 'package:untitled_folder/GamePlay/player_screen/player_screen.dart';
+import '../../utils/global_variables.dart';
+import './host_screen/host_screen.dart';
 
 class ScoreBoard extends StatefulWidget {
-  const ScoreBoard({Key? key}) : super(key: key);
+  final int questionIndex;
+  const ScoreBoard({Key? key, required this.questionIndex}) : super(key: key);
 
   @override
   _ScoreBoardState createState() => _ScoreBoardState();
@@ -27,6 +30,8 @@ class _ScoreBoardState extends State<ScoreBoard> {
   @override
   void initState() {
     // TODO: implement initState
+    print("question index is");
+    print(widget.questionIndex);
     super.initState();
     _read();
   }
@@ -60,18 +65,24 @@ class _ScoreBoardState extends State<ScoreBoard> {
         actions: [
           InkWell(
             onTap: () {
-              if (countClick == 2) {
+              if (widget.questionIndex + 1 == box.read('questionList').length) {
                 countClick = 0;
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const HighScorePage()));
-                return;
+                //return;
+              } else {
+                // Navigator.pushAndRemoveUntil(
+                //     context,
+                //     MaterialPageRoute(builder: (context) => const PlayerScreen()),
+                //     (route) => false);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HostScreen(
+                            questionIndex: widget.questionIndex + 1)));
               }
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const PlayerScreen()),
-                  (route) => false);
             },
             child: Container(
                 margin:

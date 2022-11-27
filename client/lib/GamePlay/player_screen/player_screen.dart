@@ -6,7 +6,10 @@ import 'package:untitled_folder/GamePlay/player_screen/initial_screen.dart';
 import '../score_board.dart';
 
 class PlayerScreen extends StatefulWidget {
-  const PlayerScreen({Key? key}) : super(key: key);
+  //const PlayerScreen({Key? key}) : super(key: key);
+
+  final int questionIndex;
+  const PlayerScreen({Key? key, required this.questionIndex}) : super(key: key);
 
   @override
   _PlayerScreenState createState() => _PlayerScreenState();
@@ -45,8 +48,11 @@ class _PlayerScreenState extends State<PlayerScreen> {
           setState(() {
             timer.cancel();
           });
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ScoreBoard()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ScoreBoard(questionIndex: widget.questionIndex)));
           //     .then((value) {
           //   if (value != null && value) {
           //     setState(() {

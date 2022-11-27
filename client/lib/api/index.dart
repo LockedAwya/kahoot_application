@@ -214,8 +214,7 @@ Future<Response>? deleteGameApi(String gameId) {
   }
 }
 
-Future<Response>? addPlayerApi(
-    String gamePin, String username) {
+Future<Response>? addPlayerApi(String gamePin, String username) {
   try {
     return dio.patch(
       api_url + "/api/games/" + gamePin + "/players",
@@ -231,5 +230,29 @@ Future<Response>? addPlayerApi(
     );
   } catch (err) {
     print(err);
+  }
+}
+
+Future<List<dynamic>>? getQuestionsByQuizId(String quizId) async {
+  var res = await dio.get(
+    api_url + "/api/quizes/" + quizId + "/questions",
+    options: Options(
+      followRedirects: false,
+      validateStatus: (status) {
+        return status == 200 || status == 500;
+      },
+    ),
+  );
+  if (res.statusCode == 200) {
+    // List<QuestionModel> questionList =
+    //     (res.data as List).map((e) => QuestionModel.fromJson(e)).toList();
+    //reversedList = reversedList.reversed.toList();
+    print(res.data);
+    box.write("questionList", res.data);
+    return res.data;
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load questions');
   }
 }
