@@ -108,11 +108,11 @@ class _LoginScreen extends State<LoginScreen> {
                     height: 10,
                   ),
                   ...itemTextFormField(
-                    "Username",
+                    "Email",
                     (value) {
                       return ValidateUtil.isEmail(value)
                           ? null
-                          : "Username Invalid";
+                          : "Email must be in correct form";
                     },
                     emailController,
                   ) //not display text, hence obscureText = false

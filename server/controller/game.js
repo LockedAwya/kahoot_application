@@ -32,9 +32,10 @@ const createGame = async (req, res) => {
 }
 
 const getGame = async (req, res) => {
-  const { id } = req.params
+  //const { id } = req.params
+  const { gamePin } = req.params
   try {
-    const game = await Game.findById(id);
+    const game = await Game.findOne({ pin: gamePin }).exec();
     if (game == null) {
       return res.status(404).json({ message: "Cannot find the game!" })
     }
@@ -45,13 +46,14 @@ const getGame = async (req, res) => {
 }
 
 const deleteGame = async (req, res) => {
-  const { id } = req.params
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).send('There is no game with id: ${id}')
-  }
-
+  //const { id } = req.params
+  // if (!mongoose.Types.ObjectId.isValid(id)) {
+  //   return res.status(404).send('There is no game with id: ${id}')
+  // }
+  const { gamePin } = req.params
   try {
-    await Game.findByIdAndRemove(id)
+    //await Game.findByIdAndRemove(id)
+    await Game.findOneAndDelete({ pin: gamePin }).exec();
     res.json({ message: "Game removed succesfully" })
   } catch (error) {
     res.status(500).json({ message: error.message })

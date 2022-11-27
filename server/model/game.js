@@ -16,7 +16,7 @@ const gameSchema = mongoose.Schema({
     playerList: [
         {
             //the socket connection id will be playerId
-            playerId: { type: String },
+            //playerId: { type: String },
             playerName: { type: String },
         }
     ],

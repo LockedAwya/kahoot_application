@@ -23,6 +23,7 @@ class _JoinGameScreen extends State<JoinGameScreen> {
   final TextEditingController usernameController = TextEditingController();
   StreamSocket streamSocket = StreamSocket();
   var completer = Completer<dynamic>();
+  String? socketid = "";
   //completer = Completer();
   String msg = "test";
 
@@ -47,6 +48,7 @@ class _JoinGameScreen extends State<JoinGameScreen> {
     socket.connect();
     socket.onConnect(
         (data) => print('Connection established with id ${socket.id}'));
+    socketid = socket.id;
     socket.onConnectError((data) => print('Connect Error: $data'));
     socket.onDisconnect((data) =>
         print('Socket.IO server (room) disconnected with id ${socket.id}'));
@@ -183,14 +185,16 @@ class _JoinGameScreen extends State<JoinGameScreen> {
                 ),
                 onPressed: () async {
                   initSocket();
-                  print("Data is " + msg);
-                  var res = await addPlayerApi(roomIdController.text, socket.id,
-                      usernameController.text);
+                  print("Socket id isss:");
+                  print(socket.id);
+                  var res = await addPlayerApi(
+                      roomIdController.text, usernameController.text);
                   if (res?.statusCode == 200) {
                     box.write("perspective", "player");
                     box.write('gameData', {
                       "gamePin": roomIdController.text,
                       "username": usernameController.text,
+                      "userId": res?.data["_id"],
                       "socketId": socket.id,
                     });
                     print(box.read('gameData'));
@@ -201,6 +205,7 @@ class _JoinGameScreen extends State<JoinGameScreen> {
                         position: ToastPosition.bottom);
                     //print("Invalid game pin");
                   }
+
                   // )
                 },
               ),

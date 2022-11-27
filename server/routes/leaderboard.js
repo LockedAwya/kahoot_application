@@ -5,7 +5,7 @@ const {
   createLeaderboard,
   getLeaderboard,
   addPlayerResult,
-  updateQuestionLeaderboard,
+  //updateQuestionLeaderboard,
   updateCurrentLeaderboard,
 } = require("../controller/leaderboard")
 
@@ -13,9 +13,9 @@ router.route("/").post(createLeaderboard)
 
 router.route("/:leaderboardId/playerresult").patch(addPlayerResult)
 
-router
-  .route("/:leaderboardId/questionleaderboard")
-  .patch(updateQuestionLeaderboard)
+// router
+//   .route("/:leaderboardId/questionleaderboard")
+//   .patch(updateQuestionLeaderboard)
 
 router
   .route("/:leaderboardId/currentleaderboard")

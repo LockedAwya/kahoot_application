@@ -7,6 +7,10 @@ import '../../utils/stream_socket.dart';
 import 'package:get/get.dart';
 import '../JoinGame/join_game_screen.dart';
 import '../../api/index.dart';
+//import '../HostGame/host_game_play_screen.dart';
+import '../host_screen/host_screen.dart';
+import '../player_screen/player_screen.dart';
+import 'dart:async';
 
 class GamePin extends StatefulWidget {
   //final int gameId;
@@ -49,7 +53,13 @@ class _GamePinState extends State<GamePin> {
 
     if (box.read('perspective') == "host") {
       //gameData: gamePin, gameId, quizId
-      socket.emit("create-game", box.read("gameData"));
+      //socket.emit("create-game", box.read("gameData"));
+
+      socket.emitWithAck("create-game", box.read("gameData"), ack: (data) {
+        print("The data is.....");
+        print(data);
+        //print(data1);
+      });
 
       socket.on("user-left", (data) {
         String name = data['username'];
@@ -68,8 +78,9 @@ class _GamePinState extends State<GamePin> {
     if (box.read('perspective') == "player") {
       socket.emit("add-player", {
         "username": box.read('gameData')['username'],
-        "socketId": socket.id,
+        "userId": box.read('gameData')['userId'],
         "gamePin": box.read('gameData')['gamePin'],
+        "socketId": box.read('gameData')['socketId'],
       });
     }
 
@@ -79,39 +90,24 @@ class _GamePinState extends State<GamePin> {
       gamePin.add(data);
       streamSocket.addResponse(gamePin);
     });
-    //socket.emitWithAck(event, data)
-    // socket.emitWithAck('lmao', 'init', ack: (data) {
-    //   print('ack $data');
-    //   if (data != null) {
-    //     print('from server $data');
-    //   } else {
-    //     print("Null");
-    //   }
-    // });
-    // socket.on("delete-game", (data) {
-    //   print("Game with id ${data} deleted.");
-    //   socket.dispose();
-    //   gamePin.clear();
-    //   // if (box.read('perspective') == 'host') {
-    //   //   Get.to(JoinGameScreen());
-    //   // }
-    //   // isGameLive = false;
-    //   // streamSocket.addResponse(isGameLive);
-    //   Navigator.of(context).pop();
-    // });
-    //=> gamePin.add(_["userName"]),
-    //print(data);
-    //return streamSocket.addResponse;
-
-    // final dataList = data as List;
-    // final ack = dataList.last as Function;
-    // ack(null);
-    //var _player = player;
-    //print();
-    // gamePin.add(_["userName"]);
-    // print("??");
-    // print(_);
-    //gamePin.add("New user test");
+    socket.on("game-deleted", (data) {
+      print(data);
+      print("Game is deleteddddd");
+      Timer(Duration(seconds: 3), () {
+        // Navigator.pushReplacement(
+        //     //context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        //     Navigator.of(context).pop());
+        Navigator.of(context).pop();
+      });
+    });
+    socket.on("move-to-gameplay", (data) {
+      print(data);
+      print("All players are moving to the game now!!!!!");
+      Timer(Duration(seconds: 3), () {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => PlayerScreen()));
+      });
+    });
   }
 
   // void goBack(BuildContext context) {
@@ -136,12 +132,6 @@ class _GamePinState extends State<GamePin> {
 
   @override
   Widget build(BuildContext context) {
-    socket.on("delete-game", (data) {
-      print("Game with id ${data} deleted.");
-      socket.dispose();
-      gamePin.clear();
-      Navigator.of(context).pop();
-    });
     return StreamBuilder(
         stream: streamSocket.socketResponse,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -273,7 +263,33 @@ class _GamePinState extends State<GamePin> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(5.0),
                                 child: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    socket.emit("start-game", {
+                                      "quizId": "fasd",
+                                      "gamePin": box.read('gameData')['gamePin']
+                                    });
+                                    //call game api by game pin
+                                    //if status = 200 call the loop below
+                                    // for (int i = 0; i < snapshot.data.length; i++) {
+                                    //create player result api here //snapshot.data.length
+                                    /**
+                                       * playerId: string (from game.playerList)
+                                       * gamePin: string 
+                                       * playerName: string (from game.playerList)
+                                       * score: int (0)
+                                       * answers: array (empty)
+                                       */
+                                    // }
+                                    // socket.emit("start-game", {
+                                    //   "quizId": "",
+                                    //   "gamePin": box.read('gameData')['gamePin']
+                                    // });
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HostScreen()),
+                                    );
+                                  },
                                   child: Container(
                                     width: 60,
                                     height: 30,

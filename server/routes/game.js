@@ -15,7 +15,7 @@ router
   .patch(addPlayer)
 
 router
-  .route("/:id")
+  .route("/:gamePin")
   .get(getGame)
   .patch(updateGame)
   .delete(deleteGame)

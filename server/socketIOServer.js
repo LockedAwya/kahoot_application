@@ -27,9 +27,9 @@ function dynamicSort(property) {
   }
 }
 
-const addPlayer = (username, gamePin, socketId) => {
+const addPlayer = (username, gamePin, socketId, userId) => {
   !players.some((player) => player.socketId === socketId) &&
-    players.push({ username, gamePin, socketId })
+    players.push({ username, gamePin, socketId, userId })
   console.log(players);
 }
 
@@ -73,15 +73,19 @@ io.on("connection", (socket) => {
   //   ack('test1234')
   // })
 
-  socket.on("create-game", (newGame) => {
+  socket.on("create-game", (newGame, cb) => {
     game = JSON.parse(JSON.stringify(newGame))
     //leaderboard = JSON.parse(JSON.stringify(newLeaderboard))
     console.log("Game data is ", newGame);
     games.push(newGame.gamePin);
     socket.join(newGame.gamePin)
     console.log(
-      "Host with id " + socket.id + " started game and joined gamePin: " + newGame.gamePin
+      "Host with socket id " + socket.id + " started game and joined gamePin: " + newGame.gamePin
     )
+    cb({
+      "test1": "fsdafas",
+      "test2": "dfasd"
+    });
   })
 
   //username, socketId, gamePin, cb
@@ -93,31 +97,59 @@ io.on("connection", (socket) => {
      * username
      * gamePin
      * socketId
+     * userId
      * }
      */
-    addPlayer(userInfo.username, userInfo.gamePin, socket.id)
+    addPlayer(userInfo.username, userInfo.gamePin, userInfo.socketId, userInfo.userId)
     socket.join(userInfo.gamePin)
     console.log(
       "User " +
       userInfo.username +
       " with ID " +
-      socket.id +
+      userInfo.userId +
       " joined game " +
       userInfo.gamePin
     )
-    let player = getPlayer(socket.id)
+    let player = getPlayer(userInfo.socketId)
     //io.emit("player-added", player)
     console.log("Player added?", player)
     //socket.emit('player-added', "ok from serverrrrrr");
-    socket.emit("player-added", player)
+    //socket.emit("player-added", player)
     socket.to(userInfo.gamePin).emit('player-added', player)
   })
 
+  socket.on("start-game", (gameInfo) => {
+    /**
+     * gameInfo {
+     * quiz
+     * gamePin
+     * }
+     */
+    quiz = JSON.parse(JSON.stringify(gameInfo.quizId))
+    console.log("Move players to the game")
+    console.log(gameInfo.gamePin)
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].gamePin === gameInfo.gamePin) {
+        //tempPlayers.push(players[i]);
+        socket.to(gameInfo.gamePin).emit("move-to-gameplay", players[i].socketId)
+        // socket.leave(gamePin);
+        // socket.to(gamePin).emit('game-deleted', players[i].socketId);
+      }
+    }
+  })
+
   socket.on("delete-game", (gamePin) => {
-    io.socketsLeave(gamePin);
     console.log("Game id deleted ", gamePin);
-    socket.emit("delete-game", gamePin);
-    players = [];
+    let tempPlayers = [];
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].gamePin === gamePin) {
+        //tempPlayers.push(players[i]);
+        socket.leave(gamePin);
+        socket.to(gamePin).emit('game-deleted', players[i].socketId);
+      }
+    }
+    io.socketsLeave(gamePin);
+    //players = [];
   })
 
   socket.on('leave-game', (userInfo) => {

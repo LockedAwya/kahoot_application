@@ -223,21 +223,21 @@ class _HostGamePlayScreen extends State<HostGamePlayScreen> {
                     color: Color.fromRGBO(134, 76, 191, 1),
                     borderRadius: BorderRadius.all(Radius.elliptical(74, 74)),
                   ))),
-          Positioned(
-              top: 25,
-              left: 20,
-              child: Text(
-                '20',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    color: Color.fromRGBO(255, 255, 255, 1),
-                    fontFamily: 'Roboto',
-                    fontSize: 22,
-                    letterSpacing:
-                        0 /*percentages not used in flutter. defaulting to zero*/,
-                    fontWeight: FontWeight.normal,
-                    height: 1),
-              )),
+          // Positioned(
+          //     top: 25,
+          //     left: 20,
+          //     child: Text(
+          //       '$start',
+          //       textAlign: TextAlign.left,
+          //       style: TextStyle(
+          //           color: Color.fromRGBO(255, 255, 255, 1),
+          //           fontFamily: 'Roboto',
+          //           fontSize: 22,
+          //           letterSpacing:
+          //               0 /*percentages not used in flutter. defaulting to zero*/,
+          //           fontWeight: FontWeight.normal,
+          //           height: 1),
+          //     )),
         ]));
   }
 }

@@ -1,40 +1,41 @@
 const mongoose = require("mongoose")
 
-const playerResultSchema = mongoose.Schema ({
+const playerResultSchema = mongoose.Schema({
     playerId: {
-        type: String,
-        //ref: "User"
-    },
-    gameId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Game"
+        //ref: "Game"
     },
+    gamePin: {
+        type: String,
+        //ref: "Game"
+    },
+    playerName: { type: String },
     score: {
         type: Number,
         default: 0
     },
-    answer: {
-        questionIndex: {type: Number},
-        answered: {
-            type: Boolean,
-            default: false
+    answers: [{
+        questionIndex: { type: Number },
+        // answered: {
+        //     type: Boolean,
+        //     default: false
+        // },
+        answer: {
+            name: { type: String },
+            body: { type: String }
         },
-        answers: [{
-            name: {type: String},
-            body: {type: String}
-        }],
-        correctAnswer: [{
-            name: {type: String},
-            body: {type: String}
-        }],
-        time: {
-            tyoe: Number
-        },
-        currentScore: {
-            type: Number,
-            default: 0
-        }
-    }
+        // correctAnswer: {
+        //     name: { type: String },
+        //     body: { type: String }
+        // },
+        // time: {
+        //     tyoe: Number
+        // },
+        // currentScore: {
+        //     type: Number,
+        //     default: 0
+        // }
+    }]
 })
 const PlayerResult = mongoose.model("PlayerResult", playerResultSchema)
 

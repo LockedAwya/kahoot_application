@@ -29,6 +29,8 @@ const createPlayerResult = async (req, res) => {
 //   }
 // }
 
+//get player result by player id
+
 const getPlayerResult = async (req, res) => {
   let playerResult
   try {
@@ -56,89 +58,111 @@ const getPlayerResult = async (req, res) => {
 //   }
 // }
 
-const updatePlayerResult = async (req, res) => {
-  const { id } = req.params
-  // if (!mongoose.Types.ObjectId.isValid(id)) {
-  //   return res.status(404).send(`No PlayerResult with id: ${id}`)
-  // }
+// const updatePlayerResult = async (req, res) => {
+//   const { id } = req.params
+//   // if (!mongoose.Types.ObjectId.isValid(id)) {
+//   //   return res.status(404).send(`No PlayerResult with id: ${id}`)
+//   // }
 
-  const { playerId, gameId, score } = req.body
-  const playerResult = new PlayerResult({
-    _id: id,
-    playerId,
-    gameId,
-    score,
-  })
+//   const { playerId, gameId, score } = req.body
+//   const playerResult = new PlayerResult({
+//     _id: id,
+//     playerId,
+//     gameId,
+//     score,
+//   })
 
-  try {
-    const updatedPlayerResult = await PlayerResult.findByIdAndUpdate(
-      id,
-      playerResult,
-      { new: true }
-    )
-    res.json(updatedPlayerResult)
-  } catch (error) {
-    res.status(400).json({ message: error.message })
-  }
-}
+//   try {
+//     const updatedPlayerResult = await PlayerResult.findByIdAndUpdate(
+//       id,
+//       playerResult,
+//       { new: true }
+//     )
+//     res.json(updatedPlayerResult)
+//   } catch (error) {
+//     res.status(400).json({ message: error.message })
+//   }
+// }
 
 const addAnswer = async (req, res) => {
   const { playerResultId } = req.params
   //answers is the submitted answer list from users
   /**
    * {
-   * newAnswer: {
+   * newAnswer: { 
+   * quizId:
+   * gameId:
    * questionIndex:
-   * answers:
+   * answer:
    * }
    * }
    */
-  const { questionIndex,
-    answers } = req.body.newAnswer
+  const {
+    questionIndex,
+    answer } = req.body
 
 
   let playerResult
   let game
   let quiz
   let correctAnswers
-  let answerTime
-  let points = 0
+  // let answerTime
+  // let points = 0
   try {
-    quiz = await Quiz.findById(game.quizId)
     playerResult = await PlayerResult.findById(playerResultId)
-    game = await Game.findById(playerResult.gameId)
+    game = await Game.findById(playerResult.gamePin)
+    quiz = await Quiz.findById(game.quizId)
     console.log(quiz.questionList[questionIndex - 1].answerList)
     correctAnswers = quiz.questionList[questionIndex - 1].answerList
       .filter((answer) => answer.isCorrect === true) //filter the correct answers of a quiz
-      .map((answer) => answer.name) //answer names are 4 choices a, b, c, d
+      .map((answer) => ({ name: answer.name, body: answer.body })) //answer content which is correct  (4 choices a, b, c, d)
 
     //answerTime = quiz.questionList[questionIndex-1].answerTime
     //points = quiz.scorePerQuestion
-    let sortedAnswers = answers.sort()
-    console.log(sortedAnswers);
-    // if (answered === true) {
-    if (answers.length > 0) {
-      let answerCount = 0
-      for (let i = 0; i < correctAnswers.length; i++) {
-        if (correctAnswers[i] === sortedAnswers[i]) {
-          answerCount++
-        }
-      }
-      if (answerCount === correctAnswers.length) {
-        //points = calculatePoints(quiz, time, pointType, answerTime)
-        points += quiz.scorePerQuestion;
-      }
-    }
-
-    //playerResult.score += points
     playerResult.answers.push({
-      questionIndex,
-      // answered,
-      answers,
-      //time,
-      correctAnswers,
-      points,
+      questionIndex: questionIndex,
+      answer: answer
+      // answered: {
+      //     type: Boolean,
+      //     default: false
+      // },
+      // answer: {
+      //   name: { type: String },
+      //   body: { type: String }
+      // },
+      // correctAnswer: [{
+      //   name: { type: String },
+      //   body: { type: String }
+      // }]
     })
+    if (correctAnswers[0] === playerResult.answers[questionIndex - 1]) {
+      playerResult.score += quiz.scorePerQuestion;
+    }
+    // let sortedAnswers = answers.sort()
+    // console.log(sortedAnswers);
+    // // if (answered === true) {
+    // if (answers.length > 0) {
+    //   let answerCount = 0
+    //   for (let i = 0; i < correctAnswers.length; i++) {
+    //     if (correctAnswers[i] === sortedAnswers[i]) {
+    //       answerCount++
+    //     }
+    //   }
+    //   if (answerCount === correctAnswers.length) {
+    //     //points = calculatePoints(quiz, time, pointType, answerTime)
+    //     points += quiz.scorePerQuestion;
+    //   }
+    // }
+
+    // //playerResult.score += points
+    // playerResult.answers.push({
+    //   questionIndex,
+    //   // answered,
+    //   answers,
+    //   //time,
+    //   correctAnswers,
+    //   points,
+    // })
     const updatedPlayerResult = await playerResult.save()
     res.send(updatedPlayerResult)
   } catch (error) {
@@ -251,7 +275,7 @@ const updateAnswer = async (req, res) => {
 module.exports = {
   createPlayerResult,
   getPlayerResult,
-  updatePlayerResult,
+  //updatePlayerResult,
   addAnswer,
   //getAnswers,
   getAnswer,

@@ -105,6 +105,7 @@ const getQuiz = async (req, res) => {
             })
         }
         res.status(200).json(quiz)
+        console.log("Question list of the quiz is: " + quiz.questionList);
     } catch (error) {
         res.status(500).json({ message: error.message })
     }

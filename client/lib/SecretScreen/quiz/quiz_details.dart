@@ -56,7 +56,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                     const Padding(
                       padding: EdgeInsets.zero,
                       child: Text(
-                        "Create Kahoot",
+                        "Kahoot Details",
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -220,7 +220,13 @@ class _QuizDetailsState extends State<QuizDetails> {
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               textField1(quizDescriptionController.text),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               Padding(
                                 padding: EdgeInsets.only(left: 10),
                                 child: Text(

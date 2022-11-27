@@ -215,12 +215,11 @@ Future<Response>? deleteGameApi(String gameId) {
 }
 
 Future<Response>? addPlayerApi(
-    String gamePin, String? userId, String username) {
+    String gamePin, String username) {
   try {
     return dio.patch(
       api_url + "/api/games/" + gamePin + "/players",
       data: {
-        "playerId": userId,
         "playerName": username,
       },
       options: Options(

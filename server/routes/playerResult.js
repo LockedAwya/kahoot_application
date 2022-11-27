@@ -20,7 +20,7 @@ router
 router
   .route("/:id")
   .get(getPlayerResult)
-  .patch(updatePlayerResult);
+  //.patch(updatePlayerResult);
 
 router
   .route("/:playerResultId/answers")

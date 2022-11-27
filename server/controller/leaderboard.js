@@ -61,24 +61,24 @@ const addPlayerResult = async (req, res) => {
   }
 }
 
-const updateQuestionLeaderboard = async (req, res) => {
-  const { leaderboardId } = req.params
-  const { questionIndex, playerId, playerPoints } = req.body
-  let leaderboard
+// const updateQuestionLeaderboard = async (req, res) => {
+//   const { leaderboardId } = req.params
+//   const { questionIndex, playerId, playerPoints } = req.body
+//   let leaderboard
 
-  try {
-    leaderboard = await Leaderboard.findById(leaderboardId)
-    leaderboard.questionLeaderboard[questionIndex - 1].questionResultList.push({
-      playerId,
-      playerPoints,
-    })
+//   try {
+//     leaderboard = await Leaderboard.findById(leaderboardId)
+//     leaderboard.questionLeaderboard[questionIndex - 1].questionResultList.push({
+//       playerId,
+//       playerPoints,
+//     })
 
-    const newLeaderboard = await leaderboard.save()
-    res.status(201).json(newLeaderboard)
-  } catch (error) {
-    res.status(400).json({ message: error.message })
-  }
-}
+//     const newLeaderboard = await leaderboard.save()
+//     res.status(201).json(newLeaderboard)
+//   } catch (error) {
+//     res.status(400).json({ message: error.message })
+//   }
+// }
 
 const updateCurrentLeaderboard = async (req, res) => {
   const { leaderboardId } = req.params
@@ -103,6 +103,6 @@ module.exports = {
   createLeaderboard,
   getLeaderboard,
   addPlayerResult,
-  updateQuestionLeaderboard,
+  //updateQuestionLeaderboard,
   updateCurrentLeaderboard,
 }
