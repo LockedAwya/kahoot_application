@@ -101,23 +101,24 @@ class _ScoreBoardState extends State<ScoreBoard> {
                         builder: (context) => const HighScorePage()));
                 //return;
               } else {
-                // Navigator.pushAndRemoveUntil(
-                //     context,
-                //     MaterialPageRoute(builder: (context) => const PlayerScreen()),
-                //     (route) => false);
-                if (box.read("perspective") == "host") {
-                  Timer(Duration(seconds: 3), () {
-                    socket.emit("move-to-question-preview", {
-                      "currentquestionIndex": widget.questionIndex,
-                      "gamePin": box.read("gameData")["gamePin"]
-                    });
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HostScreen(
-                                questionIndex: widget.questionIndex + 1)));
-                  });
-                }
+                socket.emit("move-to-question-preview", {
+                  "currentquestionIndex": widget.questionIndex,
+                  "gamePin": box.read("gameData")["gamePin"]
+                });
+                // Timer(Duration(seconds: 5), () {
+                //   socket.emit("move-to-question-preview", {
+                //     "currentquestionIndex": widget.questionIndex,
+                //     "gamePin": box.read("gameData")["gamePin"]
+                //   });
+                // });
+                Timer(Duration(seconds: 5), () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HostScreen(
+                              questionIndex: widget.questionIndex + 1)));
+                });
+
                 // socket.emit("start-game", {
                 //   "quizId": box.read('gameData')['quizId'],
                 //   "gamePin": box.read('gameData')['gamePin'],
