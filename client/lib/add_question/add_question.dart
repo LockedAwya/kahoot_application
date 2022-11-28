@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled_folder/model/add_question_model.dart';
-import 'package:untitled_folder/quiz_page/quiz_page.dart';
 import 'package:untitled_folder/model/quiz_model.dart';
+import 'package:untitled_folder/quiz_page/quiz_page.dart';
 import '../utils/widget.dart';
 
 class AddQuestion extends StatefulWidget {
@@ -66,105 +66,108 @@ class _AddQuestionState extends State<AddQuestion> {
               fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 10, top: 20),
-              child: Text(
-                "Test knowledge",
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+      body: SafeArea(
+        bottom: false,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 10, top: 20),
+                child: Text(
+                  "Test knowledge",
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 14, left: 10, right: 10),
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 1.58),
-                itemBuilder: (_, index) {
-                  return AddQuestionItem(
-                    onTap: () {
-                      changePage(index, context);
-                    },
-                    data: listTestnowledge[index],
-                  );
-                },
-                itemCount: listTestnowledge.length,
+              Padding(
+                padding: const EdgeInsets.only(top: 14, left: 10, right: 10),
+                child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 1.58),
+                  itemBuilder: (_, index) {
+                    return AddQuestionItem(
+                      onTap: () {
+                        changePage(index, context);
+                      },
+                      data: listTestnowledge[index],
+                    );
+                  },
+                  itemCount: listTestnowledge.length,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Text(
-                "Collect opinions",
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+              const SizedBox(
+                height: 20,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 14, left: 10, right: 10),
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 1.58),
-                itemBuilder: (_, index) {
-                  return AddQuestionItem(
-                    data: listCollectionOpinions[index],
-                  );
-                },
-                itemCount: listCollectionOpinions.length,
+              const Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  "Collect opinions",
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Text(
-                "Present info",
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+              Padding(
+                padding: const EdgeInsets.only(top: 14, left: 10, right: 10),
+                child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 1.58),
+                  itemBuilder: (_, index) {
+                    return AddQuestionItem(
+                      data: listCollectionOpinions[index],
+                    );
+                  },
+                  itemCount: listCollectionOpinions.length,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 14, left: 10, right: 10),
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 1.58),
-                itemBuilder: (_, index) {
-                  return AddQuestionItem(
-                    data: listPresentInfo[index],
-                  );
-                },
-                itemCount: listPresentInfo.length,
+              const SizedBox(
+                height: 20,
               ),
-            ),
-          ],
+              const Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  "Present info",
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 14, left: 10, right: 10),
+                child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 1.58),
+                  itemBuilder: (_, index) {
+                    return AddQuestionItem(
+                      data: listPresentInfo[index],
+                    );
+                  },
+                  itemCount: listPresentInfo.length,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

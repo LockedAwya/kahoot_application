@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:untitled_folder/add_question/add_question.dart';
 import 'package:untitled_folder/model/quiz_model.dart';
 import 'package:untitled_folder/quiz_page/create_answer_4.dart';
@@ -22,6 +25,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   String? answer4 = 'Add answer \n(optional)';
   List<QuizModel> listQuiz = [];
   TabController? tabController;
+  String image = "";
   int currentpage = 0;
   @override
   void initState() {
@@ -121,6 +125,7 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
               children: [
                 ...listQuiz.map((e) {
                   //fieldController.text = e.text ?? "";
+                  image = e.imageUrl ?? "";
                   return SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -131,47 +136,63 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
                               horizontal: 10, vertical: 10),
                           child: ListTile(
                             onTap: () {
-                              print("Tap select image");
+                              _onBrowse().then((value) {
+                                if (value != null) {
+                                  setState(() {
+                                    image = value.path;
+                                    listQuiz[listQuiz.indexOf(e)].imageUrl =
+                                        value.path;
+                                  });
+                                }
+                              });
                             },
                             dense: true,
                             contentPadding:
                                 const EdgeInsets.symmetric(horizontal: 10.0),
                             horizontalTitleGap: 1.0,
-                            title: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                height: 190,
-                                alignment: Alignment.center,
-                                child: Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Image.asset('assets/icons/ic_pick.png',
+                            title: image.isNotEmpty
+                                ? Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    height: 200,
+                                    child: Image.file(File(image ?? ""),
                                         fit: BoxFit.cover),
-                                    Container(
-                                      width: 30,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                          color: Colors.blue,
-                                          borderRadius:
-                                              BorderRadius.circular(5.0)),
-                                      child: const Icon(
-                                        Icons.add_rounded,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    const Text(
-                                      "Add Media",
-                                      style: TextStyle(
-                                          color: Color(0xFF6B6B6B),
-                                          fontSize: 16),
-                                    )
-                                  ],
-                                )),
+                                  )
+                                : Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    height: 190,
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        Image.asset('assets/icons/ic_pick.png',
+                                            fit: BoxFit.cover),
+                                        Container(
+                                          width: 30,
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                              color: Colors.blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0)),
+                                          child: const Icon(
+                                            Icons.add_rounded,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        const Text(
+                                          "Add Media",
+                                          style: TextStyle(
+                                              color: Color(0xFF6B6B6B),
+                                              fontSize: 16),
+                                        )
+                                      ],
+                                    )),
                           ),
                         ),
                         Padding(
@@ -506,6 +527,17 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
           ),
         ),
       );
+
+  Future<XFile?> _onBrowse() async {
+    final ImagePicker picker = ImagePicker();
+
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return null;
+    } else {
+      return image;
+    }
+  }
 }
 
 class ButtonItem extends StatelessWidget {

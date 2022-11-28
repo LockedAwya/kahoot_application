@@ -1,5 +1,6 @@
 class QuizModel {
   String? text;
+  String? imageUrl;
   String? answer1;
   String? answer2;
   String? answer3;
@@ -10,6 +11,7 @@ class QuizModel {
   bool isCorrect4;
   QuizModel(
       {this.text,
+      this.imageUrl,
       this.answer1,
       this.answer2,
       this.answer3,

@@ -37,10 +37,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:untitled_folder/HostGame/host_game_play_screen.dart';
 import 'package:untitled_folder/InitialScreen/initial_screen.dart';
 import 'package:untitled_folder/add_question/add_question.dart';
 import 'package:untitled_folder/create_kahoot/create_kahoot.dart';
 import 'package:untitled_folder/highscore_page.dart';
+import 'package:untitled_folder/host_screen/host_screen.dart';
 import 'package:untitled_folder/player_screen/player_screen.dart';
 import 'package:untitled_folder/quiz_page/create_answer_1.dart';
 import 'package:untitled_folder/quiz_page/create_answer_3.dart';
@@ -68,7 +70,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primarySwatch: Colors.blue,
             scaffoldBackgroundColor: Colors.deepPurpleAccent),
-        home: const SafeArea(child: PlayerScreen()),
+        home: const SafeArea(child: AddQuestion()),
         // onGenerateRoute: router.generateRoute,
         // initialRoute: InitialScreenView,
       ),
