@@ -14,8 +14,11 @@ class QuizDetails extends StatefulWidget {
   final String quizId;
   final String quizName;
   final String quizDescription;
+  final int timerPerQuestion;
+  final int scorePerQuestion;
   //final String quizCreator;
-  const QuizDetails(this.quizId, this.quizName, this.quizDescription);
+  const QuizDetails(this.quizId, this.quizName, this.quizDescription,
+      this.timerPerQuestion, this.scorePerQuestion);
   @override
   _QuizDetailsState createState() => _QuizDetailsState();
 }
@@ -25,12 +28,34 @@ class _QuizDetailsState extends State<QuizDetails> {
   late TextEditingController quizDescriptionController;
   //late var quizData;
   List<QuestionModel> quizModelList = [];
+  // Initial Selected Value
+  late int initialTime;
+  late int initialScore;
+
+  // List of items in our dropdown menu
+  var timePerQuestion_items = [
+    5,
+    10,
+    20,
+    30,
+    40,
+  ];
+
+  var scorePerQuestion_items = [
+    10,
+    20,
+    30,
+    40,
+    50,
+  ];
   @override
   void initState() {
     // TODO: implement initState
     quizTitleController = TextEditingController(text: widget.quizName);
     quizDescriptionController =
         TextEditingController(text: widget.quizDescription);
+    initialTime = widget.timerPerQuestion;
+    initialScore = widget.scorePerQuestion;
     super.initState();
   }
 
@@ -116,8 +141,8 @@ class _QuizDetailsState extends State<QuizDetails> {
                         quizTitleController.text,
                         quizDescriptionController.text,
                         "",
-                        10 /**score per question */,
-                        20 /**time per question */,
+                        initialScore /**score per question */,
+                        initialTime /**time per question */,
                         box.hasData("quiz_details")
                             ? box.read("quiz_details")["questionList"].length
                             : box.read("questionList").length,
@@ -227,6 +252,14 @@ class _QuizDetailsState extends State<QuizDetails> {
                               const SizedBox(
                                 height: 10,
                               ),
+                              timedropdown(),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              scoredropdown(),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               Padding(
                                 padding: EdgeInsets.only(left: 10),
                                 child: Text(
@@ -313,23 +346,26 @@ class _QuizDetailsState extends State<QuizDetails> {
                                           height: 50,
                                           text: 'View Questions',
                                           onTap: () {
-                                            if (!box.hasData("quiz_details")) {
+                                            //if (!box.hasData("quiz_details")) {
                                               box.write("quiz_details", {
                                                 "id": widget.quizId,
-                                                "name": widget.quizName,
+                                                "name":
+                                                    quizTitleController.text,
                                                 "description":
-                                                    widget.quizDescription,
+                                                    quizDescriptionController
+                                                        .text,
                                                 "background":
                                                     snapshot.data!.background ??
                                                         "",
                                                 "numberOfQuestion": snapshot
                                                     .data!.numberOfQuestion,
-                                                "scorePerQuestion": snapshot
-                                                    .data!.scorePerQuestion,
                                                 "questionList":
-                                                    snapshot.data!.questionList
+                                                    snapshot.data!.questionList,
+                                                "timer": initialTime,
+                                                "scorePerQuestion":
+                                                    initialScore,
                                               });
-                                            }
+                                            //}
                                             //print("LOfasdfasdL");
                                             List<dynamic> questionList =
                                                 box.read("quiz_details")[
@@ -343,34 +379,9 @@ class _QuizDetailsState extends State<QuizDetails> {
                                                 for (int i = 0;
                                                     i < questionList.length;
                                                     i++) {
-                                                  //                                   listQuiz
-                                                  // .add(QuestionModel.fromJson(box.read("listOfQuestionsCache")[i]));
                                                   quizModelList.add(
                                                       QuestionModel.fromJson(
                                                           questionList[i]));
-                                                  // quizModelList.add(QuestionModel(
-                                                  //   text: questionList[i]["question"],
-                                                  //   answer1: questionList[i]
-                                                  //       ["answerList"][0]["body"],
-                                                  //   answer2: questionList[i]
-                                                  //       ["answerList"][1]["body"],
-                                                  //   answer3: questionList[i]
-                                                  //       ["answerList"][2]["body"],
-                                                  //   answer4: questionList[i]
-                                                  //       ["answerList"][3]["body"],
-                                                  //   isCorrect: questionList[i]
-                                                  //           ["answerList"][0]
-                                                  //       ["isCorrect"],
-                                                  //   isCorrect2: questionList[i]
-                                                  //           ["answerList"][1]
-                                                  //       ["isCorrect"],
-                                                  //   isCorrect3: questionList[i]
-                                                  //           ["answerList"][2]
-                                                  //       ["isCorrect"],
-                                                  //   isCorrect4: questionList[i]
-                                                  //           ["answerList"][3]
-                                                  //       ["isCorrect"],
-                                                  // ));
                                                 }
                                               }
                                             });
@@ -500,6 +511,79 @@ class _QuizDetailsState extends State<QuizDetails> {
           scale: 1.4,
         ),
       ));
+
+  Widget timedropdown() => //dropdown
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Time per question"),
+          DropdownButton(
+            // Initial Value
+            value: initialTime,
+
+            // Down Arrow Icon
+            icon: const Icon(Icons.keyboard_arrow_down),
+
+            // Array list of items
+            items: timePerQuestion_items.map((int time) {
+              return DropdownMenuItem(
+                value: time,
+                child: Text(time.toString()),
+              );
+            }).toList(),
+            // After selecting the desired option,it will
+            // change button value to selected value
+            onChanged: (int? newValue) {
+              setState(() {
+                initialTime = newValue!;
+                print(initialTime);
+              });
+            },
+            onTap: () {
+              setState(() {
+                print(initialTime);
+              });
+            },
+          ),
+        ],
+      );
+
+  Widget scoredropdown() => //dropdown
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Score per question"),
+          DropdownButton(
+            // Initial Value
+            value: initialScore,
+
+            // Down Arrow Icon
+            icon: const Icon(Icons.keyboard_arrow_down),
+
+            // Array list of items
+            items: scorePerQuestion_items.map((int score) {
+              return DropdownMenuItem(
+                value: score,
+                child: Text(score.toString()),
+              );
+            }).toList(),
+            // After selecting the desired option,it will
+            // change button value to selected value
+            onChanged: (int? newValue) {
+              setState(() {
+                initialScore = newValue!;
+                print(initialScore);
+              });
+            },
+            onTap: () {
+              setState(() {
+                print(initialScore);
+              });
+            },
+          ),
+        ],
+      );
+
   Future<void> _showDeleteWarning() async {
     return showDialog<void>(
       context: context,

@@ -130,14 +130,22 @@ io.on("connection", (socket) => {
     quiz = JSON.parse(JSON.stringify(gameInfo.quizId))
     console.log("Move players to the game")
     console.log(gameInfo.gamePin)
-    for (let i = 0; i < players.length; i++) {
-      if (players[i].gamePin === gameInfo.gamePin) {
-        //tempPlayers.push(players[i]);
-        socket.to(gameInfo.gamePin).emit("move-to-gameplay", players[i].socketId)
-        // socket.leave(gamePin);
-        // socket.to(gamePin).emit('game-deleted', players[i].socketId);
-      }
+    let sentInfo = {
+      quizId: gameInfo.quizId,
+      gamePin: gameInfo.gamePin,
+      scorePerQuestion: gameInfo.scorePerQuestion,
+      timer: gameInfo.timer
     }
+    console.log("Sent info is ", sentInfo);
+    socket.to(gameInfo.gamePin).emit("move-to-gameplay", sentInfo)
+    // for (let i = 0; i < players.length; i++) {
+    //   if (players[i].gamePin === gameInfo.gamePin) {
+    //     //tempPlayers.push(players[i]);
+    //     socket.to(gameInfo.gamePin).emit("move-to-gameplay", players[i].socketId)
+    //     // socket.leave(gamePin);
+    //     // socket.to(gamePin).emit('game-deleted', players[i].socketId);
+    //   }
+    // }
   })
 
   socket.on("move-to-question-preview", (gameInfo) => {
@@ -152,14 +160,20 @@ io.on("connection", (socket) => {
     //quiz = JSON.parse(JSON.stringify(gameInfo.quizId))
     console.log("Move players to the question preview")
     console.log(gameInfo.gamePin)
-    for (let i = 0; i < players.length; i++) {
-      if (players[i].gamePin === gameInfo.gamePin) {
-        //tempPlayers.push(players[i]);
-        socket.to(gameInfo.gamePin).emit("move-players-to-question-preview", players[i].socketId)
-        // socket.leave(gamePin);
-        // socket.to(gamePin).emit('game-deleted', players[i].socketId);
-      }
-    }
+    socket.to(gameInfo.gamePin).emit("move-players-to-question-preview", {
+      quizId: gameInfo.quizId,
+      gamePin: gameInfo.gamePin,
+      scorePerQuestion: gameInfo.scorePerQuestion,
+      timer: gameInfo.timer
+    })
+    // for (let i = 0; i < players.length; i++) {
+    //   if (players[i].gamePin === gameInfo.gamePin) {
+    //     //tempPlayers.push(players[i]);
+    //     socket.to(gameInfo.gamePin).emit("move-players-to-question-preview", players[i].socketId)
+    //     // socket.leave(gamePin);
+    //     // socket.to(gamePin).emit('game-deleted', players[i].socketId);
+    //   }
+    // }
   })
 
   socket.on("delete-game", (gamePin) => {

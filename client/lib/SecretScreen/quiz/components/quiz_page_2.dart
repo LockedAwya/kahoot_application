@@ -607,7 +607,9 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
           builder: (context) => QuizDetails(
               box.read("quiz_details")["id"],
               box.read("quiz_details")["name"], //title quiz
-              box.read("quiz_details")["description"])),
+              box.read("quiz_details")["description"],
+              box.read("quiz_details")["timer"],
+              box.read("quiz_details")["scorePerQuestion"])),
     );
   }
 

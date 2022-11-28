@@ -10,7 +10,18 @@ import 'dart:math' as math;
 
 class ScoreBoard extends StatefulWidget {
   final int questionIndex;
-  const ScoreBoard({Key? key, required this.questionIndex}) : super(key: key);
+  final String quizId;
+  final String gamePin;
+  final int timer;
+  final int scorePerQuestion;
+  const ScoreBoard(
+      {Key? key,
+      this.quizId = "",
+      required this.questionIndex,
+      this.gamePin = "",
+      this.timer = 0,
+      this.scorePerQuestion = 0})
+      : super(key: key);
 
   @override
   _ScoreBoardState createState() => _ScoreBoardState();
@@ -66,8 +77,13 @@ class _ScoreBoardState extends State<ScoreBoard> {
               context,
               MaterialPageRoute(
                   builder: (context) => PlayerScreen(
-                        questionIndex: widget.questionIndex + 1,
-                      )));
+                      //questionIndex: widget.questionIndex + 1,
+
+                      quizId: widget.quizId,
+                      questionIndex: widget.questionIndex + 1,
+                      gamePin: widget.gamePin,
+                      timer: widget.timer,
+                      scorePerQuestion: widget.scorePerQuestion)));
           //Navigator.pop(context, widget.questionIndex + 1);
         });
       });
@@ -111,7 +127,7 @@ class _ScoreBoardState extends State<ScoreBoard> {
                 //     "gamePin": box.read("gameData")["gamePin"]
                 //   });
                 // });
-                Timer(Duration(seconds: 5), () {
+                Timer(Duration(seconds: 3), () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(

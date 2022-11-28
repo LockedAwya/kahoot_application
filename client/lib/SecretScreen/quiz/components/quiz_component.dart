@@ -9,8 +9,10 @@ class QuizComponent extends StatelessWidget {
   final String quizName;
   final String quizDescription;
   final String quizCreator;
-  const QuizComponent(
-      this.quizId, this.quizName, this.quizDescription, this.quizCreator);
+  final int quizTimer;
+  final int quizScorePerQuestion;
+  const QuizComponent(this.quizId, this.quizName, this.quizDescription,
+      this.quizCreator, this.quizTimer, this.quizScorePerQuestion);
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -38,7 +40,7 @@ class QuizComponent extends StatelessWidget {
         if (globalState == "my_kahoots") {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) =>
-                  QuizDetails(quizId, quizName, quizDescription)));
+                  QuizDetails(quizId, quizName, quizDescription, quizTimer, quizScorePerQuestion)));
           print("Quiz id is: " + quizId);
         }
       }),

@@ -7,9 +7,19 @@ import '../score_board.dart';
 
 class PlayerScreen extends StatefulWidget {
   //const PlayerScreen({Key? key}) : super(key: key);
-
+  final String quizId;
   final int questionIndex;
-  const PlayerScreen({Key? key, required this.questionIndex}) : super(key: key);
+  final String gamePin;
+  final int timer;
+  final int scorePerQuestion;
+  const PlayerScreen(
+      {Key? key,
+      required this.quizId,
+      required this.questionIndex,
+      required this.gamePin,
+      required this.timer,
+      required this.scorePerQuestion})
+      : super(key: key);
 
   @override
   _PlayerScreenState createState() => _PlayerScreenState();
@@ -17,8 +27,8 @@ class PlayerScreen extends StatefulWidget {
 
 class _PlayerScreenState extends State<PlayerScreen> {
   Timer? _timer;
-  int start = 20;
-  final key = 'point';
+  late int start;
+  //final key = 'point';
   int value = 0;
   @override
   void initState() {
@@ -27,6 +37,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
     //_read();
     print("Question index is: ");
     print(widget.questionIndex);
+    //start = widget.timer;
     if (mounted) {
       startTimer();
     }
@@ -46,6 +57,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
   void startTimer() {
     // print("Question index is: ");
     // print(widget.questionIndex);
+    start = widget.timer;
     const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
@@ -57,16 +69,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      ScoreBoard(questionIndex: widget.questionIndex)));
-          //     .then((value) {
-          //   if (value != null && value) {
-          //     setState(() {
-          //       start = 20;
-          //     });
-          //     startTimer();
-          //   }
-          // });
+                  builder: (context) => ScoreBoard(
+                      quizId: widget.quizId,
+                      questionIndex: widget.questionIndex,
+                      gamePin: widget.gamePin,
+                      timer: widget.timer,
+                      scorePerQuestion: widget.scorePerQuestion)));
         } else {
           setState(() {
             start--;
@@ -216,6 +224,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
     final prefs = await SharedPreferences.getInstance();
     if (value == 2) return;
     value = value + 1;
-    await prefs.setInt(key, value);
+    //await prefs.setInt(key, value);
   }
 }

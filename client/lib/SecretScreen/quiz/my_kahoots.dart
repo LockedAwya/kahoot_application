@@ -126,7 +126,10 @@ class _MyKahootScreen extends State<MyKahootScreen> {
                                       quizList[index].id,
                                       quizList[index].name,
                                       quizList[index].description,
-                                      quizList[index].creatorName),
+                                      quizList[index].creatorName,
+                                      quizList[index].timer,
+                                      quizList[index].scorePerQuestion
+                                      ),
                                   // SizedBox(height: 5),
                                 ],
                               ),

@@ -34,23 +34,6 @@ class _GamePinState extends State<GamePin> {
   // int playersCount = 0;
 
   void initSocket() {
-    // socket = IO.io(
-    //   'http://127.0.0.1:3003', //http://10.0.2.2:3003 //http://127.0.0.1:3003
-    //   IO.OptionBuilder()
-    //       .setTransports(['websocket'])
-    //       //.disableAutoConnect()
-    //       // .setQuery(
-    //       //     {'username': widget.username})
-    //       .enableForceNew()
-    //       .build(),
-    // );
-    // socket.connect();
-    // socket.onConnect(
-    //     (data) => print('Connection established with id ${socket.id}'));
-    // socket.onConnectError((data) => print('Connect Error: $data'));
-    // socket.onDisconnect((data) =>
-    //     print('Socket.IO server (room) disconnected with id ${socket.id}'));
-
     if (box.read('perspective') == "host") {
       //gameData: gamePin, gameId, quizId
       //socket.emit("create-game", box.read("gameData"));
@@ -101,15 +84,30 @@ class _GamePinState extends State<GamePin> {
       });
     });
     socket.on("move-to-gameplay", (data) {
-      print(data);
+      // if (data["quizId"] is String) {
+      //   print(data["quizId"]);
+      // } else if (data["gamePin"] is int) {
+      //   print(data["gamePin"]);
+      // } else if (data["timer"] is int) {
+      //   print(data["timer"]);
+      // }
+      print(data["gamePin"]);
+      print(data["timer"]);
+      //print(data["questionIndex"]);
+      print(data["gamePin"]);
+      print(data["scorePerQuestion"]);
+      // print(data["timer"]);
       print("All players are moving to the game now!!!!!");
       Timer(Duration(seconds: 3), () {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) => PlayerScreen(
-                      questionIndex: 0,
-                    )));
+                    quizId: data["quizId"].toString(),
+                    questionIndex: 0,
+                    gamePin: data["gamePin"].toString(),
+                    timer: data["timer"],
+                    scorePerQuestion: data["scorePerQuestion"])));
       });
     });
   }
@@ -274,9 +272,15 @@ class _GamePinState extends State<GamePin> {
                                     // getQuestionsByQuizId(
                                     //     box.read('gameData')['quizId']);
                                     socket.emit("start-game", {
-                                      "quizId": box.read('gameData')['quizId'],
-                                      "gamePin":
-                                          box.read('gameData')['gamePin'],
+                                      "quizId": box
+                                          .read('gameData')['quizId']
+                                          .toString(),
+                                      "gamePin": box
+                                          .read('gameData')['gamePin']
+                                          .toString(),
+                                      "scorePerQuestion": box.read(
+                                          "quizDetails")["scorePerQuestion"],
+                                      "timer": box.read("quizDetails")["timer"],
                                     });
                                     // if (questionList?.s == 200) {
                                     //   socket.emit("start-game", {

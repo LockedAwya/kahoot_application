@@ -24,17 +24,44 @@ class _CreateKahootState extends State<CreateKahoot> {
   late TextEditingController quizDescriptionController;
   List<QuestionModel> quizModelList = [];
   int numberOfQuestions = 0;
+
+  late int initialTime;
+  late int initialScore;
+
+  // List of items in our dropdown menu
+  var timePerQuestion_items = [
+    5,
+    10,
+    20,
+    30,
+    40,
+  ];
+
+  var scorePerQuestion_items = [
+    10,
+    20,
+    30,
+    40,
+    50,
+  ];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (box.hasData("quiz-name") || box.hasData("quiz-description")) {
-      quizTitleController = TextEditingController(text: box.read("quiz-name"));
-      quizDescriptionController =
-          TextEditingController(text: box.read("quiz-description"));
+    if (box.hasData("quiz_cache")) {
+      quizTitleController =
+          TextEditingController(text: box.read("quiz_cache")["name"]);
+      quizDescriptionController = TextEditingController(
+          text: box.read("quiz_cache")["description"]);
+      initialTime = box.read("quiz_cache")["timer"];
+      initialScore = box.read("quiz_cache")["scorePerQuestion"];
+      // "scorePerQuestion": initialScore,
+      //                       "timer": initialTime
     } else {
       quizTitleController = TextEditingController(text: "");
       quizDescriptionController = TextEditingController(text: "");
+      initialTime = 20;
+      initialScore = 10;
     }
     if (box.hasData("listOfQuestionsCache")) {
       print(box.read("listOfQuestionsCache"));
@@ -151,25 +178,13 @@ class _CreateKahootState extends State<CreateKahoot> {
                   "" /**background */,
                   userId,
                   username,
-                  10 /** */,
-                  20 /**timer */,
+                  initialScore /** */,
+                  initialTime /**timer */,
                   box
                       .read("listOfQuestionsCache")
                       .length /**number of question */,
                   box.read("listOfQuestionsCache") /**question list */,
                   context);
-
-              //             saveQuizFunc(
-              // String name,
-              // String description,
-              // String background,
-              // String creatorId,
-              // String creatorName,
-              // int scorePerQuestion,
-              // int timer,
-              // int numberOfQuestion,
-              // List questionList,
-              // BuildContext context)
             },
           ),
         ],
@@ -250,6 +265,14 @@ class _CreateKahootState extends State<CreateKahoot> {
             const SizedBox(
               height: 10,
             ),
+            timedropdown(),
+            const SizedBox(
+              height: 10,
+            ),
+            scoredropdown(),
+            const SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: EdgeInsets.only(left: 10),
               child: Text(
@@ -319,12 +342,15 @@ class _CreateKahootState extends State<CreateKahoot> {
                         height: 50,
                         text: 'Add Question',
                         onTap: () {
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => const QuizPage2()));
-//                    globalState = "create-quiz";
-                          box.write("quiz-name", quizTitleController.text);
-                          box.write("quiz-description",
-                              quizDescriptionController.text);
+                          box.write("quiz_cache", {
+                            "name": quizTitleController.text,
+                            "description": quizDescriptionController.text,
+                            "scorePerQuestion": initialScore,
+                            "timer": initialTime
+                          });
+                          // box.write("quiz-name", quizTitleController.text);
+                          // box.write("quiz-description",
+                          //     quizDescriptionController.text);
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => QuizPage(
                                     listValue: quizModelList,
@@ -343,6 +369,78 @@ class _CreateKahootState extends State<CreateKahoot> {
       ),
     );
   }
+
+  Widget timedropdown() => //dropdown
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Time per question"),
+          DropdownButton(
+            // Initial Value
+            value: initialTime,
+
+            // Down Arrow Icon
+            icon: const Icon(Icons.keyboard_arrow_down),
+
+            // Array list of items
+            items: timePerQuestion_items.map((int time) {
+              return DropdownMenuItem(
+                value: time,
+                child: Text(time.toString()),
+              );
+            }).toList(),
+            // After selecting the desired option,it will
+            // change button value to selected value
+            onChanged: (int? newValue) {
+              setState(() {
+                initialTime = newValue!;
+                print(initialTime);
+              });
+            },
+            onTap: () {
+              setState(() {
+                print(initialTime);
+              });
+            },
+          ),
+        ],
+      );
+
+  Widget scoredropdown() => //dropdown
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Score per question"),
+          DropdownButton(
+            // Initial Value
+            value: initialScore,
+
+            // Down Arrow Icon
+            icon: const Icon(Icons.keyboard_arrow_down),
+
+            // Array list of items
+            items: scorePerQuestion_items.map((int score) {
+              return DropdownMenuItem(
+                value: score,
+                child: Text(score.toString()),
+              );
+            }).toList(),
+            // After selecting the desired option,it will
+            // change button value to selected value
+            onChanged: (int? newValue) {
+              setState(() {
+                initialScore = newValue!;
+                print(initialScore);
+              });
+            },
+            onTap: () {
+              setState(() {
+                print(initialScore);
+              });
+            },
+          ),
+        ],
+      );
 
   Widget textField() => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),

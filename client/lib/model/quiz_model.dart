@@ -5,8 +5,8 @@ class Quiz {
   String background = "";
   String creatorId = "";
   String creatorName = "";
-  int scorePerQuestion = 10;
-  int timer = 10;
+  int scorePerQuestion;
+  int timer;
   int numberOfQuestion = 0;
   List questionList = [];
 
