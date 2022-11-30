@@ -257,6 +257,25 @@ Future<Response>? addPlayerApi(String gamePin, String username) {
   }
 }
 
+Future<Response> createPlayerResultAPI(String playerName, String gamePin, String playerId) {
+  return dio.post(
+    api_url + "/api/playerResult/",
+    data: {
+      "playerId": playerId,
+      "playerName": playerName,
+      "gamePin": gamePin,
+      "score": 0,
+      "answers": [],
+    },
+    options: Options(
+      followRedirects: false,
+      validateStatus: (status) {
+        return status == 201 || status == 400;
+      },
+    ),
+  );
+}
+
 // Future<List<dynamic>>? getQuestionsByQuizId(String quizId) async {
 //   var res = await dio.get(
 //     api_url + "/api/quizes/" + quizId + "/questions",

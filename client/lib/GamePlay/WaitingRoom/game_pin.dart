@@ -83,7 +83,7 @@ class _GamePinState extends State<GamePin> {
         Navigator.of(context).pop();
       });
     });
-    socket.on("move-to-gameplay", (data) {
+    socket.on("move-to-gameplay", (data) async {
       // if (data["quizId"] is String) {
       //   print(data["quizId"]);
       // } else if (data["gamePin"] is int) {
@@ -98,6 +98,10 @@ class _GamePinState extends State<GamePin> {
       print(data["scorePerQuestion"]);
       // print(data["timer"]);
       print("All players are moving to the game now!!!!!");
+      print("Game data is....");
+      print(box.read("gameData"));
+      await createPlayerResultAPI(box.read("gameData")["username"],
+          data["gamePin"].toString(), box.read("gameData")["userId"]);
       Timer(Duration(seconds: 3), () {
         Navigator.pushReplacement(
             context,

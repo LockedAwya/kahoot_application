@@ -22,7 +22,7 @@ const playerResultSchema = mongoose.Schema({
         // },
         answer: {
             name: { type: String },
-            body: { type: String }
+            //body: { type: String }
         },
         // correctAnswer: {
         //     name: { type: String },

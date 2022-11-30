@@ -4,10 +4,10 @@ const Quiz = require("../model/quiz")
 const Game = require("../model/game")
 
 const createPlayerResult = async (req, res) => {
-  const { playerName, gameId, score, answers } = req.body
+  const { playerName, gamePin, score, answers } = req.body
   const playerResult = new PlayerResult({
     playerName,
-    gameId,
+    gamePin,
     score,
     answers,
   })
@@ -99,7 +99,10 @@ const addAnswer = async (req, res) => {
    */
   const {
     questionIndex,
-    answer } = req.body
+    answerChoice,
+    quizId,
+    gamePin
+  } = req.body
 
 
   let playerResult
@@ -110,18 +113,22 @@ const addAnswer = async (req, res) => {
   // let points = 0
   try {
     playerResult = await PlayerResult.findById(playerResultId)
-    game = await Game.findById(playerResult.gamePin)
-    quiz = await Quiz.findById(game.quizId)
+    game = await Game.findOne({ gamePin: gamePin })
+    quiz = await Quiz.findById(quizId)
     console.log(quiz.questionList[questionIndex - 1].answerList)
     correctAnswers = quiz.questionList[questionIndex - 1].answerList
       .filter((answer) => answer.isCorrect === true) //filter the correct answers of a quiz
-      .map((answer) => ({ name: answer.name, body: answer.body })) //answer content which is correct  (4 choices a, b, c, d)
+      .map((answer) => ({
+        name: answer.name,
+        body: answer.body
+      })) //answer content which is correct  (4 choices a, b, c, d)
 
     //answerTime = quiz.questionList[questionIndex-1].answerTime
     //points = quiz.scorePerQuestion
+    console.log("Correct answer is ", correctAnswers)
     playerResult.answers.push({
       questionIndex: questionIndex,
-      answer: answer
+      answer: { name: answerChoice }
       // answered: {
       //     type: Boolean,
       //     default: false
@@ -135,8 +142,14 @@ const addAnswer = async (req, res) => {
       //   body: { type: String }
       // }]
     })
-    if (correctAnswers[0] === playerResult.answers[questionIndex - 1]) {
-      playerResult.score += quiz.scorePerQuestion;
+    console.log("Player result answer is ", playerResult.answers[playerResult.answers.length - 1])
+    if (correctAnswers[0].name === playerResult.answers[playerResult.answers.length - 1].answer.name) {
+      console.log("Your answer is correct");
+      playerResult.score += 20;
+      //quiz.scorePerQuestion;
+    } else {
+      console.log("Your answer is incorrect");
+      //res.status(401).json("Your answer is incorrect!");
     }
     // let sortedAnswers = answers.sort()
     // console.log(sortedAnswers);
@@ -164,7 +177,9 @@ const addAnswer = async (req, res) => {
     //   points,
     // })
     const updatedPlayerResult = await playerResult.save()
+    console.log("Sent data", updatedPlayerResult)
     res.send(updatedPlayerResult)
+    //res.json(updatedPlayerResult);
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
