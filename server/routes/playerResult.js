@@ -4,7 +4,7 @@ const router = express.Router();
 const {
   createPlayerResult,
   getPlayerResult,
-  updatePlayerResult,
+  getPlayerResults,
   addAnswer,
   //getAnswers,
   getAnswer,
@@ -20,7 +20,9 @@ router
 router
   .route("/:id")
   .get(getPlayerResult)
-  //.patch(updatePlayerResult);
+//.patch(updatePlayerResult);
+
+router.route("/:gamePin/playerresults").get(getPlayerResults);
 
 router
   .route("/:playerResultId/answers")

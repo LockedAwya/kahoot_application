@@ -4,22 +4,23 @@ const router = express.Router()
 const {
   createLeaderboard,
   getLeaderboard,
-  addPlayerResult,
+  //addPlayerResult,
+  updateLeaderBoard
   //updateQuestionLeaderboard,
-  updateCurrentLeaderboard,
+  //updateCurrentLeaderboard,
 } = require("../controller/leaderboard")
 
 router.route("/").post(createLeaderboard)
 
-router.route("/:leaderboardId/playerresult").patch(addPlayerResult)
-
-// router
-//   .route("/:leaderboardId/questionleaderboard")
-//   .patch(updateQuestionLeaderboard)
+//router.route("/:leaderboardId/playerresult").patch(addPlayerResult)
 
 router
-  .route("/:leaderboardId/currentleaderboard")
-  .patch(updateCurrentLeaderboard)
+  .route("/:leaderboardId/questionleaderboard")
+  .patch(updateLeaderBoard)
+
+// router
+//   .route("/:leaderboardId/currentleaderboard")
+//   .patch(updateCurrentLeaderboard)
 
 router.route("/:id").get(getLeaderboard)
 

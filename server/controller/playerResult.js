@@ -20,14 +20,15 @@ const createPlayerResult = async (req, res) => {
   }
 }
 
-// const getPlayerResults = async (req, res) => {
-//   try {
-//     const playerResults = await PlayerResult.find()
-//     res.status(200).send(playerResults)
-//   } catch (error) {
-//     res.status(500).json({ message: error.message })
-//   }
-// }
+const getPlayerResults = async (req, res) => {
+  const { gamePin } = req.params
+  try {
+    const playerResults = await PlayerResult.find({ gamePin: gamePin });
+    res.status(200).send(playerResults)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
 
 //get player result by player id
 
@@ -113,7 +114,7 @@ const addAnswer = async (req, res) => {
   // let points = 0
   try {
     playerResult = await PlayerResult.findById(playerResultId)
-    game = await Game.findOne({ gamePin: gamePin })
+    //game = await Game.findOne({ gamePin: gamePin })
     quiz = await Quiz.findById(quizId)
     console.log(quiz.questionList[questionIndex - 1].answerList)
     correctAnswers = quiz.questionList[questionIndex - 1].answerList
@@ -145,11 +146,12 @@ const addAnswer = async (req, res) => {
     console.log("Player result answer is ", playerResult.answers[playerResult.answers.length - 1])
     if (correctAnswers[0].name === playerResult.answers[playerResult.answers.length - 1].answer.name) {
       console.log("Your answer is correct");
-      playerResult.score += 20;
+      playerResult.score += quiz.scorePerQuestion;
+      //res.send("Your answer is correct");
       //quiz.scorePerQuestion;
     } else {
       console.log("Your answer is incorrect");
-      //res.status(401).json("Your answer is incorrect!");
+      //res.send("Your answer is incorrect");
     }
     // let sortedAnswers = answers.sort()
     // console.log(sortedAnswers);
@@ -178,7 +180,8 @@ const addAnswer = async (req, res) => {
     // })
     const updatedPlayerResult = await playerResult.save()
     console.log("Sent data", updatedPlayerResult)
-    res.send(updatedPlayerResult)
+    res.status(201).json(updatedPlayerResult);
+    //res.send(updatedPlayerResult)
     //res.json(updatedPlayerResult);
   } catch (error) {
     res.status(400).json({ message: error.message })
@@ -290,6 +293,7 @@ const updateAnswer = async (req, res) => {
 module.exports = {
   createPlayerResult,
   getPlayerResult,
+  getPlayerResults,
   //updatePlayerResult,
   addAnswer,
   //getAnswers,

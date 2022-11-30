@@ -5,16 +5,17 @@ const leaderBoardSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Game",
   },
-  playerResultList: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "PlayerResult",
-    },
-  ],
+  gamePin: { type: String },
+  // playerResultList: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "PlayerResult",
+  //   },
+  // ],
   questionLeaderboard: [
     {
       questionIndex: { type: Number },
-      questionResultList: [
+      leaderboardList: [
         {
           playerName: {
             type: String,
@@ -24,19 +25,19 @@ const leaderBoardSchema = new mongoose.Schema({
       ],
     },
   ],
-  currentLeaderboard: [
-    {
-      questionIndex: { type: Number },
-      leaderboardList: [
-        {
-          playerName: {
-            type: String,
-          },
-          playerCurrentScore: { type: Number },
-        },
-      ],
-    },
-  ],
+  // currentLeaderboard: [
+  //   {
+  //     questionIndex: { type: Number },
+  //     leaderboardList: [
+  //       {
+  //         playerName: {
+  //           type: String,
+  //         },
+  //         playerCurrentScore: { type: Number },
+  //       },
+  //     ],
+  //   },
+  // ],
 })
 
 module.exports = mongoose.model("Leaderboard", leaderBoardSchema)

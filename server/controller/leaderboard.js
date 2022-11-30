@@ -2,28 +2,30 @@ const mongoose = require("mongoose")
 const Leaderboard = require("../model/leaderboard")
 const Quiz = require("../model/quiz")
 const Game = require("../model/game")
+const PlayerResult = require("../model/playerResult");
 
 const createLeaderboard = async (req, res) => {
-  const { gameId, playerResultList } = req.body
+  const { gameId, gamePin, questionLeaderboard } = req.body
 
-  let quiz = await Quiz.findById(game.quizId)
-  let game = await Game.findById(gameId)
+  //let quiz = await Quiz.findById(game.quizId)
+  //let game = await Game.findById(gameId)
 
   const leaderboard = new Leaderboard({
     gameId,
-    playerResultList,
+    gamePin,
+    questionLeaderboard,
   })
 
-  quiz.questionList.forEach((question) => {
-    leaderboard.questionLeaderboard.push({
-      questionIndex: question.questionIndex,
-      questionResultList: [],
-    })
-    leaderboard.currentLeaderboard.push({
-      questionIndex: question.questionIndex,
-      leaderboardList: [],
-    })
-  })
+  // quiz.questionList.forEach((question, index) => {
+  //   leaderboard.questionLeaderboard.push({
+  //     questionIndex: index + 1,
+  //     questionResultList: [],
+  //   })
+  //   // leaderboard.currentLeaderboard.push({
+  //   //   questionIndex: question.questionIndex,
+  //   //   leaderboardList: [],
+  //   // })
+  // })
 
   try {
     const newLeaderboard = await leaderboard.save()
@@ -46,20 +48,55 @@ const getLeaderboard = async (req, res) => {
   }
 }
 
-const addPlayerResult = async (req, res) => {
+//https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value
+function dynamicSort(property) {
+  var sortOrder = 1;
+  if (property[0] === "-") {
+    sortOrder = -1;
+    property = property.substr(1);
+  }
+  return function (a, b) {
+    /* next line works with strings and numbers, 
+     * and you may want to customize it to your needs
+     */
+    var result = (a[property] < b[property]) ? 1 : (a[property] > b[property]) ? -1 : 0;
+    return result * sortOrder;
+  }
+}
+
+const updateLeaderBoard = async (req, res) => {
   const { leaderboardId } = req.params
-  const { playerResultId } = req.body
+  /**
+   * gamePin
+   * questionIndex
+   **/
+  const { gamePin, questionIndex } = req.body
   let leaderboard
+  let playerResultList
 
   try {
     leaderboard = await Leaderboard.findById(leaderboardId)
-    leaderboard.playerResultList.push(playerResultId)
+    playerResultList = await PlayerResult.find({ gamePin: gamePin })
+    leaderboard.questionLeaderboard.push({
+      questionIndex: questionIndex,
+      leaderboardList: [],
+    })
+    let lastIndex = leaderboard.questionLeaderboard.length - 1
+    for (let i = 0; i < playerResultList.length; i++) {
+      leaderboard.questionLeaderboard[lastIndex].leaderboardList.push({
+        playerName: playerResultList[i].playerName,
+        playerPoints: playerResultList[i].score,
+      });
+    }
+    leaderboard.questionLeaderboard[lastIndex]
+      .leaderboardList.sort(dynamicSort("playerPoints"));
     const newLeaderboard = await leaderboard.save()
     res.status(201).json(newLeaderboard)
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
 }
+
 
 // const updateQuestionLeaderboard = async (req, res) => {
 //   const { leaderboardId } = req.params
@@ -80,29 +117,30 @@ const addPlayerResult = async (req, res) => {
 //   }
 // }
 
-const updateCurrentLeaderboard = async (req, res) => {
-  const { leaderboardId } = req.params
-  const { questionIndex, playerId, playerCurrentScore } = req.body
-  let leaderboard
+// const updateCurrentLeaderboard = async (req, res) => {
+//   const { leaderboardId } = req.params
+//   const { questionIndex, playerId, playerCurrentScore } = req.body
+//   let leaderboard
 
-  try {
-    leaderboard = await Leaderboard.findById(leaderboardId)
-    leaderboard.currentLeaderboard[questionIndex - 1].leaderboardList.push({
-      playerId,
-      playerCurrentScore,
-    })
+//   try {
+//     leaderboard = await Leaderboard.findById(leaderboardId)
+//     leaderboard.currentLeaderboard[questionIndex - 1].leaderboardList.push({
+//       playerId,
+//       playerCurrentScore,
+//     })
 
-    const newLeaderboard = await leaderboard.save()
-    res.status(201).json(newLeaderboard)
-  } catch (error) {
-    res.status(400).json({ message: error.message })
-  }
-}
+//     const newLeaderboard = await leaderboard.save()
+//     res.status(201).json(newLeaderboard)
+//   } catch (error) {
+//     res.status(400).json({ message: error.message })
+//   }
+// }
 
 module.exports = {
   createLeaderboard,
   getLeaderboard,
-  addPlayerResult,
+  //addPlayerResult,
+  updateLeaderBoard
   //updateQuestionLeaderboard,
-  updateCurrentLeaderboard,
+  //updateCurrentLeaderboard,
 }
