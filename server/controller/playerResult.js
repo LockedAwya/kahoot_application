@@ -102,7 +102,7 @@ const addAnswer = async (req, res) => {
     questionIndex,
     answerChoice,
     quizId,
-    gamePin
+    //gamePin
   } = req.body
 
 
@@ -147,11 +147,9 @@ const addAnswer = async (req, res) => {
     if (correctAnswers[0].name === playerResult.answers[playerResult.answers.length - 1].answer.name) {
       console.log("Your answer is correct");
       playerResult.score += quiz.scorePerQuestion;
-      //res.send("Your answer is correct");
-      //quiz.scorePerQuestion;
+      playerResult.message = "Your answer is correct";
     } else {
-      console.log("Your answer is incorrect");
-      //res.send("Your answer is incorrect");
+      playerResult.message = "Your answer is incorrect";
     }
     // let sortedAnswers = answers.sort()
     // console.log(sortedAnswers);

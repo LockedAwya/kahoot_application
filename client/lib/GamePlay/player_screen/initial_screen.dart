@@ -39,7 +39,8 @@ class _InitialScreenState extends State<InitialScreen> {
         ],
       ),
       body: const Center(
-        child: Text(
+        child: 
+        Text(
           "Waiting for other players...",
           style: TextStyle(color: Colors.white, fontSize: 26),
         ),

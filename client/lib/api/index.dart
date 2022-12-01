@@ -257,7 +257,8 @@ Future<Response>? addPlayerApi(String gamePin, String username) {
   }
 }
 
-Future<Response> createPlayerResultAPI(String playerName, String gamePin, String playerId) {
+Future<Response> createPlayerResultAPI(
+    String playerName, String gamePin, String playerId) {
   return dio.post(
     api_url + "/api/playerResult/",
     data: {
@@ -274,6 +275,49 @@ Future<Response> createPlayerResultAPI(String playerName, String gamePin, String
       },
     ),
   );
+}
+
+Future<Response> userSubmitAnswerAPI(String playerResultId, int questionIndex,
+    String answerChoice, String quizId) {
+  //String gamePin) {
+  return dio.patch(
+    api_url + "/api/playerResult/" + playerResultId + "/answers",
+    data: {
+      "questionIndex": questionIndex,
+      "answerChoice": answerChoice,
+      "quizId": quizId,
+      //"gamePin": gamePin
+    },
+    options: Options(
+      followRedirects: false,
+      validateStatus: (status) {
+        return status == 201 || status == 400;
+      },
+    ),
+  );
+}
+
+Future<Response> createLeaderBoardAPI(String gameId, String gamePin) {
+  try {
+    return dio.post(
+      api_url + "/api/games",
+      data: {
+        "hostId": hostId,
+        "quizId": quizId,
+        "pin": pin,
+        "playerList": playerList,
+        "playerResultList": playerResultList
+      },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) {
+          return status == 200 || status == 400;
+        },
+      ),
+    );
+  } catch (err) {
+    print(err);
+  }
 }
 
 // Future<List<dynamic>>? getQuestionsByQuizId(String quizId) async {

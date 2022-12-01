@@ -91,6 +91,15 @@ class _GamePinState extends State<GamePin> {
       // } else if (data["timer"] is int) {
       //   print(data["timer"]);
       // }
+      var res = await createPlayerResultAPI(box.read("gameData")["username"],
+          data["gamePin"].toString(), box.read("gameData")["userId"]);
+      if (res.statusCode == 201) {
+        print("Player result id is");
+        print(res.data["_id"]);
+        box.write("playerResultID", res.data["_id"]);
+        print("Player result id after is");
+        box.read("playerResultID");
+      }
       print(data["gamePin"]);
       print(data["timer"]);
       //print(data["questionIndex"]);
@@ -100,8 +109,6 @@ class _GamePinState extends State<GamePin> {
       print("All players are moving to the game now!!!!!");
       print("Game data is....");
       print(box.read("gameData"));
-      await createPlayerResultAPI(box.read("gameData")["username"],
-          data["gamePin"].toString(), box.read("gameData")["userId"]);
       Timer(Duration(seconds: 3), () {
         Navigator.pushReplacement(
             context,

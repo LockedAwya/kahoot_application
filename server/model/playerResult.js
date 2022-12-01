@@ -14,6 +14,7 @@ const playerResultSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    message: { type: String, default: "" },
     answers: [{
         questionIndex: { type: Number },
         // answered: {

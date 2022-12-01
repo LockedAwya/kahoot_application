@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../highscore_page.dart';
 import 'package:untitled_folder/GamePlay/player_screen/initial_screen.dart';
 import '../score_board.dart';
+import '../../api/index.dart';
+import '../../utils/global_variables.dart';
 
 class PlayerScreen extends StatefulWidget {
   //const PlayerScreen({Key? key}) : super(key: key);
@@ -30,6 +32,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
   late int start;
   //final key = 'point';
   int value = 0;
+  String choice = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -122,8 +125,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   Expanded(
                       flex: 1,
                       child: InkWell(
-                        onTap: () {
+                        onTap: () async {
                           _save();
+                          choice = "A";
+                          var res = await userSubmitAnswerAPI(
+                              box.read("playerResultID"),
+                              widget.questionIndex + 1,
+                              choice,
+                              widget.quizId);
+                          if (res.statusCode == 200) {
+                            print(res.data);
+                            box.write("message_result", res.data["message"]);
+                            print(box.read("message_result"));
+                          }
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -144,8 +158,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   Expanded(
                       flex: 1,
                       child: InkWell(
-                        onTap: () {
+                        onTap: () async {
                           _save();
+                          choice = "B";
+                          var res = await userSubmitAnswerAPI(
+                              box.read("playerResultID"),
+                              widget.questionIndex + 1,
+                              choice,
+                              widget.quizId);
+                          if (res.statusCode == 200) {
+                            print(res.data);
+                            box.write("message_result", res.data["message"]);
+                            print(box.read("message_result"));
+                          }
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -173,8 +198,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   Expanded(
                       flex: 1,
                       child: InkWell(
-                        onTap: () {
+                        onTap: () async {
                           _save();
+                          choice = "C";
+                          var res = await userSubmitAnswerAPI(
+                              box.read("playerResultID"),
+                              widget.questionIndex + 1,
+                              choice,
+                              widget.quizId);
+                          if (res.statusCode == 200) {
+                            print(res.data);
+                            box.write("message_result", res.data["message"]);
+                            print(box.read("message_result"));
+                          }
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -195,8 +231,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   Expanded(
                       flex: 1,
                       child: InkWell(
-                        onTap: () {
+                        onTap: () async {
                           _save();
+                          choice = "D";
+                          var res = await userSubmitAnswerAPI(
+                              box.read("playerResultID"),
+                              widget.questionIndex + 1,
+                              choice,
+                              widget.quizId);
+                          if (res.statusCode == 200) {
+                            print(res.data);
+                            box.write("message_result", res.data["message"]);
+                            print(box.read("message_result"));
+                          }
                           Navigator.push(
                               context,
                               MaterialPageRoute(
