@@ -117,13 +117,10 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
             leading: IconButton(
               alignment: Alignment.center,
               iconSize: 20,
-              icon: Padding(
-                padding: EdgeInsets.zero,
-                child: Image.asset(
-                  'assets/icons/ic_drop.png',
-                  width: 20,
-                  height: 20,
-                ),
+              icon: Image.asset(
+                'assets/icons/ic_drop.png',
+                width: 20,
+                height: 20,
               ),
               onPressed: () {
                 print("PIP");
@@ -149,7 +146,7 @@ class _QuizPage2State extends State<QuizPage2> with TickerProviderStateMixin {
                 alignment: Alignment.center,
                 iconSize: 20,
                 icon: Image.asset(
-                  'assets/icons/ic_three_dot.png',
+                  'assets/images/trashimg.png',
                   width: 20,
                   height: 20,
                 ),

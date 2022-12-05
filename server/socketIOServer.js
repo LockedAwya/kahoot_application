@@ -176,6 +176,18 @@ io.on("connection", (socket) => {
     // }
   })
 
+  socket.on("move-to-leaderboard", (leaderboardInfo) => {
+    /**
+     * gamePin
+     * questionLeaderboard[questionLeaderboard.length - 1]
+     */
+    console.log("Move all people to the leaderboard")
+    console.log(leaderboardInfo.gamePin);
+    io.in(leaderboardInfo.gamePin).emit('move-all-to-leaderboard', {
+      currentLeaderboard: leaderboardInfo.questionLeaderboard[leaderboardInfo.questionLeaderboard.length - 1].leaderboardList
+    });
+  })
+
   socket.on("delete-game", (gamePin) => {
     console.log("Game id deleted ", gamePin);
     let tempPlayers = [];

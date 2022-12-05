@@ -134,7 +134,7 @@ class _SecretScreen extends State<SecretScreen> {
             key: Key('BottomNavigationBar'),
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.home, size: 30),
+                icon: Icon(Icons.home, size: 50),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
@@ -146,7 +146,7 @@ class _SecretScreen extends State<SecretScreen> {
                 label: 'Host',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.person, size: 30),
+                icon: Icon(Icons.person, size: 50),
                 label: 'Profile',
               ),
             ],

@@ -42,11 +42,21 @@ class _HostScreenState extends State<HostScreen> {
     const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
-      (Timer timer) {
+      (Timer timer) async {
         if (start == 0) {
           setState(() {
             timer.cancel();
           });
+          var res = await updateLeaderBoardAPI(box.read("leaderboardId"),
+              box.read('gameData')['gamePin'], widget.questionIndex + 1);
+          if (res.statusCode == 201) {
+            print("data returned is");
+            print(res.data);
+            socket.emit("move-to-leaderboard", res.data);
+          }
+          // socket.on("move-all-to-leaderboard", (data) {
+          //   print(data);
+          // });
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -110,7 +120,7 @@ class _HostScreenState extends State<HostScreen> {
                   top: 140,
                   left: 57,
                   child: Text(
-                    "Question ${widget.questionIndex + 1}" +
+                    "Question ${widget.questionIndex + 1}: " +
                         '${box.read("quizDetails")['questionList'][widget.questionIndex]['question']}',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -226,7 +236,7 @@ class _HostScreenState extends State<HostScreen> {
                               style: TextStyle(
                                   color: Color.fromRGBO(255, 255, 255, 1),
                                   fontFamily: 'Roboto',
-                                  fontSize: 10,
+                                  fontSize: 20,
                                   letterSpacing:
                                       0 /*percentages not used in flutter. defaulting to zero*/,
                                   fontWeight: FontWeight.normal,
@@ -241,7 +251,7 @@ class _HostScreenState extends State<HostScreen> {
                               style: TextStyle(
                                   color: Color.fromRGBO(255, 255, 255, 1),
                                   fontFamily: 'Roboto',
-                                  fontSize: 10,
+                                  fontSize: 20,
                                   letterSpacing:
                                       0 /*percentages not used in flutter. defaulting to zero*/,
                                   fontWeight: FontWeight.normal,
@@ -256,7 +266,7 @@ class _HostScreenState extends State<HostScreen> {
                               style: TextStyle(
                                   color: Color.fromRGBO(255, 255, 255, 1),
                                   fontFamily: 'Roboto',
-                                  fontSize: 10,
+                                  fontSize: 20,
                                   letterSpacing:
                                       0 /*percentages not used in flutter. defaulting to zero*/,
                                   fontWeight: FontWeight.normal,
@@ -271,7 +281,7 @@ class _HostScreenState extends State<HostScreen> {
                               style: TextStyle(
                                   color: Color.fromRGBO(255, 255, 255, 1),
                                   fontFamily: 'Roboto',
-                                  fontSize: 10,
+                                  fontSize: 20,
                                   letterSpacing:
                                       0 /*percentages not used in flutter. defaulting to zero*/,
                                   fontWeight: FontWeight.normal,

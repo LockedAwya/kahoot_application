@@ -94,7 +94,9 @@ class _LoginScreen extends State<LoginScreen> {
               }),
               Expanded(
                   //padding: EdgeInsets.symmetric(vertical: 0.5, horizontal: 0.5),
-                  child: Body(
+                  child: Container(
+                      //decoration: BoxDecoration(border: Border.all()),
+                      child: Body(
                 [
                   Container(
                     width: double.infinity,
@@ -130,10 +132,50 @@ class _LoginScreen extends State<LoginScreen> {
                         emailController.text, passwordController.text, context);
                   },
                       textColor: Colors.white,
-                      margin: const EdgeInsets.only(top: 10))
+                      margin: const EdgeInsets.only(top: 10)),
                 ],
                 alignment: CrossAxisAlignment.start,
-              ))
+              ))),
+              //     child: Body(
+              //   [
+              //     Container(
+              //       width: double.infinity,
+              //       alignment: Alignment.center,
+              //       child: Text(
+              //         "Login",
+              //         style: _textStyle,
+              //       ),
+              //     ),
+              //     const SizedBox(
+              //       height: 10,
+              //     ),
+              //     ...itemTextFormField(
+              //       "Email",
+              //       (value) {
+              //         return ValidateUtil.isEmail(value)
+              //             ? null
+              //             : "Email must be in correct form";
+              //       },
+              //       emailController,
+              //     ) //not display text, hence obscureText = false
+              //         .children,
+              //     ...itemTextFormField("Password", (value) {
+              //       return ValidateUtil.isPassUser(value)
+              //           ? null
+              //           : "Password Invalid";
+              //     }, passwordController,
+              //             obscureText:
+              //                 true) //not display text, hence obscureText = true
+              //         .children,
+              //     button("Login", () {
+              //       signInFunc(
+              //           emailController.text, passwordController.text, context);
+              //     },
+              //         textColor: Colors.white,
+              //         margin: const EdgeInsets.only(top: 10)),
+              //   ],
+              //   alignment: CrossAxisAlignment.start,
+              // ))
             ],
           ),
         ),

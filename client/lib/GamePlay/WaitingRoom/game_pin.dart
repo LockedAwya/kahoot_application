@@ -11,6 +11,7 @@ import '../../api/index.dart';
 import '../host_screen/host_screen.dart';
 import '../player_screen/player_screen.dart';
 import 'dart:async';
+import 'package:oktoast/oktoast.dart';
 
 class GamePin extends StatefulWidget {
   //final int gameId;
@@ -277,54 +278,67 @@ class _GamePinState extends State<GamePin> {
                                 borderRadius: BorderRadius.circular(5.0),
                                 child: InkWell(
                                   onTap: () async {
-                                    //var questionList =
-                                    // await getQuestionsByQuizId(
-                                    //     box.read('gameData')['quizId']);
-                                    // getQuestionsByQuizId(
-                                    //     box.read('gameData')['quizId']);
-                                    socket.emit("start-game", {
-                                      "quizId": box
-                                          .read('gameData')['quizId']
-                                          .toString(),
-                                      "gamePin": box
-                                          .read('gameData')['gamePin']
-                                          .toString(),
-                                      "scorePerQuestion": box.read(
-                                          "quizDetails")["scorePerQuestion"],
-                                      "timer": box.read("quizDetails")["timer"],
-                                    });
-                                    // if (questionList?.s == 200) {
-                                    //   socket.emit("start-game", {
-                                    //     "quizId":
-                                    //         box.read('gameData')['quizId'],
-                                    //     "gamePin":
-                                    //         box.read('gameData')['gamePin']
-                                    //   });
-                                    // }
-                                    //call game api by game pin
-                                    //if status = 200 call the loop below
-                                    // for (int i = 0; i < snapshot.data.length; i++) {
-                                    //create player result api here //snapshot.data.length
-                                    /**
+                                    //if no player in, host cannot start game
+                                    if (snapshot.data == null) {
+                                      showToast(
+                                          "At least one player is required to start the game!",
+                                          position: ToastPosition.bottom);
+                                    } else {
+                                      var res = await createLeaderBoardAPI(
+                                          box.read('gameData')['gameId'],
+                                          box.read('gameData')['gamePin']);
+                                      if (res.statusCode == 201) {
+                                        box.write(
+                                            "leaderboardId", res.data["_id"]);
+                                        print("Leaderboard id is.....");
+                                        print(box.read("leaderboardId"));
+                                      }
+
+                                      socket.emit("start-game", {
+                                        "quizId": box
+                                            .read('gameData')['quizId']
+                                            .toString(),
+                                        "gamePin": box
+                                            .read('gameData')['gamePin']
+                                            .toString(),
+                                        "scorePerQuestion": box.read(
+                                            "quizDetails")["scorePerQuestion"],
+                                        "timer":
+                                            box.read("quizDetails")["timer"],
+                                      });
+                                      // if (questionList?.s == 200) {
+                                      //   socket.emit("start-game", {
+                                      //     "quizId":
+                                      //         box.read('gameData')['quizId'],
+                                      //     "gamePin":
+                                      //         box.read('gameData')['gamePin']
+                                      //   });
+                                      // }
+                                      //call game api by game pin
+                                      //if status = 200 call the loop below
+                                      // for (int i = 0; i < snapshot.data.length; i++) {
+                                      //create player result api here //snapshot.data.length
+                                      /**
                                        * playerId: string (from game.playerList)
                                        * gamePin: string 
                                        * playerName: string (from game.playerList)
                                        * score: int (0)
                                        * answers: array (empty)
                                        */
-                                    // }
-                                    // socket.emit("start-game", {
-                                    //   "quizId": "",
-                                    //   "gamePin": box.read('gameData')['gamePin']
-                                    // });
-                                    Timer(Duration(seconds: 3), () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HostScreen(questionIndex: 0)),
-                                      );
-                                    });
+                                      // }
+                                      // socket.emit("start-game", {
+                                      //   "quizId": "",
+                                      //   "gamePin": box.read('gameData')['gamePin']
+                                      // });
+                                      Timer(Duration(seconds: 3), () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HostScreen(questionIndex: 0)),
+                                        );
+                                      });
+                                    }
                                   },
                                   child: Container(
                                     width: 60,
@@ -359,7 +373,8 @@ class _GamePinState extends State<GamePin> {
                     stream: streamSocket.getResponse,
                     builder: (BuildContext context,
                         AsyncSnapshot<dynamic> snapshot) {
-                      return gamePin.isNotEmpty
+                      return gamePin.isNotEmpty &&
+                              box.read('perspective') == 'host'
                           ? GridView.builder(
                               scrollDirection: Axis.vertical,
                               physics: const NeverScrollableScrollPhysics(),
@@ -398,8 +413,10 @@ class _GamePinState extends State<GamePin> {
                             )
                           : Container(
                               alignment: Alignment.center,
-                              child: const Text(
-                                "Wating for player.....",
+                              child: Text(
+                                box.read('perspective') == 'host'
+                                    ? "Waiting for players to join....."
+                                    : "Waiting host to start the game....",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,

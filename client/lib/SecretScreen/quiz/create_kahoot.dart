@@ -51,8 +51,8 @@ class _CreateKahootState extends State<CreateKahoot> {
     if (box.hasData("quiz_cache")) {
       quizTitleController =
           TextEditingController(text: box.read("quiz_cache")["name"]);
-      quizDescriptionController = TextEditingController(
-          text: box.read("quiz_cache")["description"]);
+      quizDescriptionController =
+          TextEditingController(text: box.read("quiz_cache")["description"]);
       initialTime = box.read("quiz_cache")["timer"];
       initialScore = box.read("quiz_cache")["scorePerQuestion"];
       // "scorePerQuestion": initialScore,
@@ -265,7 +265,33 @@ class _CreateKahootState extends State<CreateKahoot> {
             const SizedBox(
               height: 10,
             ),
+            const Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                "Time per question",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             timedropdown(),
+            const SizedBox(
+              height: 10,
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                "Score per question",
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -374,34 +400,37 @@ class _CreateKahootState extends State<CreateKahoot> {
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Time per question"),
-          DropdownButton(
-            // Initial Value
-            value: initialTime,
+          //Text("Time per question"),
+          Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: DropdownButton(
+              // Initial Value
+              value: initialTime,
 
-            // Down Arrow Icon
-            icon: const Icon(Icons.keyboard_arrow_down),
+              // Down Arrow Icon
+              icon: const Icon(Icons.keyboard_arrow_down),
 
-            // Array list of items
-            items: timePerQuestion_items.map((int time) {
-              return DropdownMenuItem(
-                value: time,
-                child: Text(time.toString()),
-              );
-            }).toList(),
-            // After selecting the desired option,it will
-            // change button value to selected value
-            onChanged: (int? newValue) {
-              setState(() {
-                initialTime = newValue!;
-                print(initialTime);
-              });
-            },
-            onTap: () {
-              setState(() {
-                print(initialTime);
-              });
-            },
+              // Array list of items
+              items: timePerQuestion_items.map((int time) {
+                return DropdownMenuItem(
+                  value: time,
+                  child: Text(time.toString()),
+                );
+              }).toList(),
+              // After selecting the desired option,it will
+              // change button value to selected value
+              onChanged: (int? newValue) {
+                setState(() {
+                  initialTime = newValue!;
+                  print(initialTime);
+                });
+              },
+              onTap: () {
+                setState(() {
+                  print(initialTime);
+                });
+              },
+            ),
           ),
         ],
       );
@@ -410,34 +439,37 @@ class _CreateKahootState extends State<CreateKahoot> {
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Score per question"),
-          DropdownButton(
-            // Initial Value
-            value: initialScore,
+          //Text("Score per question"),
+          Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: DropdownButton(
+              // Initial Value
+              value: initialScore,
 
-            // Down Arrow Icon
-            icon: const Icon(Icons.keyboard_arrow_down),
+              // Down Arrow Icon
+              icon: const Icon(Icons.keyboard_arrow_down),
 
-            // Array list of items
-            items: scorePerQuestion_items.map((int score) {
-              return DropdownMenuItem(
-                value: score,
-                child: Text(score.toString()),
-              );
-            }).toList(),
-            // After selecting the desired option,it will
-            // change button value to selected value
-            onChanged: (int? newValue) {
-              setState(() {
-                initialScore = newValue!;
-                print(initialScore);
-              });
-            },
-            onTap: () {
-              setState(() {
-                print(initialScore);
-              });
-            },
+              // Array list of items
+              items: scorePerQuestion_items.map((int score) {
+                return DropdownMenuItem(
+                  value: score,
+                  child: Text(score.toString()),
+                );
+              }).toList(),
+              // After selecting the desired option,it will
+              // change button value to selected value
+              onChanged: (int? newValue) {
+                setState(() {
+                  initialScore = newValue!;
+                  print(initialScore);
+                });
+              },
+              onTap: () {
+                setState(() {
+                  print(initialScore);
+                });
+              },
+            ),
           ),
         ],
       );

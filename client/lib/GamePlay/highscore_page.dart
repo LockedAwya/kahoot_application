@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../utils/global_variables.dart';
 
 class HighScorePage extends StatefulWidget {
   const HighScorePage({Key? key}) : super(key: key);
@@ -8,9 +9,9 @@ class HighScorePage extends StatefulWidget {
 }
 
 class _HighScorePageState extends State<HighScorePage> {
-  double max = 450;
-  double medium = 350;
-  double min = 100;
+  double max = box.read("top-players")[0]["namePlay"] ?? 20;
+  double medium = box.read("top-players")[1]["namePlay"] ?? 10;
+  double min = box.read("top-players")[2]["namePlay"] ?? 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

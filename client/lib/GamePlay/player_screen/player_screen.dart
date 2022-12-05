@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../highscore_page.dart';
+import 'package:untitled_folder/GamePlay/player_screen/result_screen.dart';
 import 'package:untitled_folder/GamePlay/player_screen/initial_screen.dart';
 import '../score_board.dart';
 import '../../api/index.dart';
@@ -69,15 +70,45 @@ class _PlayerScreenState extends State<PlayerScreen> {
           setState(() {
             timer.cancel();
           });
-          Navigator.push(
+          Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => ScoreBoard(
+                  builder: (context) => ResultScreen(
+                      //questionIndex: widget.questionIndex + 1,
+
                       quizId: widget.quizId,
                       questionIndex: widget.questionIndex,
                       gamePin: widget.gamePin,
                       timer: widget.timer,
                       scorePerQuestion: widget.scorePerQuestion)));
+          //Navigator.pop(context, widget.questionIndex + 1);
+          // socket.once("move-players-to-question-preview", (data) {
+          //   print(data);
+          //   print("All players are moving to the next question now!!!!!");
+          //   Timer(Duration(seconds: 3), () {
+          //     Navigator.pushReplacement(
+          //         context,
+          //         MaterialPageRoute(
+          //             builder: (context) => ResultScreen(
+          //                 //questionIndex: widget.questionIndex + 1,
+
+          //                 quizId: widget.quizId,
+          //                 questionIndex: widget.questionIndex + 1,
+          //                 gamePin: widget.gamePin,
+          //                 timer: widget.timer,
+          //                 scorePerQuestion: widget.scorePerQuestion)));
+          //     //Navigator.pop(context, widget.questionIndex + 1);
+          //   });
+          // });
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => ScoreBoard(
+          //             quizId: widget.quizId,
+          //             questionIndex: widget.questionIndex,
+          //             gamePin: widget.gamePin,
+          //             timer: widget.timer,
+          //             scorePerQuestion: widget.scorePerQuestion)));
         } else {
           setState(() {
             start--;
@@ -133,7 +164,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                               widget.questionIndex + 1,
                               choice,
                               widget.quizId);
-                          if (res.statusCode == 200) {
+                          if (res.statusCode == 201) {
                             print(res.data);
                             box.write("message_result", res.data["message"]);
                             print(box.read("message_result"));
@@ -166,7 +197,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                               widget.questionIndex + 1,
                               choice,
                               widget.quizId);
-                          if (res.statusCode == 200) {
+                          if (res.statusCode == 201) {
                             print(res.data);
                             box.write("message_result", res.data["message"]);
                             print(box.read("message_result"));
@@ -206,7 +237,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                               widget.questionIndex + 1,
                               choice,
                               widget.quizId);
-                          if (res.statusCode == 200) {
+                          if (res.statusCode == 201) {
                             print(res.data);
                             box.write("message_result", res.data["message"]);
                             print(box.read("message_result"));
@@ -239,7 +270,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                               widget.questionIndex + 1,
                               choice,
                               widget.quizId);
-                          if (res.statusCode == 200) {
+                          if (res.statusCode == 201) {
                             print(res.data);
                             box.write("message_result", res.data["message"]);
                             print(box.read("message_result"));
