@@ -1,11 +1,10 @@
-import '../Profile/profile_screen.dart';
-import '../Home/home_screen.dart';
-import '../JoinGame/join_game_screen.dart';
-import '../HostGame/host_game_screen.dart';
+import 'Profile/profile_screen.dart';
+import 'Home/home_screen.dart';
+import '../GamePlay/JoinGame/join_game_screen.dart';
+import '../GamePlay/HostGame/host_game_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/global_variables.dart';
-import '../NotLoggedIn/no_auth.dart';
+import 'NotLoggedIn/no_auth.dart';
 
 class SecretScreen extends StatefulWidget {
   //final String title;
@@ -135,7 +134,7 @@ class _SecretScreen extends State<SecretScreen> {
             key: Key('BottomNavigationBar'),
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.home, size: 30),
+                icon: Icon(Icons.home, size: 50),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
@@ -147,7 +146,7 @@ class _SecretScreen extends State<SecretScreen> {
                 label: 'Host',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.person, size: 30),
+                icon: Icon(Icons.person, size: 50),
                 label: 'Profile',
               ),
             ],

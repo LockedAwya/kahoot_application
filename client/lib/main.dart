@@ -1,47 +1,17 @@
-// import 'package:flutter/material.dart';
-// //import 'SecretScreen/SecretScreen.dart';
-// import './InitialScreen/inittial_screen.dart';
-// import 'package:oktoast/oktoast.dart';
-
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// GlobalKey<NavigatorState> globalKey = GlobalKey();
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return OKToast(
-//         child: MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//           // This is the theme of your application.
-//           //
-//           // Try running your application with "flutter run". You'll see the
-//           // application has a blue toolbar. Then, without quitting the app, try
-//           // changing the primarySwatch below to Colors.green and then invoke
-//           // "hot reload" (press "r" in the console where you ran "flutter run",
-//           // or simply save your changes to "hot reload" in a Flutter IDE).
-//           // Notice that the counter didn't reset back to zero; the application
-//           // is not restarted.
-//           primaryColor: Colors.green),
-//       //home: const Layout(title: "Test"),
-//       home: const SafeArea(child: InittialScreen()),
-//     ));
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import './router.dart' as router;
-import './routing_names.dart';
+import './utils/router.dart' as router;
+import './utils/routing_names.dart';
 //import './InitialScreen/register_screen.dart';
+import './utils/dependency_injection.dart';
+import 'package:flutter_simple_dependency_injection/injector.dart';
+import './utils/global_variables.dart';
 
-void main() {
+//final injector = Injector();
+void main() async {
+  // DependencyInjection().initialize(injector);
+  // //injector = Injector.getInjector();
+  // await SocketInitializer().initialize(injector);
   runApp(const MyApp());
 }
 
@@ -54,6 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return OKToast(
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         navigatorKey: globalKey,
         // theme: ThemeData(

@@ -5,8 +5,7 @@ import '../utils/widget.dart';
 import 'validate_util.dart';
 // import 'inittial_screen.dart';
 // import 'login_screen.dart';
-import '../utils/global_variables.dart';
-import '../routing_names.dart';
+import '../utils/routing_names.dart';
 import '../api/index.dart';
 
 class RegisterScreen extends StatefulWidget {

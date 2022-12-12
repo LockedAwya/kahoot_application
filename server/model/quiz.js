@@ -31,24 +31,35 @@ const quizSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     },
+    timer: {
+        type: Number,
+        min: 10,
+        max: 30,
+        required: true,
+    },
     questionList: [{
-        questionType: {
-            type: String,
-            enum: ["True/False", "Quiz"],
-            required: true,
-        },
+        // questionType: {
+        //     type: String,
+        //     enum: ["True/False", "Quiz"],
+        //     required: true,
+        // },
 
-        scoreType: {
-            type: String,
-            enum: ["Basic", "Double"],
-            required: true,
-        },
-        timer: {
-            type: String,
-            min: 10,
-            max: 30,
-            required: true,
-        },
+        // scoreType: {
+        //     type: String,
+        //     enum: ["Basic", "Double"],
+        //     required: true,
+        // },
+        // scoreType: {
+        //     type: String,
+        //     enum: ["Basic", "BaseOnTimes"],
+        //     required: true,
+        // },
+        // timer: {
+        //     type: String,
+        //     min: 10,
+        //     max: 30,
+        //     required: true,
+        // },
         backgroundQuestion: {
             type: String,
         },
@@ -61,10 +72,10 @@ const quizSchema = mongoose.Schema({
             body: { type: String },
             isCorrect: { type: Boolean },
         }],
-        correctAnswerList: [{
-            name: { type: String },
-            body: { type: String },
-        }],
+        // correctAnswerList: [{
+        //     name: { type: String },
+        //     body: { type: String },
+        // }],
         questionIndex: {
             type: Number,
             required: true

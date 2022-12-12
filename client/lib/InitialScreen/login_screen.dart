@@ -3,14 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import '../utils/widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 //import '../services/auth_services.dart';
 import '../utils/global_variables.dart';
 import 'validate_util.dart';
 //import 'inittial_screen.dart';
-import '../routing_names.dart';
-import 'package:dio/dio.dart';
-import "../model/user_model.dart";
+import '../utils/routing_names.dart';
+import '../model/user_model.dart';
 import '../api/index.dart';
 
 //var dio = Dio();
@@ -96,7 +94,9 @@ class _LoginScreen extends State<LoginScreen> {
               }),
               Expanded(
                   //padding: EdgeInsets.symmetric(vertical: 0.5, horizontal: 0.5),
-                  child: Body(
+                  child: Container(
+                      //decoration: BoxDecoration(border: Border.all()),
+                      child: Body(
                 [
                   Container(
                     width: double.infinity,
@@ -110,11 +110,11 @@ class _LoginScreen extends State<LoginScreen> {
                     height: 10,
                   ),
                   ...itemTextFormField(
-                    "Username",
+                    "Email",
                     (value) {
                       return ValidateUtil.isEmail(value)
                           ? null
-                          : "Username Invalid";
+                          : "Email must be in correct form";
                     },
                     emailController,
                   ) //not display text, hence obscureText = false
@@ -132,10 +132,50 @@ class _LoginScreen extends State<LoginScreen> {
                         emailController.text, passwordController.text, context);
                   },
                       textColor: Colors.white,
-                      margin: const EdgeInsets.only(top: 10))
+                      margin: const EdgeInsets.only(top: 10)),
                 ],
                 alignment: CrossAxisAlignment.start,
-              ))
+              ))),
+              //     child: Body(
+              //   [
+              //     Container(
+              //       width: double.infinity,
+              //       alignment: Alignment.center,
+              //       child: Text(
+              //         "Login",
+              //         style: _textStyle,
+              //       ),
+              //     ),
+              //     const SizedBox(
+              //       height: 10,
+              //     ),
+              //     ...itemTextFormField(
+              //       "Email",
+              //       (value) {
+              //         return ValidateUtil.isEmail(value)
+              //             ? null
+              //             : "Email must be in correct form";
+              //       },
+              //       emailController,
+              //     ) //not display text, hence obscureText = false
+              //         .children,
+              //     ...itemTextFormField("Password", (value) {
+              //       return ValidateUtil.isPassUser(value)
+              //           ? null
+              //           : "Password Invalid";
+              //     }, passwordController,
+              //             obscureText:
+              //                 true) //not display text, hence obscureText = true
+              //         .children,
+              //     button("Login", () {
+              //       signInFunc(
+              //           emailController.text, passwordController.text, context);
+              //     },
+              //         textColor: Colors.white,
+              //         margin: const EdgeInsets.only(top: 10)),
+              //   ],
+              //   alignment: CrossAxisAlignment.start,
+              // ))
             ],
           ),
         ),

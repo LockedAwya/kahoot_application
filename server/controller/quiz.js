@@ -9,6 +9,7 @@ const createQuiz = async (req, res) => {
         creatorId,
         creatorName,
         scorePerQuestion,
+        timer,
         questionList,
     } = req.body
 
@@ -20,6 +21,7 @@ const createQuiz = async (req, res) => {
         creatorName,
         numberOfQuestion: questionList.length,
         scorePerQuestion,
+        timer,
         dataCreated: new Date().toISOString,
         questionList,
     })
@@ -30,6 +32,47 @@ const createQuiz = async (req, res) => {
         res.status(200).json(newQuiz)
     } catch (error) {
         res.status(400).json({ message: error.message })
+    }
+}
+
+const updateQuiz = async (req, res) => {
+    //const { quizId } = req.params
+    const {
+        name,
+        description,
+        background,
+        creatorId,
+        creatorName,
+        scorePerQuestion,
+        questionList,
+    } = req.body
+    const quiz = new Quiz({
+        _id: req.params.id,
+        name,
+        description,
+        background,
+        creatorId,
+        creatorName,
+        scorePerQuestion,
+        questionList,
+    }
+    )
+    try {
+        const quizUpdated = await Quiz.findByIdAndUpdate(req.params.id, quiz, { new: true })
+        res.status(200).json(quizUpdated)
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+const deleteQuiz = async (req, res) => {
+    //const { id } = req.params;
+    console.log(req.params.id)
+    try {
+        await Quiz.findByIdAndRemove(req.params.id);
+        res.json({ message: "Quiz has deleted." })
+    } catch (error) {
+        res.status(500).json({ message: error.message })
     }
 }
 
@@ -62,36 +105,42 @@ const getQuiz = async (req, res) => {
             })
         }
         res.status(200).json(quiz)
+        console.log("Question list of the quiz is: " + quiz.questionList);
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
 }
 
 const addQuestion = async (req, res) => {
+    const { quizId } = req.params
     const {
-        questionType,
-        scoreType,
+        //questionType,
+        //scoreType,
         timer,
+        backgroundQuestion,
         question,
         answerList,
-        correctAnswerList
+        questionIndex
+        //correctAnswerList
     } = req.body
 
     let quiz;
     try {
-        quiz = await Quiz.findById(req.params)
+        quiz = await Quiz.findById(quizId)
         if (quiz == null) {
             return res.status(404).json({
-                msg: "Quiz not found!"
+                msg: "Quiz did not found!"
             })
         }
         quiz.questionList.push({
-            questionType,
-            scoreType,
+            // questionType,
+            // scoreType,
             timer,
+            backgroundQuestion,
             question,
             answerList,
-            correctAnswerList
+            questionIndex
+            //correctAnswerList
         })
         quiz.numberOfQuestion += 1
         const updateQuiz = await quiz.save()
@@ -103,7 +152,7 @@ const addQuestion = async (req, res) => {
 
 const getQuestions = async (req, res) => {
     try {
-        const quiz = await Quiz.findById(req.params)
+        const quiz = await Quiz.findById(req.params.quizId)
         if (quiz == null) {
             return res.status(404).json({
                 msg: "Quiz not found!"
@@ -138,5 +187,7 @@ module.exports = {
     addQuestion,
     getQuestions,
     getQuestion,
-    getHostQuizes
+    getHostQuizes,
+    updateQuiz,
+    deleteQuiz
 }

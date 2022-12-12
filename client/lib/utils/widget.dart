@@ -1,4 +1,4 @@
-import 'dart:ffi';
+//import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import '../InitialScreen/initial_screen.dart';
@@ -90,7 +90,8 @@ Widget button(String title, VoidCallback onTap,
 Column itemTextFormField(String name, String? Function(String?) validator,
     TextEditingController controller,
     //String? keyname,
-    {String? hintText, bool obscureText = false}) {
+    {String? hintText,
+    bool obscureText = false}) {
   return Column(
     children: [
       const SizedBox(
